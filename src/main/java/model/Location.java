@@ -10,9 +10,6 @@ public class Location {
     private String countryName;
     private String region;
 
-    public Location() {
-    }
-
     public static class Builder {
         private final Location newLocation;
 
