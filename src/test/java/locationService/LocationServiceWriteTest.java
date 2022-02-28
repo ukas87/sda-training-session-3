@@ -1,38 +1,39 @@
-package weatherService;
+package locationService;
 import model.Location;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import parser.CsvLocationParser;
+import parser.Parser;
 import service.LocationService;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import writer.CsvLocationWriter;
+import writer.Writer;
+import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class LocationServiceWriteTest {
-
+    private static final String PATH = "locationData.csv";
     LocationService locationService;
-
+    Parser<Location> locationParser = new CsvLocationParser(PATH);
+    Writer<Location> locationWriter = new CsvLocationWriter(PATH);
 
     @BeforeEach
     void setUp() {
-        locationService = new LocationService();
+        locationService = new LocationService(locationParser,locationWriter);
     }
 
     @AfterEach
-    void erase() throws URISyntaxException, IOException {
-        Files.write((Paths.get(ClassLoader.getSystemResource("locationData.csv").toURI())),
-                ("".getBytes()));
+    void erase(){
+        locationService.eraseAllData();
     }
 
     @Test
-    void shouldWriteLocationToFile() throws URISyntaxException, IOException {
-        Location l1 = new Location.Builder()
+    void shouldWriteLocationToFile() {
+        //given
+        Location expected = new Location.Builder()
                 .withId(UUID.fromString("5616a660-01f2-4b5b-8874-f56cdb037e03"))
                 .withLatitude(60L)
                 .withLongitude(70L)
@@ -41,16 +42,18 @@ public class LocationServiceWriteTest {
                 .withRegion("LesserPoland")
                 .build();
 
-        locationService.write(l1);
-        String actual = Files.lines(Paths.get(ClassLoader.getSystemResource("locationData.csv").toURI()))
-                .findFirst().orElse(null);
+        //when
+        locationService.write(expected);
+        Location actual = locationService.getLocationObjectsFromFile().get(0);
 
-        assertThat(actual).isEqualTo(l1.toString());
+        //then
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
-    void shouldAppendLocation() throws URISyntaxException, IOException {
-        Location l1 = new Location.Builder()
+    void shouldAppendLocation() {
+        //given
+        Location location1 = new Location.Builder()
                 .withId(UUID.fromString("5616a660-01f2-4b5b-8874-f56cdb037e03"))
                 .withLatitude(60L)
                 .withLongitude(70L)
@@ -58,7 +61,8 @@ public class LocationServiceWriteTest {
                 .withCountryName("Poland")
                 .withRegion("LesserPoland")
                 .build();
-        Location l2 = new Location.Builder()
+
+        Location location2 = new Location.Builder()
                 .withId(UUID.fromString("6f87f5fe-bc8b-4e8b-b65c-ff83cf370318"))
                 .withLatitude(99L)
                 .withLongitude(66L)
@@ -67,13 +71,14 @@ public class LocationServiceWriteTest {
                 .withRegion("UnitedKingdoms")
                 .build();
 
-        locationService.write(l1);
-        locationService.write(l2);
-        String actual = Files.lines(Paths.get(ClassLoader.getSystemResource("locationData.csv").toURI()))
-                .collect(Collectors.joining());
+        //when
+        locationService.write(location1);
+        locationService.write(location2);
+        List<Location> expected = List.of(location1,location2);
+        List<Location> actual = locationService.getLocationObjectsFromFile();
 
-
-        assertThat(actual).isEqualTo(l1.toString().concat(l2.toString()));
+        //then
+        assertThat(actual).isEqualTo(expected);
     }
 
 }
