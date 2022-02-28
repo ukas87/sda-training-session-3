@@ -1,8 +1,5 @@
 package service;
-
-import model.WeatherObject;
-
-
+import model.Location;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -16,33 +13,22 @@ import java.util.stream.Stream;
 
 public class WeatherService {
 
-    List<WeatherObject> weatherObjects;
     private static final String PATH = "weatherData.csv";
 
-
-    public WeatherService(List<WeatherObject> weatherObjects) {
-        this.weatherObjects = weatherObjects;
-    }
-
-    public void add(WeatherObject weatherObject) {
-        weatherObjects.add(weatherObject);
-    }
-
-    public void remove(WeatherObject weatherObject) {
-        weatherObjects.remove(weatherObject);
-    }
-
-    public List<WeatherObject> getWeatherObjectsFromFile() {
+    public List<Location> getWeatherObjectsFromFile() {
         List<String[]> lines = getLinesFromFile();
 
         return lines.stream()
-                .map(line -> new WeatherObject(UUID.fromString(line[0]),
-                        Long.parseLong(line[1]),
-                        Long.parseLong(line[2]),
-                        line[3],
-                        line[4],
-                        line[5]))
+                .map(line -> new Location.Builder()
+                        .withId(UUID.fromString(line[0]))
+                        .withLatitude(Long.parseLong(line[1]))
+                        .withLongitude(Long.parseLong(line[2]))
+                        .withCityName(line[3])
+                        .withCountryName(line[4])
+                        .withRegion(line[5])
+                        .build())
                 .collect(Collectors.toList());
+
     }
 
     private List<String[]> getLinesFromFile() {
@@ -54,14 +40,13 @@ public class WeatherService {
         } catch (IOException | URISyntaxException e) {
             System.err.println("Unable to read the file.");
         }
-
         return lines;
     }
 
-    public void write(WeatherObject weatherObject) {
+    public void write(Location location) {
         try {
             Files.write((Paths.get(ClassLoader.getSystemResource(PATH).toURI())),
-                    (weatherObject.toString() + System.lineSeparator()).getBytes(), StandardOpenOption.APPEND);
+                    (location.toString() + System.lineSeparator()).getBytes(), StandardOpenOption.APPEND);
         } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         }
