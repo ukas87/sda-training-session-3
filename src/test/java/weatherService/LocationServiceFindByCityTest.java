@@ -4,7 +4,7 @@ import model.Location;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import service.WeatherService;
+import service.LocationService;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -14,14 +14,14 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class WeatherServiceFindByCityTest {
+public class LocationServiceFindByCityTest {
 
-    WeatherService weatherService;
+    LocationService locationService;
     Location l1;
 
     @BeforeEach
     void setUp() {
-        weatherService = new WeatherService();
+        locationService = new LocationService();
         l1 = new Location.Builder()
                 .withId(UUID.fromString("5616a660-01f2-4b5b-8874-f56cdb037e03"))
                 .withLatitude(60L)
@@ -30,27 +30,27 @@ public class WeatherServiceFindByCityTest {
                 .withCountryName("Poland")
                 .withRegion("LesserPoland")
                 .build();
-        weatherService.write(l1);
+        locationService.write(l1);
 
     }
 
     @AfterEach
     void erase() throws URISyntaxException, IOException {
-        Files.write((Paths.get(ClassLoader.getSystemResource("weatherData.csv").toURI())),
+        Files.write((Paths.get(ClassLoader.getSystemResource("locationData.csv").toURI())),
                 ("".getBytes()));
     }
 
 
     @Test
     void shouldReturnLocationByCity() {
-        Location actual = weatherService.findByCity("Krakow");
+        Location actual = locationService.findByCity("Krakow");
 
         assertThat(actual).isEqualTo(l1);
     }
 
     @Test
     void shouldReturnNullIfNoLocationWithSuchCity(){
-        Location actual = weatherService.findByCity("Wroclaw");
+        Location actual = locationService.findByCity("Wroclaw");
 
         assertThat(actual).isNull();
     }

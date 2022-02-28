@@ -1,10 +1,9 @@
 package weatherService;
-
 import model.Location;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import service.WeatherService;
+import service.LocationService;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -15,19 +14,19 @@ import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class WeatherServiceWriteTest {
+public class LocationServiceWriteTest {
 
-    WeatherService weatherService;
+    LocationService locationService;
 
 
     @BeforeEach
     void setUp() {
-        weatherService = new WeatherService();
+        locationService = new LocationService();
     }
 
     @AfterEach
     void erase() throws URISyntaxException, IOException {
-        Files.write((Paths.get(ClassLoader.getSystemResource("weatherData.csv").toURI())),
+        Files.write((Paths.get(ClassLoader.getSystemResource("locationData.csv").toURI())),
                 ("".getBytes()));
     }
 
@@ -42,8 +41,8 @@ public class WeatherServiceWriteTest {
                 .withRegion("LesserPoland")
                 .build();
 
-        weatherService.write(l1);
-        String actual = Files.lines(Paths.get(ClassLoader.getSystemResource("weatherData.csv").toURI()))
+        locationService.write(l1);
+        String actual = Files.lines(Paths.get(ClassLoader.getSystemResource("locationData.csv").toURI()))
                 .findFirst().orElse(null);
 
         assertThat(actual).isEqualTo(l1.toString());
@@ -68,9 +67,9 @@ public class WeatherServiceWriteTest {
                 .withRegion("UnitedKingdoms")
                 .build();
 
-        weatherService.write(l1);
-        weatherService.write(l2);
-        String actual = Files.lines(Paths.get(ClassLoader.getSystemResource("weatherData.csv").toURI()))
+        locationService.write(l1);
+        locationService.write(l2);
+        String actual = Files.lines(Paths.get(ClassLoader.getSystemResource("locationData.csv").toURI()))
                 .collect(Collectors.joining());
 
 

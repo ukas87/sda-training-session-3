@@ -11,9 +11,9 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class WeatherService {
+public class LocationService {
 
-    private static final String PATH = "weatherData.csv";
+    private static final String PATH = "locationData.csv";
 
     //creating objects from parsed with 'getLinesFromFile()' method data
     public List<Location> getWeatherObjectsFromFile() {
