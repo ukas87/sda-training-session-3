@@ -15,6 +15,7 @@ public class WeatherService {
 
     private static final String PATH = "weatherData.csv";
 
+    //creating objects from parsed with 'getLinesFromFile()' method data
     public List<Location> getWeatherObjectsFromFile() {
         List<String[]> lines = getLinesFromFile();
 
@@ -31,6 +32,21 @@ public class WeatherService {
 
     }
 
+    public Location findByCity(String city){
+        return getWeatherObjectsFromFile().stream()
+                .filter(location -> location.getCityName().equals(city))
+                .findFirst()
+                .orElse(null);
+    }
+
+    //printing all locations from file
+    public void displayAllLocations(){
+        for (Location location: getWeatherObjectsFromFile()){
+            System.out.println(location);
+        }
+    }
+
+    //parsing data from csv file
     private List<String[]> getLinesFromFile() {
         List<String[]> lines = new ArrayList<>();
         try (Stream<String> stream = Files.lines(Paths.get(ClassLoader.getSystemResource(PATH).toURI()))) {
@@ -43,10 +59,20 @@ public class WeatherService {
         return lines;
     }
 
+    //appending new locations to existing file
     public void write(Location location) {
         try {
             Files.write((Paths.get(ClassLoader.getSystemResource(PATH).toURI())),
                     (location.toString() + System.lineSeparator()).getBytes(), StandardOpenOption.APPEND);
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void eraseAllData(){
+        try {
+            Files.write((Paths.get(ClassLoader.getSystemResource(PATH).toURI())),
+                    ("".getBytes()));
         } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         }
