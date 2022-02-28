@@ -20,7 +20,7 @@ public class WeatherServiceFindByCityTest {
     Location l1;
 
     @BeforeEach
-    void init() {
+    void setUp() {
         weatherService = new WeatherService();
         l1 = new Location.Builder()
                 .withId(UUID.fromString("5616a660-01f2-4b5b-8874-f56cdb037e03"))
