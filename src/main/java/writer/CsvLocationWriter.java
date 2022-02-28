@@ -1,7 +1,5 @@
 package writer;
-
 import model.Location;
-
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;

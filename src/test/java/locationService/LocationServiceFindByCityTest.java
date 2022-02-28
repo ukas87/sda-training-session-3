@@ -1,5 +1,4 @@
 package locationService;
-
 import model.Location;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,7 +8,6 @@ import parser.Parser;
 import service.LocationService;
 import writer.CsvLocationWriter;
 import writer.Writer;
-
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
