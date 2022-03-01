@@ -1,13 +1,20 @@
 package model.openweathermap;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties({"feels_like", "temp_min", "temp_max"})
 public class Main {
 
     private double temp;
     private int pressure;
     private int humidity;
+
+    @JsonIgnore
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
     public double getTemp() {
         return temp;
@@ -19,6 +26,16 @@ public class Main {
 
     public int getHumidity() {
         return humidity;
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
+    }
+
+    @JsonAnySetter
+    public void setAdditionalProperty(String name, Object value) {
+        this.additionalProperties.put(name, value);
     }
 
     @Override
