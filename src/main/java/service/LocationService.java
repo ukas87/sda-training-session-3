@@ -6,8 +6,8 @@ import java.util.List;
 
 public class LocationService {
 
-    Parser<Location> locationParser;
-    Writer<Location> locationWriter;
+    private final Parser<Location> locationParser;
+    private final Writer<Location> locationWriter;
 
     public LocationService(Parser<Location> locationParser, Writer<Location> locationWriter) {
         this.locationParser = locationParser;
@@ -26,9 +26,7 @@ public class LocationService {
     }
 
     public void displayAllLocations() {
-        for (Location location : getLocationObjectsFromFile()) {
-            System.out.println(location);
-        }
+        getLocationObjectsFromFile().forEach(System.out::println);
     }
 
     public void write(Location location) {

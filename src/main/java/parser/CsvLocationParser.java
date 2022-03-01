@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -51,23 +50,4 @@ public class CsvLocationParser implements Parser<Location> {
         return lines;
     }
 
-
-    public void writeToFile(Location location) {
-        try {
-            Files.write((Paths.get(ClassLoader.getSystemResource(PATH).toURI())),
-                    (location.toString() + System.lineSeparator()).getBytes(), StandardOpenOption.APPEND);
-        } catch (IOException | URISyntaxException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    public void eraseAllData() {
-        try {
-            Files.write((Paths.get(ClassLoader.getSystemResource(PATH).toURI())),
-                    ("".getBytes()));
-        } catch (IOException | URISyntaxException e) {
-            System.err.println();
-        }
-    }
 }

@@ -20,7 +20,7 @@ public class CsvLocationWriter implements Writer<Location> {
             Files.write((Paths.get(ClassLoader.getSystemResource(PATH).toURI())),
                     (location.toString() + System.lineSeparator()).getBytes(), StandardOpenOption.APPEND);
         } catch (IOException | URISyntaxException e) {
-            e.printStackTrace();
+            System.err.println("Unable to write to the file.");
         }
 
     }
@@ -31,7 +31,7 @@ public class CsvLocationWriter implements Writer<Location> {
             Files.write((Paths.get(ClassLoader.getSystemResource(PATH).toURI())),
                     ("".getBytes()));
         } catch (IOException | URISyntaxException e) {
-            System.err.println();
+            System.err.println("Unable to erase all data");
         }
     }
 }
