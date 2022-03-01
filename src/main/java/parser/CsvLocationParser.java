@@ -19,11 +19,6 @@ public class CsvLocationParser implements Parser<Location> {
     }
 
     @Override
-    public String getPath() {
-        return PATH;
-    }
-
-    @Override
     public List<Location> getObjectFromFile() {
         List<String[]> lines = getLinesFromFile();
         return lines.stream()
