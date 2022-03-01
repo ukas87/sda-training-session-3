@@ -1,7 +1,6 @@
 package service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import model.openweathermap.OpenWeatherMapForecast;
-
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;

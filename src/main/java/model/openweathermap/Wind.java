@@ -1,16 +1,15 @@
 package model.openweathermap;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class Wind {
-    @JsonProperty("speed")
-    private int speed;
 
-    @JsonProperty("deg")
+    private int speed;
     private int deg;
 
     public int getSpeed() {
         return speed;
+    }
+
+    public int getDeg() {
+        return deg;
     }
 
     @Override
