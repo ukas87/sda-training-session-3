@@ -1,23 +1,31 @@
-package service;
+package parser;
 import model.Location;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class WeatherService {
+public class CsvLocationParser implements Parser<Location> {
 
-    private static final String PATH = "weatherData.csv";
+    private final String PATH;
 
-    public List<Location> getWeatherObjectsFromFile() {
+    public CsvLocationParser(String PATH) {
+        this.PATH = PATH;
+    }
+
+    @Override
+    public String getPath() {
+        return PATH;
+    }
+
+    @Override
+    public List<Location> getObjectFromFile() {
         List<String[]> lines = getLinesFromFile();
-
         return lines.stream()
                 .map(line -> new Location.Builder()
                         .withId(UUID.fromString(line[0]))
@@ -28,7 +36,6 @@ public class WeatherService {
                         .withRegion(line[5])
                         .build())
                 .collect(Collectors.toList());
-
     }
 
     private List<String[]> getLinesFromFile() {
@@ -43,12 +50,4 @@ public class WeatherService {
         return lines;
     }
 
-    public void write(Location location) {
-        try {
-            Files.write((Paths.get(ClassLoader.getSystemResource(PATH).toURI())),
-                    (location.toString() + System.lineSeparator()).getBytes(), StandardOpenOption.APPEND);
-        } catch (IOException | URISyntaxException e) {
-            e.printStackTrace();
-        }
-    }
 }
