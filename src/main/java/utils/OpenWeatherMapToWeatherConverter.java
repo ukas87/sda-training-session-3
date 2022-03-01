@@ -1,9 +1,20 @@
 package utils;
+
 import model.Weather;
 import model.openweathermap.OpenWeatherMapForecast;
 
 
-public  class OpenWeatherMapToWeatherConverter implements ObjectConverter<OpenWeatherMapForecast, Weather> {
+public class OpenWeatherMapToWeatherConverter implements ObjectConverter<OpenWeatherMapForecast, Weather> {
+
+    private static OpenWeatherMapToWeatherConverter INSTANCE;
+
+    public static OpenWeatherMapToWeatherConverter getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new OpenWeatherMapToWeatherConverter();
+        }
+        return INSTANCE;
+    }
+
     @Override
     public Weather convert(OpenWeatherMapForecast openWeatherMapForecast) {
 

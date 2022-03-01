@@ -3,11 +3,11 @@ import model.Location;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import parser.CsvLocationParser;
-import parser.Parser;
+import utils.parser.CsvLocationParser;
+import utils.parser.Parser;
 import service.LocationService;
-import writer.CsvLocationWriter;
-import writer.Writer;
+import utils.writer.CsvLocationWriter;
+import utils.writer.Writer;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;

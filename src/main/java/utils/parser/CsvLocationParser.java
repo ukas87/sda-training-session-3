@@ -1,4 +1,4 @@
-package parser;
+package utils.parser;
 import model.Location;
 import java.io.IOException;
 import java.net.URISyntaxException;
