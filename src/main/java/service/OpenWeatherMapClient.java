@@ -32,7 +32,4 @@ public class OpenWeatherMapClient implements WeatherClient<OpenWeatherMapForecas
         return url;
     }
 
-
-
-
 }
