@@ -1,53 +1,68 @@
 package ui;
 
+import model.Location;
+import parser.CsvLocationParser;
+import parser.Parser;
+import service.LocationService;
+import writer.CsvLocationWriter;
+import writer.Writer;
+
+
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.UUID;
 
 public class UserInterface {
-    static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
+        InputHandler inputHandler = new InputHandler(new Scanner(System.in));
+        Manager manager = new Manager(new ArrayList<>());
+        String PATH = "locationData.csv";
+        Parser<Location> parser = new CsvLocationParser(PATH);
+        Writer<Location> writer = new CsvLocationWriter(PATH);
+        LocationService locationService = new LocationService(parser, writer);
+        boolean isRunning = true;
+        String initMenu = "==== Weather Application ===\n[1] Adding a location\n[2] Display currently added locations\n[3] Downloading weather values\n[0] Exit";
 
-        start();
-
-    }
-
-    static public void start() {
-        boolean exit = false;
 
         do {
-            printTerminal();
+            System.out.println(initMenu);
+            String choice = inputHandler.takeMenuChoice();
 
-            int choice = sc.nextInt();
-            sc.nextLine();
 
             switch (choice) {
-                case 1:
-                    //addLocation();
-                    break;
-                case 2:
-                   // displayCurrentLocation();
-                    break;
-                case 3:
+                case "1":
+                    System.out.println("You chose to Add a location: ");
+                    Location locationToAdd = new Location.Builder().withId(UUID.randomUUID())
+                        .withCityName(inputHandler.takeLocationCityName2())
+                        .withCountryName(inputHandler.takeLocationCountryName2())
+                        .withRegion(inputHandler.takeLocationRegionName2())
+                        .withLatitude(inputHandler.takeLocationLatitude2())
+                        .withLongitude(inputHandler.takeLocationLongitude2())
+                        .build();
 
-                   // downloadWeatherValues(); do pobierania danych z serwisu;
+                    locationService.write(locationToAdd);
                     break;
-                case 0:
-                    exit = true;
+
+                case "2":
+                    System.out.println("You chose to display Current Location: ");
+                    locationService.displayAllLocations();
+                    break;
+
+                case "3":
+                    System.out.println("You chose to Download Weather Values: ");
+                    //showWeather
+                    break;
+
+                case "0":
                     System.out.println("Bye, thanks");
+                    isRunning = false;
                     break;
                 default:
-                    System.out.println("Wrong data!");
-                   // printTerminal();
+                    System.out.println("(default)Wrong data! Try again\n");
             }
-        } while (!exit);
+        } while (isRunning);
     }
-
-
-    static void printTerminal(){
-        System.out.println("[1]. Adding a location(to File)");
-        System.out.println("[2]. Display currently added locations");
-        System.out.println("[3]. Downloading weather values");
-        System.out.println("[0]. Exit");
-    }
-
 }
+
+
