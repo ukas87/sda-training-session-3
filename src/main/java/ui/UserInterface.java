@@ -14,17 +14,17 @@ import java.util.UUID;
 
 public class UserInterface {
 
-    public static void main(String[] args) {
-        InputHandler inputHandler = new InputHandler(new Scanner(System.in));
-        Manager manager = new Manager(new ArrayList<>());
-        String PATH = "locationData.csv";
-        Parser<Location> parser = new CsvLocationParser(PATH);
-        Writer<Location> writer = new CsvLocationWriter(PATH);
-        LocationService locationService = new LocationService(parser, writer);
-        boolean isRunning = true;
-        String initMenu = "==== Weather Application ===\n[1] Adding a location\n[2] Display currently added locations\n[3] Downloading weather values\n[0] Exit";
 
+    InputHandler inputHandler = new InputHandler(new Scanner(System.in));
+    Manager manager = new Manager(new ArrayList<>());
+    String PATH = "locationData.csv";
+    Parser<Location> parser = new CsvLocationParser(PATH);
+    Writer<Location> writer = new CsvLocationWriter(PATH);
+    LocationService locationService = new LocationService(parser, writer);
+    boolean isRunning = true;
+    String initMenu = "==== Weather Application ===\n[1] Adding a location\n[2] Display currently added locations\n[3] Downloading weather values\n[0] Exit";
 
+    public void userMenu() {
         do {
             System.out.println(initMenu);
             String choice = inputHandler.takeMenuChoice();
@@ -34,12 +34,12 @@ public class UserInterface {
                 case "1":
                     System.out.println("You chose to Add a location: ");
                     Location locationToAdd = new Location.Builder().withId(UUID.randomUUID())
-                        .withCityName(inputHandler.takeLocationCityName2())
-                        .withCountryName(inputHandler.takeLocationCountryName2())
-                        .withRegion(inputHandler.takeLocationRegionName2())
-                        .withLatitude(inputHandler.takeLocationLatitude2())
-                        .withLongitude(inputHandler.takeLocationLongitude2())
-                        .build();
+                            .withCityName(inputHandler.takeLocationCityName())
+                            .withCountryName(inputHandler.takeLocationCountryName())
+                            .withRegion(inputHandler.takeLocationRegionName())
+                            .withLatitude(inputHandler.takeLocationLatitude())
+                            .withLongitude(inputHandler.takeLocationLongitude())
+                            .build();
 
                     locationService.write(locationToAdd);
                     break;
@@ -64,5 +64,4 @@ public class UserInterface {
         } while (isRunning);
     }
 }
-
 
