@@ -3,11 +3,11 @@ import model.Location;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import parser.CsvLocationParser;
-import parser.Parser;
+import utils.parser.CsvLocationParser;
+import utils.parser.Parser;
 import service.LocationService;
-import writer.CsvLocationWriter;
-import writer.Writer;
+import utils.writer.CsvLocationWriter;
+import utils.writer.Writer;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,8 +25,8 @@ public class LocationServiceFindByCityTest {
         locationService = new LocationService(locationParser, locationWriter);
         location1 = new Location.Builder()
                 .withId(UUID.fromString("5616a660-01f2-4b5b-8874-f56cdb037e03"))
-                .withLatitude(60L)
-                .withLongitude(70L)
+                .withLatitude(60D)
+                .withLongitude(70D)
                 .withCityName("Krakow")
                 .withCountryName("Poland")
                 .withRegion("LesserPoland")

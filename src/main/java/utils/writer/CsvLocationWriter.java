@@ -1,4 +1,4 @@
-package writer;
+package utils.writer;
 import model.Location;
 import java.io.IOException;
 import java.net.URISyntaxException;

@@ -5,8 +5,8 @@ import java.util.UUID;
 
 public class Location {
     private UUID id;
-    private Long latitude;
-    private Long longitude;
+    private Double latitude;
+    private Double longitude;
     private String cityName;
     private String countryName;
     private String region;
@@ -27,12 +27,12 @@ public class Location {
             return this;
         }
 
-        public Builder withLatitude(Long latitude) {
+        public Builder withLatitude(Double latitude) {
             newLocation.latitude = latitude;
             return this;
         }
 
-        public Builder withLongitude(Long longitude) {
+        public Builder withLongitude(Double longitude) {
             newLocation.longitude = longitude ;
             return this;
         }

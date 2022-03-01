@@ -1,7 +1,7 @@
 package service;
 import model.Location;
-import parser.Parser;
-import writer.Writer;
+import utils.parser.Parser;
+import utils.writer.Writer;
 import java.util.List;
 
 public class LocationService {

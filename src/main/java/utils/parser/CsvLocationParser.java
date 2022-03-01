@@ -1,4 +1,4 @@
-package parser;
+package utils.parser;
 import model.Location;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -19,18 +19,13 @@ public class CsvLocationParser implements Parser<Location> {
     }
 
     @Override
-    public String getPath() {
-        return PATH;
-    }
-
-    @Override
     public List<Location> getObjectFromFile() {
         List<String[]> lines = getLinesFromFile();
         return lines.stream()
                 .map(line -> new Location.Builder()
                         .withId(UUID.fromString(line[0]))
-                        .withLatitude(Long.parseLong(line[1]))
-                        .withLongitude(Long.parseLong(line[2]))
+                        .withLatitude(Double.parseDouble(line[1]))
+                        .withLongitude(Double.parseDouble(line[2]))
                         .withCityName(line[3])
                         .withCountryName(line[4])
                         .withRegion(line[5])
