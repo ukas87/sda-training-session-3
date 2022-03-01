@@ -25,8 +25,8 @@ public class LocationServiceFindByCityTest {
         locationService = new LocationService(locationParser, locationWriter);
         location1 = new Location.Builder()
                 .withId(UUID.fromString("5616a660-01f2-4b5b-8874-f56cdb037e03"))
-                .withLatitude(60L)
-                .withLongitude(70L)
+                .withLatitude(60D)
+                .withLongitude(70D)
                 .withCityName("Krakow")
                 .withCountryName("Poland")
                 .withRegion("LesserPoland")

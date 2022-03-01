@@ -35,8 +35,8 @@ public class LocationServiceWriteTest {
         //given
         Location expected = new Location.Builder()
                 .withId(UUID.fromString("5616a660-01f2-4b5b-8874-f56cdb037e03"))
-                .withLatitude(60L)
-                .withLongitude(70L)
+                .withLatitude(60D)
+                .withLongitude(70D)
                 .withCityName("Krakow")
                 .withCountryName("Poland")
                 .withRegion("LesserPoland")
@@ -55,8 +55,8 @@ public class LocationServiceWriteTest {
         //given
         Location location1 = new Location.Builder()
                 .withId(UUID.fromString("5616a660-01f2-4b5b-8874-f56cdb037e03"))
-                .withLatitude(60L)
-                .withLongitude(70L)
+                .withLatitude(60D)
+                .withLongitude(70D)
                 .withCityName("Krakow")
                 .withCountryName("Poland")
                 .withRegion("LesserPoland")
@@ -64,8 +64,8 @@ public class LocationServiceWriteTest {
 
         Location location2 = new Location.Builder()
                 .withId(UUID.fromString("6f87f5fe-bc8b-4e8b-b65c-ff83cf370318"))
-                .withLatitude(99L)
-                .withLongitude(66L)
+                .withLatitude(99D)
+                .withLongitude(66D)
                 .withCityName("London")
                 .withCountryName("UnitedKingdoms")
                 .withRegion("UnitedKingdoms")
