@@ -70,7 +70,7 @@ class ValidatorTest {
 
     @Test
     public void checkLongitudeValidator(){
-        boolean result = validator.validateLongitude("22");
+        boolean result = validator.validateLongitude("22.2");
 
         assertThat(result).isNotNull()
                 .isTrue();
@@ -86,7 +86,7 @@ class ValidatorTest {
 
     @Test
     public void checkLatitudeValidator(){
-        boolean result = validator.validateLatitude("90");
+        boolean result = validator.validateLatitude("89.87");
 
         assertThat(result).isNotNull()
                           .isTrue();
@@ -94,7 +94,7 @@ class ValidatorTest {
 
     @Test
     public void checkLatitudeValidatorOverLimit(){
-        boolean result = validator.validateLatitude("91");
+        boolean result = validator.validateLatitude("91.34");
 
         assertThat(result).isNotNull()
                            .isFalse();

@@ -1,11 +1,12 @@
 package ui;
 
 import model.Location;
-import parser.CsvLocationParser;
-import parser.Parser;
+
 import service.LocationService;
-import writer.CsvLocationWriter;
-import writer.Writer;
+import utils.parser.CsvLocationParser;
+import utils.parser.Parser;
+import utils.writer.CsvLocationWriter;
+import utils.writer.Writer;
 
 
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public class UserInterface {
 
 
     InputHandler inputHandler = new InputHandler(new Scanner(System.in));
-    Manager manager = new Manager(new ArrayList<>());
+
     String PATH = "locationData.csv";
     Parser<Location> parser = new CsvLocationParser(PATH);
     Writer<Location> writer = new CsvLocationWriter(PATH);
