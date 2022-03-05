@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonIgnoreProperties({"feels_like", "temp_min", "temp_max"})
 public class Main {
 
     private double temp;
