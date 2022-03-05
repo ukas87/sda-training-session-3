@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonIgnoreProperties({"coord", "weather", "base", "visibility", "clouds", "dt", "sys", "timezone", "id", "name", "cod", "rain"})
 public class OpenWeatherMapForecast {
 
     private Main main;

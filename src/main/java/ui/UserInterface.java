@@ -1,15 +1,10 @@
 package ui;
-
 import model.Location;
-
 import service.LocationService;
 import utils.parser.CsvLocationParser;
 import utils.parser.Parser;
 import utils.writer.CsvLocationWriter;
 import utils.writer.Writer;
-
-
-import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.UUID;
 

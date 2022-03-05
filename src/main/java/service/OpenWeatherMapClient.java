@@ -28,6 +28,7 @@ public class OpenWeatherMapClient implements WeatherClient<OpenWeatherMapForecas
         } catch (MalformedURLException e) {
             System.err.println("Unable to create request");
         }
+        System.out.println(url);
         return url;
     }
 
