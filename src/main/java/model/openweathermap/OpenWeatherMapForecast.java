@@ -10,6 +10,12 @@ public class OpenWeatherMapForecast {
 
     private Main main;
     private Wind wind;
+    private Coord coord;
+    private Sys sys;
+    private String name;
+
+    @JsonProperty("id")
+    private int cityId;
 
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<>();
@@ -20,6 +26,22 @@ public class OpenWeatherMapForecast {
 
     public Wind getWind() {
         return wind;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getCityId() {
+        return cityId;
+    }
+
+    public Sys getSys() {
+        return sys;
+    }
+
+    public Coord getCoord() {
+        return coord;
     }
 
     @JsonAnyGetter
@@ -34,6 +56,13 @@ public class OpenWeatherMapForecast {
 
     @Override
     public String toString() {
-        return "OpenWeatherMapForecast{" + "main=" + main + ", wind=" + wind + '}';
+        return "OpenWeatherMapForecast{" +
+                "main=" + main +
+                ", wind=" + wind +
+                ", coord=" + coord +
+                ", sys=" + sys +
+                ", name='" + name + '\'' +
+                ", cityId=" + cityId +
+                '}';
     }
 }

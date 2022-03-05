@@ -9,6 +9,10 @@ public class Weather {
     private Integer humidity;
     private Integer windSpeed;
     private LocalDateTime date;
+    private Location location;
+
+    private Weather() {
+    }
 
     public static class Builder {
         private final Weather newWeather;
@@ -42,6 +46,11 @@ public class Weather {
             return this;
         }
 
+        public Builder withLocation(Location location) {
+            newWeather.location = location;
+            return this;
+        }
+
         public Weather build() {
             return newWeather;
         }
@@ -49,6 +58,17 @@ public class Weather {
 
     @Override
     public String toString() {
-        return "" + temperature + "," + pressure + "," + humidity + "," + windSpeed + "," + date;
+        return "Weather{" +
+                "temperature=" + temperature +
+                ", pressure=" + pressure +
+                ", humidity=" + humidity +
+                ", windSpeed=" + windSpeed +
+                ", date=" + date +
+                ", location=" + location +
+                '}';
+    }
+
+    public String toWriteFormat() {
+        return "" + temperature + "," + pressure + "," + humidity + "," + windSpeed + "," + date + "," + location.getCityName();
     }
 }
