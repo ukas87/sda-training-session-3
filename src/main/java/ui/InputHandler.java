@@ -62,26 +62,26 @@ public class InputHandler {
     }
 
 
-    public Long takeLocationLatitude() {
+    public Double takeLocationLatitude() {
         System.out.println("What is Location Latitude?");
-        Long checking;
+        Double checking;
         do {
-            checking = Long.parseLong(input.nextLine());
+            checking = input.nextDouble();
             if (!validator.validateLatitude(String.valueOf(checking))) {
-                System.out.println("Wrong data try smth like 22.222");
+                System.out.println("Wrong data try smth like 22,222");
             }
         } while (!validator.validateLatitude(String.valueOf(checking)));
         return checking;
     }
 
 
-    public Long takeLocationLongitude() {
+    public Double takeLocationLongitude() {
         System.out.println("What is Location Longitude?");
-        Long checking;
+        Double checking;
         do {
-            checking = Long.parseLong(input.nextLine());
+            checking = input.nextDouble();
             if (!validator.validateLongitude(String.valueOf(checking))) {
-                System.out.println("Wrong data try smth like 22.222");
+                System.out.println("Wrong data try smth like 22,222");
             }
         } while (!validator.validateLongitude(String.valueOf(checking)));
         return checking;
