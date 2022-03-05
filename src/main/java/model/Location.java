@@ -11,6 +11,9 @@ public class Location {
     private String countryName;
     private String region;
 
+    private Location() {
+    }
+
     public String getCityName() {
         return cityName;
     }
@@ -73,6 +76,17 @@ public class Location {
 
     @Override
     public String toString() {
+        return "Location{" +
+                "id=" + id +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", cityName='" + cityName + '\'' +
+                ", countryName='" + countryName + '\'' +
+                ", region='" + region + '\'' +
+                '}';
+    }
+
+    public String toWriteFormat(){
         return "" + id + "," + latitude + "," + longitude + "," + cityName + "," + countryName + "," + region;
     }
 }
