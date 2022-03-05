@@ -69,6 +69,6 @@ public class Weather {
     }
 
     public String toWriteFormat() {
-        return "" + temperature + "," + pressure + "," + humidity + "," + windSpeed + "," + date + "," + location;
+        return "" + temperature + "," + pressure + "," + humidity + "," + windSpeed + "," + date + "," + location.getCityName();
     }
 }

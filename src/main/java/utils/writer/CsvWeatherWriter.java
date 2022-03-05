@@ -18,7 +18,7 @@ public class CsvWeatherWriter implements Writer<Weather> {
     public void write(Weather weather) {
         try {
             Files.write((Paths.get(ClassLoader.getSystemResource(PATH).toURI())),
-                    (weather.toString() + System.lineSeparator()).getBytes(), StandardOpenOption.APPEND);
+                    (weather.toWriteFormat() + System.lineSeparator()).getBytes(), StandardOpenOption.APPEND);
         } catch (IOException | URISyntaxException e) {
             System.err.println("Unable to write to the file.");
         }
