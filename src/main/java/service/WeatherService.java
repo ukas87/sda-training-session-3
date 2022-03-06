@@ -1,4 +1,5 @@
 package service;
+import model.Location;
 import model.Weather;
 import model.openweathermap.OpenWeatherMapForecast;
 import model.weatherstack.WeatherStackForecast;
@@ -16,6 +17,8 @@ public class WeatherService {
         Weather weather1 = getWeatherFromOpenWeatherMap(city);
         Weather weather2 = getWeatherFromWeatherStack(city);
 
+
+
         return getAverageWeather(weather1,weather2);
     }
 
@@ -29,6 +32,10 @@ public class WeatherService {
         WeatherStackForecast forecast = weatherStackClient.getWeatherByCity(city);
         ObjectConverter<WeatherStackForecast, Weather> converter = WeatherStackToWeatherConverter.getInstance();
         return converter.convert(forecast);
+    }
+    private Location getStandardizedLocation(Location...location){
+
+        return null;
     }
 
     private Weather getAverageWeather(Weather...weathers){

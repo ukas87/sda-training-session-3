@@ -17,7 +17,12 @@ public class WeatherAverager implements Averager<Weather> {
         Integer avgWindSpeed = getAverageWindSpeed(weathers);
 
 
-        return null;
+        return new Weather.Builder()
+                .withTemperature(avgTemperature)
+                .withHumidity(avgHumidity)
+                .withPressure(avgPressure)
+                .withWindSpeed(avgWindSpeed)
+                .build();
     }
 
     public Double getAverageTemperature(Weather[] weathers) {
