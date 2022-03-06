@@ -11,6 +11,8 @@ import java.util.Map;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Location {
 
+    private String name;
+    private String region;
     private double lon;
     private double lat;
     private String country;
@@ -28,6 +30,14 @@ public class Location {
 
     public String getCountry() {
         return country;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getRegion() {
+        return region;
     }
 
     @JsonAnyGetter

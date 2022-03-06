@@ -24,7 +24,8 @@ public class WeatherStackToWeatherConverter implements ObjectConverter<WeatherSt
         Location location = new Location.Builder()
                 .withLatitude(weatherStackMapForecast.getLocation().getLat())
                 .withLongitude(weatherStackMapForecast.getLocation().getLon())
-                .withCityName(weatherStackMapForecast.getName())
+                .withCityName(weatherStackMapForecast.getLocation().getName())
+                .withRegion(weatherStackMapForecast.getLocation().getRegion())
                 .withCountryName(weatherStackMapForecast.getLocation().getCountry())
                 .build();
 
