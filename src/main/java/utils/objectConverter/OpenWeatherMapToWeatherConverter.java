@@ -1,4 +1,4 @@
-package utils;
+package utils.objectConverter;
 import model.Location;
 import model.Weather;
 import model.openweathermap.OpenWeatherMapForecast;

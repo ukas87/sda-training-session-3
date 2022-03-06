@@ -18,7 +18,7 @@ public class CsvLocationWriter implements Writer<Location> {
     public void write(Location location) {
         try {
             Files.write((Paths.get(ClassLoader.getSystemResource(PATH).toURI())),
-                    (location.toString() + System.lineSeparator()).getBytes(), StandardOpenOption.APPEND);
+                    (location.toWriteFormat() + System.lineSeparator()).getBytes(), StandardOpenOption.APPEND);
         } catch (IOException | URISyntaxException e) {
             System.err.println("Unable to write to the file.");
         }

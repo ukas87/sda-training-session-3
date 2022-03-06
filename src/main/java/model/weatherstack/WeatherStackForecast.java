@@ -10,7 +10,7 @@ import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 
-public class WeatherStackMapForecast {
+public class WeatherStackForecast {
 
     private Current current;
     private Location location;
