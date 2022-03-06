@@ -33,7 +33,8 @@ public class WeatherStackToWeatherConverter implements ObjectConverter<WeatherSt
                 .withTemperature(weatherStackForecast.getCurrent().getTemperature())
                 .withPressure(weatherStackForecast.getCurrent().getPressure())
                 .withHumidity(weatherStackForecast.getCurrent().getHumidity())
-                .withWindSpeed(weatherStackForecast.getCurrent().getWind_speed())
+                .withWindSpeed((int)(weatherStackForecast.getCurrent().getWindSpeed()/3.6))
+                .withWindDirection(weatherStackForecast.getCurrent().getWindDir())
                 .withLocation(location)
                 .build();
 

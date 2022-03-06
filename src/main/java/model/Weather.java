@@ -9,6 +9,7 @@ public class Weather {
     private Integer humidity;
     private Integer windSpeed;
     private LocalDateTime date;
+    private Integer windDirection;
     private Location location;
 
     private Weather() {
@@ -51,6 +52,10 @@ public class Weather {
             newWeather.location = location;
             return this;
         }
+        public Builder withWindDirection(Integer windDirection){
+            newWeather.windDirection = windDirection;
+            return this;
+        }
 
         public Weather build() {
             return newWeather;
@@ -89,6 +94,7 @@ public class Weather {
                 ", humidity=" + humidity +
                 ", windSpeed=" + windSpeed +
                 ", date=" + date +
+                ", windDirection='" + windDirection + '\'' +
                 ", location=" + location +
                 '}';
     }
