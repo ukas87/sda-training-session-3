@@ -12,6 +12,7 @@ public class Weather {
     private Location location;
 
     private Weather() {
+
     }
 
     public static class Builder {
@@ -54,6 +55,30 @@ public class Weather {
         public Weather build() {
             return newWeather;
         }
+    }
+
+    public Double getTemperature() {
+        return temperature;
+    }
+
+    public Integer getPressure() {
+        return pressure;
+    }
+
+    public Integer getHumidity() {
+        return humidity;
+    }
+
+    public Integer getWindSpeed() {
+        return windSpeed;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public Location getLocation() {
+        return location;
     }
 
     @Override
