@@ -9,7 +9,8 @@ public class Weather {
     private Integer humidity;
     private Integer windSpeed;
     private LocalDateTime date;
-    private Integer windDirection;
+    private Integer windDig;
+    private String windDir;
     private Location location;
 
     private Weather() {
@@ -52,14 +53,22 @@ public class Weather {
             newWeather.location = location;
             return this;
         }
-        public Builder withWindDirection(Integer windDirection){
-            newWeather.windDirection = windDirection;
+        public Builder withWindDegrees(Integer windDegrees){
+            newWeather.windDig = windDegrees;
+            return this;
+        }
+        public Builder withWindDirection(String windDirection){
+            newWeather.windDir = windDirection;
             return this;
         }
 
         public Weather build() {
             return newWeather;
         }
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     public Double getTemperature() {
@@ -94,7 +103,8 @@ public class Weather {
                 ", humidity=" + humidity +
                 ", windSpeed=" + windSpeed +
                 ", date=" + date +
-                ", windDirection='" + windDirection + '\'' +
+                ", windDig=" + windDig +
+                ", windDir='" + windDir + '\'' +
                 ", location=" + location +
                 '}';
     }

@@ -3,6 +3,7 @@ package utils.objectConverter;
 import model.Location;
 import model.Weather;
 import model.weatherstack.WeatherStackForecast;
+import utils.FormatConverter;
 
 public class WeatherStackToWeatherConverter implements ObjectConverter<WeatherStackForecast, Weather>{
 
@@ -33,8 +34,8 @@ public class WeatherStackToWeatherConverter implements ObjectConverter<WeatherSt
                 .withTemperature(weatherStackForecast.getCurrent().getTemperature())
                 .withPressure(weatherStackForecast.getCurrent().getPressure())
                 .withHumidity(weatherStackForecast.getCurrent().getHumidity())
-                .withWindSpeed((int)(weatherStackForecast.getCurrent().getWindSpeed()/3.6))
-                .withWindDirection(weatherStackForecast.getCurrent().getWindDir())
+                .withWindSpeed((FormatConverter.getInstance().fromKilometersHourToMeterSeconds(weatherStackForecast.getCurrent().getWindSpeed())))
+                .withWindDegrees(weatherStackForecast.getCurrent().getWindDir())
                 .withLocation(location)
                 .build();
 

@@ -34,7 +34,7 @@ public class OpenWeatherMapToWeatherConverter implements ObjectConverter<OpenWea
                 .withPressure(openWeatherMapForecast.getMain().getPressure())
                 .withHumidity(openWeatherMapForecast.getMain().getHumidity())
                 .withWindSpeed(openWeatherMapForecast.getWind().getSpeed())
-                .withWindDirection(openWeatherMapForecast.getWind().getDeg())
+                .withWindDegrees(openWeatherMapForecast.getWind().getDeg())
                 .withLocation(location)
                 .build();
     }
