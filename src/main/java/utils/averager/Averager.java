@@ -1,4 +1,4 @@
-package utils.objectConverter;
+package utils.averager;
 
 public interface Averager<T> {
 

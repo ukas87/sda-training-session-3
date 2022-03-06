@@ -1,7 +1,7 @@
 package utils;
 import model.Weather;
 import org.junit.jupiter.api.Test;
-import utils.objectConverter.WeatherAverager;
+import utils.averager.WeatherAverager;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class AveragerTest {

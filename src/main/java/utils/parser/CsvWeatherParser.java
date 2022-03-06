@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,7 +27,7 @@ public class CsvWeatherParser implements Parser<Weather>{
                         .withPressure(Integer.parseInt(line[1]))
                         .withHumidity(Integer.parseInt(line[2]))
                         .withWindSpeed(Integer.parseInt(line[3]))
-                        .withDate(LocalDateTime.parse(line[4]))
+                        .withDate(LocalDate.parse(line[4]))
                         .build())
                 .collect(Collectors.toList());
     }

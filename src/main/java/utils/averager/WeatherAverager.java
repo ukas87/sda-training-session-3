@@ -1,8 +1,6 @@
-package utils.objectConverter;
-
+package utils.averager;
 import model.Weather;
 import utils.FormatConverter;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Arrays;

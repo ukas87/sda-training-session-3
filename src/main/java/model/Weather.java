@@ -1,6 +1,6 @@
 package model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class Weather {
 
@@ -8,7 +8,7 @@ public class Weather {
     private Integer pressure;
     private Integer humidity;
     private Integer windSpeed;
-    private LocalDateTime date;
+    private LocalDate date;
     private Integer windDegrees;
     private String windDirection;
     private Location location;
@@ -44,7 +44,7 @@ public class Weather {
             return this;
         }
 
-        public Builder withDate(LocalDateTime localDateTime) {
+        public Builder withDate(LocalDate localDateTime) {
             newWeather.date = localDateTime;
             return this;
         }
@@ -87,7 +87,11 @@ public class Weather {
         return windSpeed;
     }
 
-    public LocalDateTime getDate() {
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public LocalDate getDate() {
         return date;
     }
 
