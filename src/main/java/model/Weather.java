@@ -56,6 +56,30 @@ public class Weather {
         }
     }
 
+    public Double getTemperature() {
+        return temperature;
+    }
+
+    public Integer getPressure() {
+        return pressure;
+    }
+
+    public Integer getHumidity() {
+        return humidity;
+    }
+
+    public Integer getWindSpeed() {
+        return windSpeed;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
     @Override
     public String toString() {
         return "Weather{" +
