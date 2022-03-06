@@ -2,9 +2,9 @@ package utils.objectConverter;
 
 import model.Location;
 import model.Weather;
-import model.weatherstack.WeatherStackMapForecast;
+import model.weatherstack.WeatherStackForecast;
 
-public class WeatherStackToWeatherConverter implements ObjectConverter<WeatherStackMapForecast, Weather>{
+public class WeatherStackToWeatherConverter implements ObjectConverter<WeatherStackForecast, Weather>{
 
     private static WeatherStackToWeatherConverter INSTANCE;
 
@@ -20,20 +20,20 @@ public class WeatherStackToWeatherConverter implements ObjectConverter<WeatherSt
 
 
     @Override
-    public Weather convert(WeatherStackMapForecast weatherStackMapForecast) {
+    public Weather convert(WeatherStackForecast weatherStackForecast) {
         Location location = new Location.Builder()
-                .withLatitude(weatherStackMapForecast.getLocation().getLat())
-                .withLongitude(weatherStackMapForecast.getLocation().getLon())
-                .withCityName(weatherStackMapForecast.getLocation().getName())
-                .withRegion(weatherStackMapForecast.getLocation().getRegion())
-                .withCountryName(weatherStackMapForecast.getLocation().getCountry())
+                .withLatitude(weatherStackForecast.getLocation().getLat())
+                .withLongitude(weatherStackForecast.getLocation().getLon())
+                .withCityName(weatherStackForecast.getLocation().getName())
+                .withRegion(weatherStackForecast.getLocation().getRegion())
+                .withCountryName(weatherStackForecast.getLocation().getCountry())
                 .build();
 
         return new Weather.Builder()
-                .withTemperature(weatherStackMapForecast.getCurrent().getTemperature())
-                .withPressure(weatherStackMapForecast.getCurrent().getPressure())
-                .withHumidity(weatherStackMapForecast.getCurrent().getHumidity())
-                .withWindSpeed(weatherStackMapForecast.getCurrent().getWind_speed())
+                .withTemperature(weatherStackForecast.getCurrent().getTemperature())
+                .withPressure(weatherStackForecast.getCurrent().getPressure())
+                .withHumidity(weatherStackForecast.getCurrent().getHumidity())
+                .withWindSpeed(weatherStackForecast.getCurrent().getWind_speed())
                 .withLocation(location)
                 .build();
 
