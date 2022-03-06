@@ -18,4 +18,12 @@ public class FormatConverter {
     public Integer fromKilometersHourToMeterSeconds(Integer toConvert){
         return (int) (toConvert/3.6);
     }
+
+    public String DegreesToCardinalDetailed(Integer degrees)
+    {
+        degrees *= 10;
+
+        String[] caridnals = { "N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW", "N" };
+        return caridnals[(int)Math.round(((double)degrees % 3600) / 225)];
+    }
 }

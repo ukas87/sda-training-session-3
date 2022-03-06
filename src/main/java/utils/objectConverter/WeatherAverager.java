@@ -1,6 +1,7 @@
 package utils.objectConverter;
 
 import model.Weather;
+import utils.FormatConverter;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -15,6 +16,8 @@ public class WeatherAverager implements Averager<Weather> {
         Integer avgHumidity = getAverageHumidity(weathers);
         Integer avgPressure = getAveragePressure(weathers);
         Integer avgWindSpeed = getAverageWindSpeed(weathers);
+        Integer avgWindDegrees = getAverageWindDegrees(weathers);
+        String windDirection = FormatConverter.getInstance().DegreesToCardinalDetailed(avgWindDegrees);
 
 
         return new Weather.Builder()
@@ -22,6 +25,8 @@ public class WeatherAverager implements Averager<Weather> {
                 .withHumidity(avgHumidity)
                 .withPressure(avgPressure)
                 .withWindSpeed(avgWindSpeed)
+                .withWindDegrees(avgWindDegrees)
+                .withWindDirection(windDirection)
                 .build();
     }
 
@@ -57,6 +62,14 @@ public class WeatherAverager implements Averager<Weather> {
         return (int) Arrays.stream(weathers)
                 .filter(weather -> weather.getWindSpeed() != null)
                 .mapToInt(Weather::getWindSpeed)
+                .average()
+                .orElse(0);
+    }
+
+    public Integer getAverageWindDegrees(Weather[] weathers) {
+        return (int) Arrays.stream(weathers)
+                .filter(weather -> weather.getWindDegrees() != null)
+                .mapToInt(Weather::getWindDegrees)
                 .average()
                 .orElse(0);
     }
