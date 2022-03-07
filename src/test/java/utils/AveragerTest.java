@@ -1,7 +1,7 @@
 package utils;
 import model.Weather;
 import org.junit.jupiter.api.Test;
-import utils.objectConverter.WeatherAverager;
+import utils.averager.WeatherAverager;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class AveragerTest {
@@ -13,6 +13,7 @@ public class AveragerTest {
             .withPressure(10)
             .withHumidity(11)
             .withWindSpeed(5)
+            .withWindDegrees(150)
             .build();
 
     Weather weather2 = new Weather.Builder()
@@ -20,6 +21,7 @@ public class AveragerTest {
             .withPressure(24)
             .withHumidity(78)
             .withWindSpeed(7)
+            .withWindDegrees(350)
             .build();
 
     Weather weather3 = new Weather.Builder()
@@ -27,6 +29,7 @@ public class AveragerTest {
             .withPressure(5)
             .withHumidity(51)
             .withWindSpeed(1)
+            .withWindDegrees(5)
             .build();
 
     Weather weather4 = new Weather.Builder().build();
@@ -139,6 +142,34 @@ public class AveragerTest {
         Weather[] weathers = new Weather[]{weather4};
 
         Integer actual = averager.getAverageWindSpeed(weathers);
+
+        assertThat(actual).isEqualTo(0);
+    }
+
+
+    @Test
+    void shouldCountAverageWindDegrees(){
+        Weather[] weathers = new Weather[]{weather1, weather2,weather3};
+
+        Integer actual = averager.getAverageWindDegrees(weathers);
+
+        assertThat(actual).isEqualTo(168);
+    }
+
+    @Test
+    void shouldCountAverageWindDegreesWithOneEmptyField(){
+        Weather[] weathers = new Weather[]{weather1, weather2,weather3,weather4};
+
+        Integer actual = averager.getAverageWindDegrees(weathers);
+
+        assertThat(actual).isEqualTo(168);
+    }
+
+    @Test
+    void shouldReturnZeroAverageWindDegreesIfAllFieldsEmpty(){
+        Weather[] weathers = new Weather[]{weather4};
+
+        Integer actual = averager.getAverageWindDegrees(weathers);
 
         assertThat(actual).isEqualTo(0);
     }

@@ -1,9 +1,6 @@
 package model.weatherstack;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,8 +9,13 @@ import java.util.Map;
 public class Current {
 
     private double temperature;
-    private int wind_speed;
-    private String wind_dir;
+
+    @JsonProperty("wind_speed")
+    private int windSpeed;
+
+    @JsonProperty("wind_degree")
+    private Integer windDir;
+
     private int humidity;
     private int pressure;
 
@@ -25,12 +27,12 @@ public class Current {
         return temperature;
     }
 
-    public int getWind_speed() {
-        return wind_speed;
+    public int getWindSpeed() {
+        return windSpeed;
     }
 
-    public String getWind_dir() {
-        return wind_dir;
+    public Integer getWindDir() {
+        return windDir;
     }
 
     public int getHumidity() {
@@ -51,15 +53,15 @@ public class Current {
         this.additionalProperties.put(name, value);
     }
 
-
     @Override
     public String toString() {
         return "Current{" +
-                "temp=" + temperature +
-                ", windSpeed=" + wind_speed+
-                ", windDir='" + wind_dir + '\'' +
+                "temperature=" + temperature +
+                ", windSpeed=" + windSpeed +
+                ", windDir=" + windDir +
                 ", humidity=" + humidity +
                 ", pressure=" + pressure +
+                ", additionalProperties=" + additionalProperties +
                 '}';
     }
 }

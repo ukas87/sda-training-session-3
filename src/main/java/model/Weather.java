@@ -1,6 +1,6 @@
 package model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class Weather {
 
@@ -8,7 +8,9 @@ public class Weather {
     private Integer pressure;
     private Integer humidity;
     private Integer windSpeed;
-    private LocalDateTime date;
+    private LocalDate date;
+    private Integer windDegrees;
+    private String windDirection;
     private Location location;
 
     private Weather() {
@@ -42,7 +44,7 @@ public class Weather {
             return this;
         }
 
-        public Builder withDate(LocalDateTime localDateTime) {
+        public Builder withDate(LocalDate localDateTime) {
             newWeather.date = localDateTime;
             return this;
         }
@@ -51,10 +53,22 @@ public class Weather {
             newWeather.location = location;
             return this;
         }
+        public Builder withWindDegrees(Integer windDegrees){
+            newWeather.windDegrees = windDegrees;
+            return this;
+        }
+        public Builder withWindDirection(String windDirection){
+            newWeather.windDirection = windDirection;
+            return this;
+        }
 
         public Weather build() {
             return newWeather;
         }
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     public Double getTemperature() {
@@ -73,8 +87,16 @@ public class Weather {
         return windSpeed;
     }
 
-    public LocalDateTime getDate() {
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public LocalDate getDate() {
         return date;
+    }
+
+    public Integer getWindDegrees() {
+        return windDegrees;
     }
 
     public Location getLocation() {
@@ -89,6 +111,8 @@ public class Weather {
                 ", humidity=" + humidity +
                 ", windSpeed=" + windSpeed +
                 ", date=" + date +
+                ", windDig=" + windDegrees +
+                ", windDir='" + windDirection + '\'' +
                 ", location=" + location +
                 '}';
     }

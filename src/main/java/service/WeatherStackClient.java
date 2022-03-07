@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class WeatherStackMapClient implements WeatherClient<WeatherStackForecast> {
+public class WeatherStackClient implements WeatherClient<WeatherStackForecast> {
     private static final String appId = "1dcafe969dd27e1888fc943455c556ed";
 
 
@@ -23,10 +23,10 @@ public class WeatherStackMapClient implements WeatherClient<WeatherStackForecast
         return forecast;
     }
 
-    private URL buildRequestForCity(String city){
+    private URL buildRequestForCity(String city) {
         URL url = null;
         try {
-            url = new URL("http://api.weatherstack.com/current?access_key=" + appId + "&query=" + city);
+            url = new URL("http://api.weatherstack.com/current?access_key=" + appId + "&query=" + city + "&units=m");
         } catch (MalformedURLException e) {
             System.err.println("Unable to create request");
         }
@@ -34,5 +34,5 @@ public class WeatherStackMapClient implements WeatherClient<WeatherStackForecast
         return url;
     }
 
-    }
+}
 
