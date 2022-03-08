@@ -23,11 +23,14 @@ public class WeatherStackToWeatherConverter implements ObjectConverter<WeatherSt
     @Override
     public Weather convert(WeatherStackForecast weatherStackForecast) {
         Location location = new Location.Builder()
-                .withLatitude(weatherStackForecast.getLocation().getLat())
-                .withLongitude(weatherStackForecast.getLocation().getLon())
+                //.withLatitude(weatherStackForecast.getLocation().getLat())
+                .withLatitude(FormatConverter.getInstance().latitudeFormatter(weatherStackForecast.getLocation().getLat()))
+               // .withLongitude(weatherStackForecast.getLocation().getLon())
+                .withLongitude(FormatConverter.getInstance().longitudeFormatter(weatherStackForecast.getLocation().getLon()))
                 .withCityName(weatherStackForecast.getLocation().getName())
                 .withRegion(weatherStackForecast.getLocation().getRegion())
                 .withCountryName(weatherStackForecast.getLocation().getCountry())
+                //.withCountryName(FormatConverter.getInstance().countryNameFormatter(weatherStackForecast.getLocation().getCountry()))
                 .build();
 
         return new Weather.Builder()
