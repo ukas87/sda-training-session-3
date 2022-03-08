@@ -34,7 +34,7 @@ class FormatConverterTest {
     }
 
     @Test
-    public void isongitudeFormatConverterWorking(){
+    public void isCheckLongitudeFormatConverterWorking(){
         Double result = formatConverter.longitudeFormatter(175.2222);
 
         assertThat(result).isEqualTo(175.222);
@@ -47,14 +47,21 @@ class FormatConverterTest {
         assertThat(result).isEqualTo(12.22);
     }
 
-
     @Test
     public void checkCityNameFormatter(){
 
         String result = formatConverter.cityNameFormatters("ĄĘŹŻ");
 
         assertThat(result).isEqualTo("AEZZ");
-
     }
 
+    @Test
+    public void checkCountryNameFormatterCorrect(){
+
+        String result = formatConverter.countryNameFormatter("PL");
+
+        assertThat(result).isEqualTo("Poland");
+        assertThat(result).isNotNull();
+
+    }
 }

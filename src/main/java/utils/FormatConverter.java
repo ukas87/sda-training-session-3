@@ -30,7 +30,6 @@ public class FormatConverter {
         return caridnals[(int) Math.round(((double) degrees % 3600) / 225)];
     }
 
-
     public Double longitudeFormatter(Double longitude) {
         return (Math.round(longitude * 1000.0) / 1000.0);
     }
@@ -48,32 +47,24 @@ public class FormatConverter {
         return city;
     }
 
-
     public String regionNameFormatter() {
         return regionNameFormatter();
     }
 
-
-    //obie temperatury są w stopniach C
     public Double temperatureFormatter(double n) {
         return (Math.round(n * 100.0) / 100.0);
-
     }
 
-  
     public Integer pressureFormatter() {
         return null;
     }
-
 
     public Integer humidityFormatter() {
         return null;
 
     }
-
-
     public String countryNameFormatter(String country) {
         Locale l = new Locale(" ", country);
-        return l.getDisplayCountry();
+        return l.getDisplayCountry(Locale.ENGLISH);
     }
 }
