@@ -18,7 +18,7 @@ public class WeatherAverager implements Averager<Weather> {
         String windDirection = FormatConverter.getInstance().DegreesToCardinalDetailed(avgWindDegrees);
 
 
-        return new Weather.Builder()
+        return Weather.Builder()
                 .withTemperature(avgTemperature)
                 .withHumidity(avgHumidity)
                 .withPressure(avgPressure)

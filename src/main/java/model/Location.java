@@ -1,5 +1,7 @@
 package model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
@@ -10,6 +12,8 @@ import java.util.List;
 @Data
 @Table(name = "locations")
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder(setterPrefix = "with",builderMethodName = "Builder")
 public class Location {
 
     @Id
@@ -35,46 +39,7 @@ public class Location {
     @OneToMany(mappedBy = "location", fetch = FetchType.EAGER)
     private List<Weather> weathers;
 
-    public static class Builder {
-        private final Location newLocation;
 
-        public Builder() {
-            newLocation = new Location();
-        }
 
-        public Builder withId(Integer id) {
-            newLocation.id = id;
-            return this;
-        }
 
-        public Builder withLatitude(Double latitude) {
-            newLocation.latitude = latitude;
-            return this;
-        }
-
-        public Builder withLongitude(Double longitude) {
-            newLocation.longitude = longitude ;
-            return this;
-        }
-
-        public Builder withCityName(String cityName) {
-            newLocation.cityName = cityName;
-            return this;
-        }
-
-        public Builder withCountryName(String countryName) {
-            newLocation.countryName = countryName;
-            return this;
-        }
-
-        public Builder withRegion(String region) {
-            newLocation.region = region;
-            return this;
-        }
-
-        public Location build(){
-            return newLocation;
-        }
-
-    }
 }

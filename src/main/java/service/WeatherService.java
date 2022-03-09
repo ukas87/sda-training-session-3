@@ -1,13 +1,10 @@
 package service;
+import dto.Mapper;
 import model.Location;
 import model.Weather;
 import model.openweathermap.OpenWeatherMapForecast;
 import model.weatherstack.WeatherStackForecast;
 import utils.averager.Averager;
-import utils.objectConverter.ObjectConverter;
-import utils.objectConverter.OpenWeatherMapToWeatherConverter;
-import utils.objectConverter.WeatherStackToWeatherConverter;
-
 import java.time.LocalDateTime;
 
 public class WeatherService {
@@ -15,6 +12,7 @@ public class WeatherService {
     WeatherClient<OpenWeatherMapForecast> openWeatherMapClient;
     WeatherClient<WeatherStackForecast> weatherStackClient;
     Averager<Weather> weatherAverager;
+    Mapper mapper;
 
     public WeatherService(WeatherClient<OpenWeatherMapForecast> openWeatherMapClient, WeatherClient<WeatherStackForecast> weatherStackClient, Averager<Weather> weatherAverager) {
         this.openWeatherMapClient = openWeatherMapClient;
@@ -37,14 +35,14 @@ public class WeatherService {
 
     private Weather getWeatherFromOpenWeatherMap(String city) {
         OpenWeatherMapForecast forecast = openWeatherMapClient.getWeatherByCity(city);
-        ObjectConverter<OpenWeatherMapForecast, Weather> converter = OpenWeatherMapToWeatherConverter.getInstance();
-        return converter.convert(forecast);
+
+        return mapper.toWeather(mapper.OpenWeatherToWeatherDto(forecast));
     }
 
     private Weather getWeatherFromWeatherStack(String city) {
         WeatherStackForecast forecast = weatherStackClient.getWeatherByCity(city);
-        ObjectConverter<WeatherStackForecast, Weather> converter = WeatherStackToWeatherConverter.getInstance();
-        return converter.convert(forecast);
+
+        return mapper.toWeather(mapper.WeatherStackToWeatherDto(forecast));
     }
     private Location getStandardizedLocation(Location...location){
 

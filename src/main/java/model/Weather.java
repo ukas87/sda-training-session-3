@@ -1,5 +1,7 @@
 package model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,6 +11,8 @@ import java.time.LocalDate;
 @Data
 @Table(name = "weathers")
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder(setterPrefix = "with",builderMethodName = "Builder")
 public class Weather {
 
     @Id
@@ -42,55 +46,6 @@ public class Weather {
     @JoinColumn(name = "location_id")
     private Location location;
 
-    public static class Builder {
-        private final Weather newWeather;
-
-        public Builder() {
-            newWeather = new Weather();
-        }
-
-        public Builder withTemperature(Double temperature) {
-            newWeather.temperature = temperature;
-            return this;
-        }
-
-        public Builder withPressure(Integer pressure) {
-            newWeather.pressure = pressure;
-            return this;
-        }
-
-        public Builder withHumidity(Integer humidity) {
-            newWeather.humidity = humidity;
-            return this;
-        }
-
-        public Builder withWindSpeed(Integer windSpeed) {
-            newWeather.windSpeed = windSpeed;
-            return this;
-        }
-
-        public Builder withDate(LocalDate localDateTime) {
-            newWeather.date = localDateTime;
-            return this;
-        }
-
-        public Builder withLocation(Location location) {
-            newWeather.location = location;
-            return this;
-        }
-        public Builder withWindDegrees(Integer windDegrees){
-            newWeather.windDegrees = windDegrees;
-            return this;
-        }
-        public Builder withWindDirection(String windDirection){
-            newWeather.windDirection = windDirection;
-            return this;
-        }
-
-        public Weather build() {
-            return newWeather;
-        }
-    }
 
     @Override
     public String toString() {

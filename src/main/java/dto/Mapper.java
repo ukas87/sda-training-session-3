@@ -42,7 +42,7 @@ public class Mapper  {
     }
 
     public Weather toWeather(WeatherDto dto){
-        return new Weather.Builder()
+        return Weather.Builder()
                 .withTemperature(dto.getTemperature())
                 .withPressure(dto.getPressure())
                 .withHumidity(dto.getHumidity())
@@ -50,7 +50,7 @@ public class Mapper  {
                 .withDate(dto.getDate())
                 .withWindDegrees(dto.getWindDegrees())
                 .withWindDirection(dto.getWindDirection())
-                .withLocation(new Location.Builder()
+                .withLocation(Location.Builder()
                         .withCityName(dto.getCityName())
                         .withCountryName(dto.getCountryName())
                         .withLongitude(dto.getLongitude())

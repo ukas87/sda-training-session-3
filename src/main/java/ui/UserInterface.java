@@ -24,7 +24,7 @@ public class UserInterface {
             switch (choice) {
                 case "1":
                     System.out.println("You chose to Add a location: ");
-                    Location locationToAdd = new Location.Builder()
+                    Location locationToAdd = Location.Builder()
                             .withCityName(inputHandler.takeLocationCityName())
                             .withCountryName(inputHandler.takeLocationCountryName())
                             .withRegion(inputHandler.takeLocationRegionName())
