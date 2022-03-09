@@ -6,9 +6,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class AveragerTest {
 
-    WeatherAverager averager = new WeatherAverager();
+    final WeatherAverager averager = new WeatherAverager();
 
-    Weather weather1 = Weather.Builder()
+    final Weather weather1 = Weather.Builder()
             .withTemperature(49.5)
             .withPressure(10)
             .withHumidity(11)
@@ -16,7 +16,7 @@ public class AveragerTest {
             .withWindDegrees(150)
             .build();
 
-    Weather weather2 = Weather.Builder()
+    final Weather weather2 = Weather.Builder()
             .withTemperature(14.7)
             .withPressure(24)
             .withHumidity(78)
@@ -24,7 +24,7 @@ public class AveragerTest {
             .withWindDegrees(350)
             .build();
 
-    Weather weather3 = Weather.Builder()
+    final Weather weather3 = Weather.Builder()
             .withTemperature(-7.0)
             .withPressure(5)
             .withHumidity(51)
@@ -32,7 +32,7 @@ public class AveragerTest {
             .withWindDegrees(5)
             .build();
 
-    Weather weather4 = Weather.Builder().build();
+    final Weather weather4 = Weather.Builder().build();
 
 
     @Test

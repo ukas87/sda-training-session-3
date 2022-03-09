@@ -18,7 +18,7 @@ public class OpenWeatherMapForecast {
     private int cityId;
 
     @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<>();
+    private final Map<String, Object> additionalProperties = new HashMap<>();
 
     public Main getMain() {
         return main;

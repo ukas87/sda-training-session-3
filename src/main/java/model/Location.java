@@ -1,17 +1,17 @@
 package model;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Table(name = "locations")
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder(setterPrefix = "with",builderMethodName = "Builder")
 public class Location {
@@ -40,6 +40,16 @@ public class Location {
     private List<Weather> weathers;
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Location location = (Location) o;
+        return id != null && Objects.equals(id, location.id);
+    }
 
-
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

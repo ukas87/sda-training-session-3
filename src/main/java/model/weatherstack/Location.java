@@ -18,7 +18,7 @@ public class Location {
     private String country;
 
     @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<>();
+    private final Map<String, Object> additionalProperties = new HashMap<>();
 
     public double getLon() {
         return lon;

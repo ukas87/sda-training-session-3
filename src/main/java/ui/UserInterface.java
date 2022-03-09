@@ -8,12 +8,12 @@ import java.util.Scanner;
 public class UserInterface {
 
 
-    InputHandler inputHandler = new InputHandler(new Scanner(System.in));
+    final InputHandler inputHandler = new InputHandler(new Scanner(System.in));
 
     String PATH = "locationData.csv";
     LocationService locationService = new LocationService();
     boolean isRunning = true;
-    String initMenu = "==== Weather Application ===\n[1] Adding a location\n[2] Display currently added locations\n[3] Downloading weather values\n[0] Exit";
+    final String initMenu = "==== Weather Application ===\n[1] Adding a location\n[2] Display currently added locations\n[3] Downloading weather values\n[0] Exit";
 
     public void userMenu() {
         do {

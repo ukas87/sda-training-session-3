@@ -1,16 +1,17 @@
 package model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Objects;
+
 @Entity
-@Data
+@Getter
+@Setter
+@RequiredArgsConstructor
 @Table(name = "weathers")
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder(setterPrefix = "with",builderMethodName = "Builder")
 public class Weather {
@@ -60,5 +61,18 @@ public class Weather {
                 ", windDirection='" + windDirection + '\'' +
                 ", location=" + location.getCityName() +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Weather weather = (Weather) o;
+        return id != null && Objects.equals(id, weather.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

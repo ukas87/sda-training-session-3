@@ -1,8 +1,6 @@
 package dto;
 
 import lombok.Data;
-import model.Location;
-import model.Weather;
 
 import java.time.LocalDate;
 

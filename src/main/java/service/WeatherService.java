@@ -9,9 +9,9 @@ import java.time.LocalDateTime;
 
 public class WeatherService {
 
-    WeatherClient<OpenWeatherMapForecast> openWeatherMapClient;
-    WeatherClient<WeatherStackForecast> weatherStackClient;
-    Averager<Weather> weatherAverager;
+    final WeatherClient<OpenWeatherMapForecast> openWeatherMapClient;
+    final WeatherClient<WeatherStackForecast> weatherStackClient;
+    final Averager<Weather> weatherAverager;
     Mapper mapper;
 
     public WeatherService(WeatherClient<OpenWeatherMapForecast> openWeatherMapClient, WeatherClient<WeatherStackForecast> weatherStackClient, Averager<Weather> weatherAverager) {
