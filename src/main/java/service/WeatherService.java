@@ -27,7 +27,10 @@ public class WeatherService {
         Weather weather2 = getWeatherFromWeatherStack(city);
 
         Weather result = getAverageWeather(weather1,weather2);
+
+
         result.setDate(LocalDateTime.now().toLocalDate());
+        result.setLocation(getStandardizedLocation());
 
         return result;
     }

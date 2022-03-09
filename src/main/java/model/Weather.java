@@ -14,7 +14,6 @@ public class Weather {
     private Location location;
 
     private Weather() {
-
     }
 
     public static class Builder {

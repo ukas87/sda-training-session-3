@@ -1,9 +1,15 @@
 package model;
-
+import lombok.Data;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Objects;
 import java.util.UUID;
 
+@Entity
+@Data
 public class Location {
+
+    @Id
     private UUID id;
     private Double latitude;
     private Double longitude;
@@ -11,7 +17,7 @@ public class Location {
     private String countryName;
     private String region;
 
-    private Location() {
+    public Location() {
     }
 
     public String getCityName() {
@@ -59,6 +65,26 @@ public class Location {
             return newLocation;
         }
 
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public String getCountryName() {
+        return countryName;
+    }
+
+    public String getRegion() {
+        return region;
     }
 
     @Override
