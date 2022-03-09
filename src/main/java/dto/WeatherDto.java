@@ -23,23 +23,5 @@ public class WeatherDto {
     private String region;
 
 
-    public Weather toWeather(){
-        return new Weather.Builder()
-                .withTemperature(temperature)
-                .withPressure(pressure)
-                .withHumidity(humidity)
-                .withWindSpeed(windSpeed)
-                .withDate(date)
-                .withWindDegrees(windDegrees)
-                .withWindDirection(windDirection)
-                .withLocation(new Location.Builder()
-                        .withCityName(cityName)
-                        .withCountryName(countryName)
-                        .withLongitude(longitude)
-                        .withLatitude(latitude)
-                        .withRegion(region)
-                        .build())
-                .build();
 
-    }
 }
