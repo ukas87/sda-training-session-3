@@ -1,62 +1,70 @@
 package service;
-import dto.Mapper;
-import dto.WeatherDto;
+
+import dao.LocationDao;
+import dao.WeatherDao;
 import model.Location;
+import utils.mapper.Mapper;
+import model.WeatherDto;
 import model.Weather;
-import model.openweathermap.OpenWeatherMapForecast;
-import model.weatherstack.WeatherStackForecast;
 import utils.averager.Averager;
-import java.time.LocalDateTime;
+
+import java.time.LocalDate;
 
 public class WeatherService {
 
-    final WeatherClient<OpenWeatherMapForecast> openWeatherMapClient;
-    final WeatherClient<WeatherStackForecast> weatherStackClient;
-    final Averager<Weather> weatherAverager;
+    final WeatherClient openWeatherMapClient;
+    final WeatherClient weatherStackClient;
+    final Averager<WeatherDto> weatherAverager;
     final Mapper mapper;
+    final LocationDao locationDao;
+    final WeatherDao weatherDao;
 
-    public WeatherService(WeatherClient<OpenWeatherMapForecast> openWeatherMapClient, WeatherClient<WeatherStackForecast> weatherStackClient, Averager<Weather> weatherAverager, Mapper mapper) {
+
+    public WeatherService(WeatherClient openWeatherMapClient, WeatherClient weatherStackClient, Averager<WeatherDto> weatherAverager, Mapper mapper, LocationDao locationDao, WeatherDao weatherDao) {
         this.openWeatherMapClient = openWeatherMapClient;
         this.weatherStackClient = weatherStackClient;
         this.weatherAverager = weatherAverager;
         this.mapper = mapper;
+        this.locationDao = locationDao;
+        this.weatherDao = weatherDao;
     }
 
-    public Weather getWeatherByCity(String city) {
+    public WeatherDto getAverageWeatherDtoByCity(String city) {
         WeatherDto weather1 = getWeatherDtoFromOpenWeatherMap(city);
         WeatherDto weather2 = getWeatherDtoFromWeatherStack(city);
 
+        WeatherDto averageWeatherDto = getAverageWeatherDto(weather1, weather2);
+        averageWeatherDto.setDate(LocalDate.now());
 
-        Weather result = getAverageWeather(weather1,weather2);
+        Weather weatherToSave = mapper.toWeather(averageWeatherDto);
 
 
-        result.setDate(LocalDateTime.now().toLocalDate());
-        result.setLocation(getStandardizedLocation());
+        return averageWeatherDto;
+    }
 
-        return result;
+    public void saveWeather(Weather weather){
+        Location location = locationDao.findByCityAndCountry(weather.getLocation().getCityName(), weather.getLocation().getCountryName());
+        if(location != null){
+            weather.setLocation(location);
+            weatherDao.save(weather);
+        }else{
+            weatherDao.save(weather);
+        }
+
     }
 
     private WeatherDto getWeatherDtoFromOpenWeatherMap(String city) {
-        OpenWeatherMapForecast forecast = openWeatherMapClient.getWeatherByCity(city);
 
-        return mapper.OpenWeatherToWeatherDto(forecast);
+        return openWeatherMapClient.getWeatherByCity(city);
     }
 
 
     private WeatherDto getWeatherDtoFromWeatherStack(String city) {
-        WeatherStackForecast forecast = weatherStackClient.getWeatherByCity(city);
 
-        return mapper.WeatherStackToWeatherDto(forecast);
+        return openWeatherMapClient.getWeatherByCity(city);
     }
 
-
-    private Location getStandardizedLocation(Location...location){
-
-        return null;
-    }
-
-
-    private Weather getAverageWeather(WeatherDto... weathers){
+    private WeatherDto getAverageWeatherDto(WeatherDto... weathers) {
         return weatherAverager.getAverage(weathers);
     }
 

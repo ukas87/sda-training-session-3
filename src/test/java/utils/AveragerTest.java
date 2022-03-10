@@ -1,5 +1,5 @@
 package utils;
-import dto.WeatherDto;
+import model.WeatherDto;
 import org.junit.jupiter.api.Test;
 import utils.averager.WeatherDtoAverager;
 import static org.assertj.core.api.Assertions.assertThat;

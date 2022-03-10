@@ -1,15 +1,15 @@
 package model.dao;
 
+import dao.LocationDao;
+import dao.WeatherDao;
 import model.Location;
 import model.Weather;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class WeatherDaoTest {
     WeatherDao weatherDao = new WeatherDao();

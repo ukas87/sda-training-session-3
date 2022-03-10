@@ -1,6 +1,6 @@
 package utils.averager;
 
-import dto.WeatherDto;
+import model.WeatherDto;
 
 public interface Averager<T> {
 

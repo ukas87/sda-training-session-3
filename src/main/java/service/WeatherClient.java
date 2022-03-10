@@ -1,7 +1,9 @@
 package service;
 
-public interface WeatherClient<T> {
-    T getWeatherByCity(String city);
+import model.WeatherDto;
+
+public interface WeatherClient {
+    WeatherDto getWeatherByCity(String city);
 
 
 }
