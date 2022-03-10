@@ -2,6 +2,8 @@ package db;
 
 import dao.LocationDao;
 import model.Location;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,9 +13,10 @@ public class LocationDaoTest {
     LocationDao dao = new LocationDao();
     Location location;
     Location location1;
+    Location location2;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         location = Location.Builder()
                 .withCityName("New York")
                 .withCountryName("US")
@@ -29,12 +32,27 @@ public class LocationDaoTest {
                 .withLongitude(222.321)
                 .withRegion("NearTheOcean")
                 .build();
+
+        location2 = Location.Builder()
+                .withCityName("Sydney")
+                .withCountryName("PL")
+                .withLatitude(666.132)
+                .withLongitude(11.321)
+                .withRegion("FarFromOcean")
+                .build();
+
         dao.save(location);
         dao.save(location1);
+        dao.save(location2);
+    }
+
+    @AfterEach
+    void clean() {
+        dao.deleteAllLocations();
     }
 
     @Test
-    void shouldSaveLocation(){
+    void shouldSaveLocation() {
         Location toSave = Location.Builder()
                 .withCityName("Kabul")
                 .withCountryName("AF")
@@ -50,14 +68,21 @@ public class LocationDaoTest {
     }
 
     @Test
-    void shouldDeleteLocation(){
-        Location before = dao.findByCity("Sydney");
+    void shouldDeleteLocation() {
+        Location before = dao.findByCity("New York");
 
-        dao.delete(location1);
-        Location after = dao.findByCity("Sydney");
+        dao.delete(location);
+        Location after = dao.findByCity("New York");
 
-        assertThat(before).isEqualTo(location1);
+        assertThat(before).isEqualTo(location);
         assertThat(after).isNull();
+    }
 
+    @Test
+    void shouldFindLocationByCityAndCountry() {
+
+        Location search = dao.findByCityAndCountry("Sydney", "PL");
+
+        assertThat(search).isEqualTo(location2);
     }
 }
