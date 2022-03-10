@@ -2,6 +2,7 @@ package model;
 
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -13,7 +14,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @Table(name = "weathers")
 @AllArgsConstructor
-@Builder(setterPrefix = "with",builderMethodName = "Builder")
+@Builder(setterPrefix = "with", builderMethodName = "Builder")
 public class Weather {
 
     @Id
@@ -34,7 +35,7 @@ public class Weather {
     @Column(name = "wind_speed")
     private Integer windSpeed;
 
-
+    @Column
     private LocalDate date;
 
     @Column(name = "wind_degrees")
@@ -44,6 +45,7 @@ public class Weather {
     private String windDirection;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     @JoinColumn(name = "location_id")
     private Location location;
 

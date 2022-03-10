@@ -12,12 +12,13 @@ public class WeatherService {
     final WeatherClient<OpenWeatherMapForecast> openWeatherMapClient;
     final WeatherClient<WeatherStackForecast> weatherStackClient;
     final Averager<Weather> weatherAverager;
-    Mapper mapper;
+    final Mapper mapper;
 
-    public WeatherService(WeatherClient<OpenWeatherMapForecast> openWeatherMapClient, WeatherClient<WeatherStackForecast> weatherStackClient, Averager<Weather> weatherAverager) {
+    public WeatherService(WeatherClient<OpenWeatherMapForecast> openWeatherMapClient, WeatherClient<WeatherStackForecast> weatherStackClient, Averager<Weather> weatherAverager, Mapper mapper) {
         this.openWeatherMapClient = openWeatherMapClient;
         this.weatherStackClient = weatherStackClient;
         this.weatherAverager = weatherAverager;
+        this.mapper = mapper;
     }
 
     public Weather getWeatherByCity(String city) {

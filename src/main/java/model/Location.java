@@ -33,7 +33,7 @@ public class Location {
     @Column(name = "country_name")
     private String countryName;
 
-    @Column(name = "region")
+    @Column
     private String region;
 
     @OneToMany(mappedBy = "location", fetch = FetchType.EAGER)
