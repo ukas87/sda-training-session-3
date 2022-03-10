@@ -22,10 +22,20 @@ public class WeatherDao {
                 transaction.rollback();
         }
     }
-    public void delete(Weather weather) {
+
+    public void delete(Weather weather){
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+
+            session.delete(weather);
+
+            transaction.commit();
+        } catch (HibernateException e) {
+            if (transaction != null)
+                transaction.rollback();
+        }
     }
-
-
 
     public Weather findById(Integer id) {
         Transaction transaction = null;
@@ -44,4 +54,10 @@ public class WeatherDao {
         }
         return null;
     }
+
+
+
+
+
+
 }
