@@ -2,6 +2,7 @@ package model.dao;
 
 import model.Location;
 import model.Weather;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -42,6 +43,11 @@ class WeatherDaoTest {
         weatherDao.save(weather);
         weatherDao.save(weather1);
     }
+
+//    @AfterEach
+//    void clean() {
+//        weatherDao.deleteAllWeathers();
+//    }
 
     @Test
     void shouldSaveWeather() {

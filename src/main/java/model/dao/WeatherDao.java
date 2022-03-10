@@ -71,4 +71,23 @@ public class WeatherDao {
 
     }
 
+    public void deleteAllWeathers(){
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+
+            session.createNativeQuery("""
+                    DELETE  From weathers
+                    """
+            ).executeUpdate();
+
+            transaction.commit();
+
+        } catch (HibernateException e) {
+            if (transaction != null)
+                transaction.rollback();
+        }
+
+    }
+
 }
