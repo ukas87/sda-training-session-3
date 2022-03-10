@@ -1,16 +1,12 @@
 import dao.LocationDao;
 import dao.WeatherDao;
 import model.Weather;
-import org.hibernate.cfg.Configuration;
 import service.WeatherService;
 import service.WeatherStackClient;
 import utils.averager.WeatherDtoAverager;
-import utils.connection.HibernateUtil;
 import utils.mapper.Mapper;
 import model.Location;
-import model.openweathermap.OpenWeatherMapForecast;
 import service.OpenWeatherMapClient;
-import service.WeatherClient;
 
 public class Runner {
     public static void main(String[] args) {

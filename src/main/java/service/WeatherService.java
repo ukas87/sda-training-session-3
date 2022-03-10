@@ -36,7 +36,7 @@ public class WeatherService {
         WeatherDto averageWeatherDto = getAverageWeatherDto(weather1, weather2);
         averageWeatherDto.setDate(LocalDate.now());
 
-        Weather weatherToSave = mapper.dtoToWeather(averageWeatherDto);
+        Weather weatherToSave = mapper.toWeather(averageWeatherDto);
 
 
         return averageWeatherDto;
