@@ -1,5 +1,5 @@
 package utils.averager;
-import dto.WeatherDto;
+import model.WeatherDto;
 import utils.FormatConverter;
 import java.math.BigDecimal;
 import java.math.RoundingMode;

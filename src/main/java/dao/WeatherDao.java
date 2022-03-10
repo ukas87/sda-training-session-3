@@ -1,4 +1,4 @@
-package model.dao;
+package dao;
 
 import model.Weather;
 import org.hibernate.HibernateException;

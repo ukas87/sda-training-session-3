@@ -1,7 +1,8 @@
-package dto;
+package utils.mapper;
 
 import model.Location;
 import model.Weather;
+import model.WeatherDto;
 import model.openweathermap.OpenWeatherMapForecast;
 import model.weatherstack.WeatherStackForecast;
 import utils.FormatConverter;
