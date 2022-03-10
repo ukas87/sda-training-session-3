@@ -1,92 +1,55 @@
 package model;
-
+import lombok.*;
+import org.hibernate.Hibernate;
+import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
+
+@Entity
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
+@Table(name = "locations")
+@AllArgsConstructor
+@Builder(setterPrefix = "with",builderMethodName = "Builder")
 public class Location {
-    private UUID id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "location_id")
+    private Integer id;
+
+    @Column
     private Double latitude;
+
+    @Column
     private Double longitude;
+
+    @Column(name = "city_name")
     private String cityName;
+
+    @Column(name = "country_name")
     private String countryName;
+
+    @Column
     private String region;
 
-    private Location() {
-    }
+    @OneToMany(mappedBy = "location", fetch = FetchType.EAGER)
+    private List<Weather> weathers;
 
-    public String getCityName() {
-        return cityName;
-    }
-
-    public static class Builder {
-        private final Location newLocation;
-
-        public Builder() {
-            newLocation = new Location();
-        }
-
-        public Builder withId(UUID id) {
-            newLocation.id = id;
-            return this;
-        }
-
-        public Builder withLatitude(Double latitude) {
-            newLocation.latitude = latitude;
-            return this;
-        }
-
-        public Builder withLongitude(Double longitude) {
-            newLocation.longitude = longitude ;
-            return this;
-        }
-
-        public Builder withCityName(String cityName) {
-            newLocation.cityName = cityName;
-            return this;
-        }
-
-        public Builder withCountryName(String countryName) {
-            newLocation.countryName = countryName;
-            return this;
-        }
-
-        public Builder withRegion(String region) {
-            newLocation.region = region;
-            return this;
-        }
-
-        public Location build(){
-            return newLocation;
-        }
-
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         Location location = (Location) o;
-        return id.equals(location.id) && latitude.equals(location.latitude) && longitude.equals(location.longitude) && cityName.equals(location.cityName) && countryName.equals(location.countryName) && region.equals(location.region);
+        return id != null && Objects.equals(id, location.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, latitude, longitude, cityName, countryName, region);
-    }
-
-    @Override
-    public String toString() {
-        return "Location{" +
-                "id=" + id +
-                ", latitude=" + latitude +
-                ", longitude=" + longitude +
-                ", cityName='" + cityName + '\'' +
-                ", countryName='" + countryName + '\'' +
-                ", region='" + region + '\'' +
-                '}';
-    }
-
-    public String toWriteFormat(){
-        return "" + id + "," + latitude + "," + longitude + "," + cityName + "," + countryName + "," + region;
+        return getClass().hashCode();
     }
 }

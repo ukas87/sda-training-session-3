@@ -17,7 +17,7 @@ public class WeatherStackForecast {
     private String name;
 
     @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<>();
+    private final Map<String, Object> additionalProperties = new HashMap<>();
 
     public Current getCurrent() {
         return current;

@@ -1,10 +1,9 @@
 package ui;
 
 import java.util.Scanner;
-import java.util.UUID;
 
 public class InputHandler {
-    Scanner input;
+    final Scanner input;
 
     Validator validator = new Validator();
 

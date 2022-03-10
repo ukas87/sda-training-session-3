@@ -1,123 +1,80 @@
 package model;
 
-import java.time.LocalDate;
+import lombok.*;
+import org.hibernate.Hibernate;
+import org.hibernate.annotations.Cascade;
 
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.Objects;
+
+@Entity
+@Getter
+@Setter
+@RequiredArgsConstructor
+@Table(name = "weathers")
+@AllArgsConstructor
+@Builder(setterPrefix = "with", builderMethodName = "Builder")
 public class Weather {
 
+    @Id
+    @Column(name = "weather_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+
+    @Column
     private Double temperature;
+
+    @Column
     private Integer pressure;
+
+    @Column
     private Integer humidity;
+
+    @Column(name = "wind_speed")
     private Integer windSpeed;
+
+    @Column
     private LocalDate date;
+
+    @Column(name = "wind_degrees")
     private Integer windDegrees;
+
+    @Column(name = "wind_direction")
     private String windDirection;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+    @JoinColumn(name = "location_id")
     private Location location;
 
-    private Weather() {
-
-    }
-
-    public static class Builder {
-        private final Weather newWeather;
-
-        public Builder() {
-            newWeather = new Weather();
-        }
-
-        public Builder withTemperature(Double temperature) {
-            newWeather.temperature = temperature;
-            return this;
-        }
-
-        public Builder withPressure(Integer pressure) {
-            newWeather.pressure = pressure;
-            return this;
-        }
-
-        public Builder withHumidity(Integer humidity) {
-            newWeather.humidity = humidity;
-            return this;
-        }
-
-        public Builder withWindSpeed(Integer windSpeed) {
-            newWeather.windSpeed = windSpeed;
-            return this;
-        }
-
-        public Builder withDate(LocalDate localDateTime) {
-            newWeather.date = localDateTime;
-            return this;
-        }
-
-        public Builder withLocation(Location location) {
-            newWeather.location = location;
-            return this;
-        }
-        public Builder withWindDegrees(Integer windDegrees){
-            newWeather.windDegrees = windDegrees;
-            return this;
-        }
-        public Builder withWindDirection(String windDirection){
-            newWeather.windDirection = windDirection;
-            return this;
-        }
-
-        public Weather build() {
-            return newWeather;
-        }
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
-    public Double getTemperature() {
-        return temperature;
-    }
-
-    public Integer getPressure() {
-        return pressure;
-    }
-
-    public Integer getHumidity() {
-        return humidity;
-    }
-
-    public Integer getWindSpeed() {
-        return windSpeed;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public Integer getWindDegrees() {
-        return windDegrees;
-    }
-
-    public Location getLocation() {
-        return location;
-    }
 
     @Override
     public String toString() {
         return "Weather{" +
-                "temperature=" + temperature +
+                "id=" + id +
+                ", temperature=" + temperature +
                 ", pressure=" + pressure +
                 ", humidity=" + humidity +
                 ", windSpeed=" + windSpeed +
                 ", date=" + date +
-                ", windDig=" + windDegrees +
-                ", windDir='" + windDirection + '\'' +
-                ", location=" + location +
+                ", windDegrees=" + windDegrees +
+                ", windDirection='" + windDirection + '\'' +
+                ", location=" + location.getCityName() +
                 '}';
     }
 
-    public String toWriteFormat() {
-        return "" + temperature + "," + pressure + "," + humidity + "," + windSpeed + "," + date + "," + location.getCityName();
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Weather weather = (Weather) o;
+        return id != null && Objects.equals(id, weather.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

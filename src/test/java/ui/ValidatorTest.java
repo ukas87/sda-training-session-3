@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class ValidatorTest {
 
-    Validator validator = new Validator();
+    final Validator validator = new Validator();
 
 
     @Test

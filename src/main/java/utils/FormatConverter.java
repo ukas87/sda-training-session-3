@@ -23,7 +23,7 @@ public class FormatConverter {
     {
         degrees *= 10;
 
-        String[] caridnals = { "N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW", "N" };
-        return caridnals[(int)Math.round(((double)degrees % 3600) / 225)];
+        String[] cardinals = { "N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW", "N" };
+        return cardinals[(int)Math.round(((double)degrees % 3600) / 225)];
     }
 }

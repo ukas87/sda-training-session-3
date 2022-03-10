@@ -1,39 +1,24 @@
 package service;
+
+import dao.LocationDao;
 import model.Location;
-import utils.parser.Parser;
-import utils.writer.Writer;
-import java.util.List;
 
 public class LocationService {
 
-    private final Parser<Location> locationParser;
-    private final Writer<Location> locationWriter;
+    LocationDao locationDao;
 
-    public LocationService(Parser<Location> locationParser, Writer<Location> locationWriter) {
-        this.locationParser = locationParser;
-        this.locationWriter = locationWriter;
+
+    public void add(Location location){
+        locationDao.save(location);
     }
 
-    public List<Location> getLocationObjectsFromFile() {
-        return locationParser.getObjectFromFile();
+    public void delete(Location location){
+        locationDao.delete(location);
     }
 
-    public Location findByCity(String city) {
-        return getLocationObjectsFromFile().stream()
-                .filter(location -> location.getCityName().equals(city))
-                .findFirst()
-                .orElse(null);
+    public Location findByCity(String city){
+        return locationDao.findByCity(city);
     }
 
-    public void displayAllLocations() {
-        getLocationObjectsFromFile().forEach(System.out::println);
-    }
 
-    public void write(Location location) {
-        locationWriter.write(location);
-    }
-
-    public void eraseAllData() {
-        locationWriter.eraseAllData();
-    }
 }

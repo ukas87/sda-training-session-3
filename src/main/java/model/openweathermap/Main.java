@@ -13,7 +13,7 @@ public class Main {
     private int humidity;
 
     @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<>();
+    private final Map<String, Object> additionalProperties = new HashMap<>();
 
     public double getTemp() {
         return temp;
