@@ -85,4 +85,16 @@ public class LocationDaoTest {
 
         assertThat(search).isEqualTo(location2);
     }
+
+    @Test
+    void shouldUpdateLocationCountry(){
+        Location locationToUpdate = dao.findByCity("New York");
+        String newCountry = "RU";
+
+        locationToUpdate.setCountryName(newCountry);
+        dao.update(locationToUpdate);
+        Location actual = dao.findByCity("New York");
+
+        assertThat(locationToUpdate).isEqualTo(actual);
+    }
 }

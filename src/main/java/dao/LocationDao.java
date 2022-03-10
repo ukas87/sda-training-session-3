@@ -97,4 +97,20 @@ public class LocationDao {
                 transaction.rollback();
         }
     }
+
+    public void update(Location location) {
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+
+            session.update(location);
+
+            transaction.commit();
+        } catch (HibernateException hibernateException) {
+            if (transaction != null)
+                transaction.rollback();
+        }
+    }
+
+
 }
