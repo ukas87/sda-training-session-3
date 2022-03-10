@@ -56,8 +56,19 @@ public class WeatherDao {
     }
 
 
+    public void update(Weather weather) {
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
 
+            session.update(weather);
 
+            transaction.commit();
+        } catch (HibernateException hibernateException) {
+            if (transaction != null)
+                transaction.rollback();
+        }
 
+    }
 
 }

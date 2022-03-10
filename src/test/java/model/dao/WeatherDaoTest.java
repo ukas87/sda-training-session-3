@@ -65,12 +65,26 @@ class WeatherDaoTest {
 
     @Test
     void shouldDeleteWeather(){
-        Weather before = weatherDao.findById(3);
+        Weather weatherBefore = weatherDao.findById(3);
 
         weatherDao.delete(weather);
         Weather after = weatherDao.findById(3);
 
-        //assertThat(before).isEqualTo(weather);
+        //assertThat(weatherBefore).isEqualTo(weather);
         assertThat(after).isNull();
+    }
+
+
+    @Test
+    void shouldUpdateWeather(){
+        Weather weatherToUpdate = weatherDao.findById(2);
+        Double newTemp = -66.6;
+
+        weatherToUpdate.setTemperature(newTemp);
+        weatherDao.update(weatherToUpdate);
+        Weather actualWeather = weatherDao.findById(2);
+
+        assertThat(weatherToUpdate).isEqualTo(actualWeather);
+
     }
 }
