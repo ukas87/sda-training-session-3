@@ -6,23 +6,21 @@ import model.Location;
 import utils.mapper.Mapper;
 import model.WeatherDto;
 import model.Weather;
-import model.openweathermap.OpenWeatherMapForecast;
-import model.weatherstack.WeatherStackForecast;
 import utils.averager.Averager;
 
 import java.time.LocalDate;
 
 public class WeatherService {
 
-    final WeatherClient<OpenWeatherMapForecast> openWeatherMapClient;
-    final WeatherClient<WeatherStackForecast> weatherStackClient;
+    final WeatherClient openWeatherMapClient;
+    final WeatherClient weatherStackClient;
     final Averager<WeatherDto> weatherAverager;
     final Mapper mapper;
     final LocationDao locationDao;
     final WeatherDao weatherDao;
 
 
-    public WeatherService(WeatherClient<OpenWeatherMapForecast> openWeatherMapClient, WeatherClient<WeatherStackForecast> weatherStackClient, Averager<WeatherDto> weatherAverager, Mapper mapper, LocationDao locationDao, WeatherDao weatherDao) {
+    public WeatherService(WeatherClient openWeatherMapClient, WeatherClient weatherStackClient, Averager<WeatherDto> weatherAverager, Mapper mapper, LocationDao locationDao, WeatherDao weatherDao) {
         this.openWeatherMapClient = openWeatherMapClient;
         this.weatherStackClient = weatherStackClient;
         this.weatherAverager = weatherAverager;
@@ -56,15 +54,14 @@ public class WeatherService {
     }
 
     private WeatherDto getWeatherDtoFromOpenWeatherMap(String city) {
-        OpenWeatherMapForecast forecast = openWeatherMapClient.getWeatherByCity(city);
 
-        return mapper.OpenWeatherToWeatherDto(forecast);
+        return openWeatherMapClient.getWeatherByCity(city);
     }
 
 
     private WeatherDto getWeatherDtoFromWeatherStack(String city) {
-        WeatherStackForecast forecast = weatherStackClient.getWeatherByCity(city);
-        return mapper.WeatherStackToWeatherDto(forecast);
+
+        return openWeatherMapClient.getWeatherByCity(city);
     }
 
     private WeatherDto getAverageWeatherDto(WeatherDto... weathers) {

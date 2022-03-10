@@ -1,9 +1,11 @@
 import dao.LocationDao;
 import dao.WeatherDao;
 import model.Weather;
+import org.hibernate.cfg.Configuration;
 import service.WeatherService;
 import service.WeatherStackClient;
 import utils.averager.WeatherDtoAverager;
+import utils.connection.HibernateUtil;
 import utils.mapper.Mapper;
 import model.Location;
 import model.openweathermap.OpenWeatherMapForecast;
@@ -12,14 +14,13 @@ import service.WeatherClient;
 
 public class Runner {
     public static void main(String[] args) {
-        WeatherClient<OpenWeatherMapForecast> wc = new OpenWeatherMapClient();
-        Mapper mapper = new Mapper();
-        OpenWeatherMapForecast forecast = wc.getWeatherByCity("Chicago");
-        System.out.println(mapper.dtoToWeather(mapper.OpenWeatherToWeatherDto(forecast)));
+
         LocationDao lDao = new LocationDao();
         WeatherDao wDao = new WeatherDao();
 
-        WeatherService service = new WeatherService(wc, new WeatherStackClient(), new WeatherDtoAverager(), new Mapper(), lDao, wDao);
+
+
+        WeatherService service = new WeatherService(new OpenWeatherMapClient(), new WeatherStackClient(), new WeatherDtoAverager(), new Mapper(), lDao, wDao);
         Location location = Location.Builder()
                 .withCityName("New York")
                 .withCountryName("US")
