@@ -1,10 +1,14 @@
 package dto;
 
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDate;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder(setterPrefix = "with", builderMethodName = "Builder")
 public class WeatherDto {
 
     private Double temperature;

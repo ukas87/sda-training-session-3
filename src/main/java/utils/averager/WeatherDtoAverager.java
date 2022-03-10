@@ -1,24 +1,24 @@
 package utils.averager;
-import model.Weather;
+import dto.WeatherDto;
 import utils.FormatConverter;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Arrays;
 
 
-public class WeatherAverager implements Averager<Weather> {
+public class WeatherDtoAverager implements Averager<WeatherDto> {
 
     @Override
-    public Weather getAverage(Weather[] weathers) {
-        Double avgTemperature = getAverageTemperature(weathers);
-        Integer avgHumidity = getAverageHumidity(weathers);
-        Integer avgPressure = getAveragePressure(weathers);
-        Integer avgWindSpeed = getAverageWindSpeed(weathers);
-        Integer avgWindDegrees = getAverageWindDegrees(weathers);
+    public WeatherDto getAverage(WeatherDto[] dtos) {
+        Double avgTemperature = getAverageTemperature(dtos);
+        Integer avgHumidity = getAverageHumidity(dtos);
+        Integer avgPressure = getAveragePressure(dtos);
+        Integer avgWindSpeed = getAverageWindSpeed(dtos);
+        Integer avgWindDegrees = getAverageWindDegrees(dtos);
         String windDirection = FormatConverter.getInstance().DegreesToCardinalDetailed(avgWindDegrees);
 
 
-        return Weather.Builder()
+        return WeatherDto.Builder()
                 .withTemperature(avgTemperature)
                 .withHumidity(avgHumidity)
                 .withPressure(avgPressure)
@@ -28,10 +28,10 @@ public class WeatherAverager implements Averager<Weather> {
                 .build();
     }
 
-    public Double getAverageTemperature(Weather[] weathers) {
-        double result = Arrays.stream(weathers)
+    public Double getAverageTemperature(WeatherDto[] dtos) {
+        double result = Arrays.stream(dtos)
                 .filter(weather -> weather.getTemperature() != null)
-                .mapToDouble(Weather::getTemperature)
+                .mapToDouble(WeatherDto::getTemperature)
                 .average()
                 .orElse(0);
 
@@ -40,34 +40,34 @@ public class WeatherAverager implements Averager<Weather> {
         return bd.doubleValue();
     }
 
-    public Integer getAverageHumidity(Weather[] weathers) {
-        return (int) Arrays.stream(weathers)
+    public Integer getAverageHumidity(WeatherDto[] dtos) {
+        return (int) Arrays.stream(dtos)
                 .filter(weather -> weather.getHumidity() != null)
-                .mapToInt(Weather::getHumidity)
+                .mapToInt(WeatherDto::getHumidity)
                 .average()
                 .orElse(0);
     }
 
-    public Integer getAveragePressure(Weather[] weathers) {
-        return (int) Arrays.stream(weathers)
+    public Integer getAveragePressure(WeatherDto[] dtos) {
+        return (int) Arrays.stream(dtos)
                 .filter(weather -> weather.getPressure() != null)
-                .mapToInt(Weather::getPressure)
+                .mapToInt(WeatherDto::getPressure)
                 .average()
                 .orElse(0);
     }
 
-    public Integer getAverageWindSpeed(Weather[] weathers) {
-        return (int) Arrays.stream(weathers)
+    public Integer getAverageWindSpeed(WeatherDto[] dtos) {
+        return (int) Arrays.stream(dtos)
                 .filter(weather -> weather.getWindSpeed() != null)
-                .mapToInt(Weather::getWindSpeed)
+                .mapToInt(WeatherDto::getWindSpeed)
                 .average()
                 .orElse(0);
     }
 
-    public Integer getAverageWindDegrees(Weather[] weathers) {
-        return (int) Arrays.stream(weathers)
+    public Integer getAverageWindDegrees(WeatherDto[] dtos) {
+        return (int) Arrays.stream(dtos)
                 .filter(weather -> weather.getWindDegrees() != null)
-                .mapToInt(Weather::getWindDegrees)
+                .mapToInt(WeatherDto::getWindDegrees)
                 .average()
                 .orElse(0);
     }

@@ -41,7 +41,7 @@ public class Mapper  {
         return weatherDto;
     }
 
-    public Weather toWeather(WeatherDto dto){
+    public Weather dtoToWeather(WeatherDto dto){
         return Weather.Builder()
                 .withTemperature(dto.getTemperature())
                 .withPressure(dto.getPressure())
@@ -60,7 +60,7 @@ public class Mapper  {
                 .build();
     }
 
-    public WeatherDto toDto(Weather weather){
+    public WeatherDto weatherToDto(Weather weather){
         WeatherDto weatherDto = new WeatherDto();
         weatherDto.setTemperature(weather.getTemperature());
         weatherDto.setPressure(weather.getPressure());

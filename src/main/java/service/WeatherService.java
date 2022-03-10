@@ -1,5 +1,6 @@
 package service;
 import dto.Mapper;
+import dto.WeatherDto;
 import model.Location;
 import model.Weather;
 import model.openweathermap.OpenWeatherMapForecast;
@@ -22,8 +23,9 @@ public class WeatherService {
     }
 
     public Weather getWeatherByCity(String city) {
-        Weather weather1 = getWeatherFromOpenWeatherMap(city);
-        Weather weather2 = getWeatherFromWeatherStack(city);
+        WeatherDto weather1 = getWeatherDtoFromOpenWeatherMap(city);
+        WeatherDto weather2 = getWeatherDtoFromWeatherStack(city);
+
 
         Weather result = getAverageWeather(weather1,weather2);
 
@@ -34,23 +36,27 @@ public class WeatherService {
         return result;
     }
 
-    private Weather getWeatherFromOpenWeatherMap(String city) {
+    private WeatherDto getWeatherDtoFromOpenWeatherMap(String city) {
         OpenWeatherMapForecast forecast = openWeatherMapClient.getWeatherByCity(city);
 
-        return mapper.toWeather(mapper.OpenWeatherToWeatherDto(forecast));
+        return mapper.OpenWeatherToWeatherDto(forecast);
     }
 
-    private Weather getWeatherFromWeatherStack(String city) {
+
+    private WeatherDto getWeatherDtoFromWeatherStack(String city) {
         WeatherStackForecast forecast = weatherStackClient.getWeatherByCity(city);
 
-        return mapper.toWeather(mapper.WeatherStackToWeatherDto(forecast));
+        return mapper.WeatherStackToWeatherDto(forecast);
     }
+
+
     private Location getStandardizedLocation(Location...location){
 
         return null;
     }
 
-    private Weather getAverageWeather(Weather...weathers){
+
+    private Weather getAverageWeather(WeatherDto... weathers){
         return weatherAverager.getAverage(weathers);
     }
 
