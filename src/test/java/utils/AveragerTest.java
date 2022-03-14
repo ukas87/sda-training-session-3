@@ -9,6 +9,8 @@ public class AveragerTest {
     final WeatherDtoAverager averager = new WeatherDtoAverager();
 
     final WeatherDto weatherDto1 = WeatherDto.Builder()
+            .withCountryName("United States Of America")
+            .withCityName("Chicago")
             .withTemperature(49.5)
             .withPressure(10)
             .withHumidity(11)
@@ -17,6 +19,8 @@ public class AveragerTest {
             .build();
 
     final WeatherDto weatherDto2 = WeatherDto.Builder()
+            .withCityName("Chicago1")
+            .withCountryName("United States")
             .withTemperature(14.7)
             .withPressure(24)
             .withHumidity(78)
@@ -25,6 +29,8 @@ public class AveragerTest {
             .build();
 
     final WeatherDto weatherDto3 = WeatherDto.Builder()
+            .withCityName("Chicago2")
+            .withCountryName("USA")
             .withTemperature(-7.0)
             .withPressure(5)
             .withHumidity(51)
@@ -33,6 +39,42 @@ public class AveragerTest {
             .build();
 
     final WeatherDto weatherDto4 = WeatherDto.Builder().build();
+
+    @Test
+    void shouldReturnFirstCityName(){
+        WeatherDto[] dtos = new WeatherDto[]{weatherDto1, weatherDto2, weatherDto3};
+
+        String actual = averager.getCityName(dtos);
+
+        assertThat(actual).isEqualTo("Chicago");
+    }
+
+    @Test
+    void shouldReturnNullIfAllCitiesAreNull(){
+        WeatherDto[] dtos = new WeatherDto[]{weatherDto4};
+
+        String actual = averager.getCityName(dtos);
+
+        assertThat(actual).isNull();
+    }
+
+    @Test
+    void shouldReturnCountryNameInProperFormat(){
+        WeatherDto[] dtos = new WeatherDto[]{weatherDto1, weatherDto2, weatherDto3};
+
+        String actual = averager.getCountryName(dtos);
+
+        assertThat(actual).isEqualTo("USA");
+    }
+
+    @Test
+    void shouldReturnNullIfAllCountriesAreNull(){
+        WeatherDto[] dtos = new WeatherDto[]{weatherDto4};
+
+        String actual = averager.getCityName(dtos);
+
+        assertThat(actual).isNull();
+    }
 
 
     @Test

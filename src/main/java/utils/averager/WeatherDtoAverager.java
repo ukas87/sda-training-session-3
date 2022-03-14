@@ -1,9 +1,12 @@
 package utils.averager;
+
 import model.WeatherDto;
 import utils.FormatConverter;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Arrays;
+import java.util.Objects;
 
 
 public class WeatherDtoAverager implements Averager<WeatherDto> {
@@ -70,6 +73,23 @@ public class WeatherDtoAverager implements Averager<WeatherDto> {
                 .mapToInt(WeatherDto::getWindDegrees)
                 .average()
                 .orElse(0);
+    }
+
+    public String getCountryName(WeatherDto[] dtos) {
+        return Arrays.stream(dtos)
+                .map(WeatherDto::getCountryName)
+                .filter(Objects::nonNull)
+                .filter(name -> name.matches("[A-Z]{2,}"))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public String getCityName(WeatherDto[] dtos) {
+        return Arrays.stream(dtos)
+                .map(WeatherDto::getCityName)
+                .filter(Objects::nonNull)
+                .findFirst()
+                .orElse(null);
     }
 
 }

@@ -1,9 +1,10 @@
-package model.dao;
+package db;
 
 import dao.LocationDao;
 import dao.WeatherDao;
 import model.Location;
 import model.Weather;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -44,10 +45,10 @@ class WeatherDaoTest {
         weatherDao.save(weather1);
     }
 
-//    @AfterEach
-//    void clean() {
-//        weatherDao.deleteAllWeathers();
-//    }
+    @AfterEach
+    void clean() {
+        weatherDao.deleteAllWeathers();
+    }
 
     @Test
     void shouldSaveWeather() {
@@ -76,7 +77,7 @@ class WeatherDaoTest {
         weatherDao.delete(weather);
         Weather after = weatherDao.findById(3);
 
-        //assertThat(weatherBefore).isEqualTo(weather);
+        assertThat(weatherBefore).isEqualTo(weather);
         assertThat(after).isNull();
     }
 

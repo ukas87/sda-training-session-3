@@ -1,5 +1,4 @@
 package db;
-
 import dao.LocationDao;
 import model.Location;
 import model.Weather;
@@ -46,10 +45,10 @@ public class LocationDaoTest {
         dao.save(location2);
     }
 
-//    @AfterEach
-//    void clean() {
-//        dao.deleteAllLocations();
-//    }
+    @AfterEach
+    void clean() {
+        dao.deleteAllLocations();
+    }
 
     @Test
     void shouldSaveLocation() {
