@@ -3,12 +3,14 @@ package service;
 import dao.LocationDao;
 import dao.WeatherDao;
 import model.Location;
+import org.apache.logging.log4j.core.util.datetime.Format;
 import utils.mapper.WeatherMapper;
 import model.WeatherDto;
 import model.Weather;
 import utils.averager.Averager;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class WeatherService {
 
@@ -38,16 +40,27 @@ public class WeatherService {
 
         Weather weatherToSave = weatherMapper.toEntity(averageWeatherDto);
 
-
         return averageWeatherDto;
     }
 
-    public void saveWeather(Weather weather){
+    public void displayWeather(WeatherDto weatherDto) {
+        System.out.println("City: " + weatherDto.getCityName() +
+                "\nCountry: " + weatherDto.getCountryName() +
+                "\nRegion: " + weatherDto.getRegion() +
+                "\nDate: " + weatherDto.getDate() +
+                "\nTemperature: " + weatherDto.getTemperature() + " C" +
+                "\nPressure: " + weatherDto.getPressure() + " Pa" +
+                "\nHumidity: " + weatherDto.getHumidity() + " %" +
+                "\nWind direction: " + weatherDto.getWindDirection() +
+                "\nWind speed: " + weatherDto.getWindSpeed() + " km/hour");
+    }
+
+    public void saveWeather(Weather weather) {
         Location location = locationDao.findByCityAndCountry(weather.getLocation().getCityName(), weather.getLocation().getCountryName());
-        if(location != null){
+        if (location != null) {
             weather.setLocation(location);
             weatherDao.save(weather);
-        }else{
+        } else {
             weatherDao.save(weather);
         }
 
@@ -61,7 +74,7 @@ public class WeatherService {
 
     private WeatherDto getWeatherDtoFromWeatherStack(String city) {
 
-        return openWeatherMapClient.getWeatherByCity(city);
+        return weatherStackClient.getWeatherByCity(city);
     }
 
     private WeatherDto getAverageWeatherDto(WeatherDto... weathers) {
