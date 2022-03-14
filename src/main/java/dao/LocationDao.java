@@ -67,14 +67,6 @@ public class LocationDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
 
-//            Location location = session.createNativeQuery("""
-//                            SELECT *
-//                            FROM locations
-//                            WHERE city_name = :cityName AND country_name = :countryName""", Location.class)
-//                    .setParameter("cityName", city)
-//                    .setParameter("countryName", country)
-//                    .uniqueResult();
-
             Location location = session.createQuery("FROM Location WHERE cityName = :city AND countryName = :country", Location.class)
                     .setParameter("city", city)
                     .setParameter("country", country)
@@ -136,9 +128,9 @@ public class LocationDao {
         }
     }
 
-    public List<Location> findAll() {
+    public List findAll() {
         Transaction transaction = null;
-        List<Location> countries = new ArrayList<>();
+        List countries = new ArrayList<>();
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
