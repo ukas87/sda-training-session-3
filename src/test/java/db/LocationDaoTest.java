@@ -1,6 +1,6 @@
 package db;
-
 import dao.LocationDao;
+import dao.WeatherDao;
 import model.Location;
 import model.Weather;
 import org.junit.jupiter.api.AfterEach;
@@ -10,7 +10,8 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class LocationDaoTest {
-    LocationDao dao = new LocationDao();
+    LocationDao locationDao = new LocationDao();
+    WeatherDao weatherDao = new WeatherDao();
     Location location;
     Location location1;
     Location location2;
@@ -41,15 +42,16 @@ public class LocationDaoTest {
                 .withRegion("FarFromOcean")
                 .build();
 
-        dao.save(location);
-        dao.save(location1);
-        dao.save(location2);
+        locationDao.save(location);
+        locationDao.save(location1);
+        locationDao.save(location2);
     }
 
-//    @AfterEach
-//    void clean() {
-//        dao.deleteAllLocations();
-//    }
+    @AfterEach
+    void clean() {
+        weatherDao.deleteAllWeathers();
+        locationDao.deleteAllLocations();
+    }
 
     @Test
     void shouldSaveLocation() {
@@ -61,18 +63,18 @@ public class LocationDaoTest {
                 .withRegion("Mountains")
                 .build();
 
-        dao.save(toSave);
-        Location expected = dao.findByCity("Kabul");
+        locationDao.save(toSave);
+        Location expected = locationDao.findByCity("Kabul");
 
         assertThat(toSave).isEqualTo(expected);
     }
 
     @Test
     void shouldDeleteLocation() {
-        Location before = dao.findByCity("New York");
+        Location before = locationDao.findByCity("New York");
 
-        dao.delete(location);
-        Location after = dao.findByCity("New York");
+        locationDao.delete(location);
+        Location after = locationDao.findByCity("New York");
 
         assertThat(before).isEqualTo(location);
         assertThat(after).isNull();
@@ -81,19 +83,19 @@ public class LocationDaoTest {
     @Test
     void shouldFindLocationByCityAndCountry() {
 
-        Location search = dao.findByCityAndCountry("Sydney", "PL");
+        Location search = locationDao.findByCityAndCountry("Sydney", "PL");
 
         assertThat(search).isEqualTo(location2);
     }
 
     @Test
     void shouldUpdateLocationCountry() {
-        Location locationToUpdate = dao.findByCity("New York");
+        Location locationToUpdate = locationDao.findByCity("New York");
         String newCountry = "RU";
 
         locationToUpdate.setCountryName(newCountry);
-        dao.update(locationToUpdate);
-        Location actual = dao.findByCity("New York");
+        locationDao.update(locationToUpdate);
+        Location actual = locationDao.findByCity("New York");
 
         assertThat(locationToUpdate).isEqualTo(actual);
     }
@@ -104,10 +106,10 @@ public class LocationDaoTest {
                 .withLocation(location2)
                 .withTemperature(42.00)
                 .build();
-        int locations = dao.findAll().size();
+        int locations = locationDao.findAll().size();
         System.out.println(locations);
 
-        dao.saveWeather(toSave);
+        locationDao.saveWeather(toSave);
 
         assertThat(locations).isEqualTo(3);
     }

@@ -4,6 +4,7 @@ import utils.FormatConverter;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Arrays;
+import java.util.Objects;
 
 
 public class WeatherDtoAverager implements Averager<WeatherDto> {
@@ -16,6 +17,11 @@ public class WeatherDtoAverager implements Averager<WeatherDto> {
         Integer avgWindSpeed = getAverageWindSpeed(dtos);
         Integer avgWindDegrees = getAverageWindDegrees(dtos);
         String windDirection = FormatConverter.getInstance().DegreesToCardinalDetailed(avgWindDegrees);
+        Double latitude = getAverageLatitude(dtos);
+        Double longitude = getAverageLongitude(dtos);
+        String cityName = getCityName(dtos);
+        String countryName = getCountryName(dtos);
+        String region = getRegionName(dtos);
 
 
         return WeatherDto.Builder()
@@ -25,7 +31,36 @@ public class WeatherDtoAverager implements Averager<WeatherDto> {
                 .withWindSpeed(avgWindSpeed)
                 .withWindDegrees(avgWindDegrees)
                 .withWindDirection(windDirection)
+                .withLatitude(latitude)
+                .withLongitude(longitude)
+                .withCityName(cityName)
+                .withCountryName(countryName)
+                .withRegion(region)
                 .build();
+    }
+
+    public Double getAverageLatitude(WeatherDto[] dtos){
+        double result = Arrays.stream(dtos)
+                .filter(weather -> weather.getLatitude() != null)
+                .mapToDouble(WeatherDto::getLatitude)
+                .average()
+                .orElse(0);
+
+        BigDecimal bd = new BigDecimal(Double.toString(result));
+        bd = bd.setScale(4, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
+
+    public Double getAverageLongitude(WeatherDto[] dtos){
+        double result = Arrays.stream(dtos)
+                .filter(weather -> weather.getLongitude() != null)
+                .mapToDouble(WeatherDto::getLongitude)
+                .average()
+                .orElse(0);
+
+        BigDecimal bd = new BigDecimal(Double.toString(result));
+        bd = bd.setScale(4, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 
     public Double getAverageTemperature(WeatherDto[] dtos) {
@@ -70,6 +105,31 @@ public class WeatherDtoAverager implements Averager<WeatherDto> {
                 .mapToInt(WeatherDto::getWindDegrees)
                 .average()
                 .orElse(0);
+    }
+
+    public String getCountryName(WeatherDto[] dtos) {
+        return Arrays.stream(dtos)
+                .map(WeatherDto::getCountryName)
+                .filter(Objects::nonNull)
+                .filter(name -> name.matches("[A-Z]{2,}"))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public String getCityName(WeatherDto[] dtos) {
+        return Arrays.stream(dtos)
+                .map(WeatherDto::getCityName)
+                .filter(Objects::nonNull)
+                .findFirst()
+                .orElse(null);
+    }
+
+    public String getRegionName(WeatherDto[] dtos){
+        return  Arrays.stream(dtos)
+                .map(WeatherDto::getRegion)
+                .filter(Objects::nonNull)
+                .findFirst()
+                .orElse(null);
     }
 
 }

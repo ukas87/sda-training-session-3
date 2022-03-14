@@ -3,7 +3,9 @@ package model;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
+@EqualsAndHashCode
 @Getter
 @Setter
 @AllArgsConstructor
@@ -41,4 +43,5 @@ public class WeatherDto {
                 ", region='" + region + '\'' +
                 '}';
     }
+
 }
