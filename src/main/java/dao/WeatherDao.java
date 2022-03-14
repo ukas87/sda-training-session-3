@@ -87,7 +87,5 @@ public class WeatherDao {
             if (transaction != null)
                 transaction.rollback();
         }
-
     }
-
 }
