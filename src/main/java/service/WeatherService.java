@@ -1,16 +1,12 @@
 package service;
-
 import dao.LocationDao;
 import dao.WeatherDao;
 import model.Location;
-import org.apache.logging.log4j.core.util.datetime.Format;
 import utils.mapper.WeatherMapper;
 import model.WeatherDto;
 import model.Weather;
 import utils.averager.Averager;
-
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 public class WeatherService {
 
@@ -39,6 +35,7 @@ public class WeatherService {
         averageWeatherDto.setDate(LocalDate.now());
 
         Weather weatherToSave = weatherMapper.toEntity(averageWeatherDto);
+        saveWeather(weatherToSave);
 
         return averageWeatherDto;
     }

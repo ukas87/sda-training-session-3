@@ -128,23 +128,23 @@ public class LocationDao {
         }
     }
 
-    public List findAll() {
+    public List<Location> findAll() {
         Transaction transaction = null;
-        List countries = new ArrayList<>();
+        List<Location> locations = new ArrayList<>();
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            countries =
-                    session.createQuery("FROM Location ").getResultList();
+            locations =
+                    session.createQuery("FROM Location ", Location.class).getResultList();
 
             transaction.commit();
-            return countries;
+            return locations;
         } catch (HibernateException e) {
             if (transaction != null)
                 transaction.rollback();
         }
 
-        return countries;
+        return locations;
     }
 
 
