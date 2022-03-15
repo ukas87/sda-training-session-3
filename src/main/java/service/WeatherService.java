@@ -86,8 +86,8 @@ public class WeatherService {
         }
     }
 
-    public List<Weather> getAllWeathersByDate(LocalDate date){
-        return weatherDao.getWeatherByDate(date);
+    public List<Weather> getAllWeathersByDate(LocalDate date, String cityName){
+        return weatherDao.getWeatherByDateAndCity(date, cityName);
     }
 
     public void displayWeathers(List<Weather> weathers) {
@@ -96,7 +96,8 @@ public class WeatherService {
                 .toList();
 
         for (WeatherDto weather : listToDisplay) {
-            displayLocation(weather);
+            displayWeather(weather);
+            System.out.println();
         }
     }
 

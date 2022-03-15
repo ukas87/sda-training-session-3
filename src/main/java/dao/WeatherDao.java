@@ -1,6 +1,5 @@
 package dao;
 
-import model.Location;
 import model.Weather;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -94,15 +93,21 @@ public class WeatherDao {
         }
     }
 
-    public List<Weather> getWeatherByDate(LocalDate date) {
+    public List<Weather> getWeatherByDateAndCity(LocalDate date, String city) {
         Transaction transaction = null;
         List<Weather> weathers = new ArrayList<>();
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
 
-            weathers = session.createQuery("FROM Weather WHERE date = :date", Weather.class)
+            weathers = session.createNativeQuery("""
+                            SELECT *
+                            FROM weathers
+                            JOIN locations using(location_id)
+                            WHERE date = :date AND city_name = :city
+                            """, Weather.class)
                     .setParameter("date", date)
+                    .setParameter("city", city)
                     .getResultList();
 
             transaction.commit();
