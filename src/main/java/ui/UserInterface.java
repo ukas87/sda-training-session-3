@@ -1,8 +1,17 @@
 package ui;
 
+import dao.LocationDao;
+import dao.WeatherDao;
 import model.Location;
 
 import service.LocationService;
+import service.OpenWeatherMapClient;
+import service.WeatherService;
+import service.WeatherStackClient;
+import utils.averager.WeatherDtoAverager;
+import utils.mapper.LocationMapper;
+import utils.mapper.WeatherMapper;
+
 import java.util.Scanner;
 
 public class UserInterface {
@@ -10,7 +19,8 @@ public class UserInterface {
 
     final InputHandler inputHandler = new InputHandler(new Scanner(System.in));
 
-    LocationService locationService = new LocationService();
+    LocationService locationService = new LocationService(new LocationDao(), new LocationMapper());
+    WeatherService weatherService = new WeatherService(new WeatherStackClient(), new OpenWeatherMapClient(), new WeatherDtoAverager(), new WeatherMapper(), new LocationMapper(), new LocationDao(), new WeatherDao());
     boolean isRunning = true;
     final String initMenu = "==== Weather Application ===\n[1] Adding a location\n[2] Display currently added locations\n[3] Downloading weather values\n[0] Exit";
 
@@ -19,9 +29,8 @@ public class UserInterface {
             System.out.println(initMenu);
             String choice = inputHandler.takeMenuChoice();
 
-
             switch (choice) {
-                case "1":
+                case "1" -> {
                     System.out.println("You chose to Add a location: ");
                     Location locationToAdd = Location.Builder()
                             .withCityName(inputHandler.takeLocationCityName())
@@ -30,26 +39,21 @@ public class UserInterface {
                             .withLatitude(inputHandler.takeLocationLatitude())
                             .withLongitude(inputHandler.takeLocationLongitude())
                             .build();
+                    locationService.add(locationToAdd);
+                }
+                case "2" -> {
+                    System.out.println("You chose to display Available Locations: ");
+                    locationService.displayLocations(locationService.getAllLocations());
+                }
+                //locationService.displayAllLocations();
+                case "3" -> System.out.println("You chose to Download Weather Values: ");
 
-                    //locationService.write(locationToAdd);
-                    break;
-
-                case "2":
-                    System.out.println("You chose to display Current Location: ");
-                    //locationService.displayAllLocations();
-                    break;
-
-                case "3":
-                    System.out.println("You chose to Download Weather Values: ");
-                    //showWeather
-                    break;
-
-                case "0":
+                //showWeather
+                case "0" -> {
                     System.out.println("Bye, thanks");
                     isRunning = false;
-                    break;
-                default:
-                    System.out.println("(default)Wrong data! Try again\n");
+                }
+                default -> System.out.println("(default)Wrong data! Try again\n");
             }
         } while (isRunning);
     }

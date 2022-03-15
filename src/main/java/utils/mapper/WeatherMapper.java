@@ -13,6 +13,7 @@ public class WeatherMapper implements Mapper<Weather, WeatherDto> {
                 .withPressure(entity.getPressure())
                 .withHumidity(entity.getHumidity())
                 .withWindSpeed(entity.getWindSpeed())
+                .withDate(entity.getDate())
                 .withWindDegrees(entity.getWindDegrees())
                 .withLatitude(entity.getLocation().getLatitude())
                 .withLongitude(entity.getLocation().getLongitude())

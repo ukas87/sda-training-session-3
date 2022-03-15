@@ -72,19 +72,7 @@ public class WeatherService {
 
 
 
-    public List<Location> getAllLocations() {
-        return locationDao.findAll();
-    }
 
-    public void displayLocations(List<Location> locations) {
-        List<WeatherDto> listToDisplay = locations.stream()
-                .map(locationMapper::toDto)
-                .toList();
-
-        for (WeatherDto location : listToDisplay) {
-            displayLocation(location);
-        }
-    }
 
     public List<Weather> getAllWeathersByDate(LocalDate date, String cityName){
         return weatherDao.getWeatherByDateAndCity(date, cityName);
@@ -115,11 +103,6 @@ public class WeatherService {
                 "\nWind speed: " + weatherDto.getWindSpeed() + " km/hour");
     }
 
-    public void displayLocation(WeatherDto weatherDto) {
-        System.out.println("City: " + weatherDto.getCityName() + " | " +
-                "Country: " + weatherDto.getCountryName() + " | " +
-                "Region: " + weatherDto.getRegion() + " | " +
-                "Coordinates: " + weatherDto.getLatitude() + ", " + weatherDto.getLongitude());
-    }
+
 
 }
