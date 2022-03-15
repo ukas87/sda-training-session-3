@@ -1,5 +1,4 @@
 package service;
-
 import dao.LocationDao;
 import dao.WeatherDao;
 import model.Location;
@@ -8,10 +7,8 @@ import utils.mapper.WeatherMapper;
 import model.WeatherDto;
 import model.Weather;
 import utils.averager.Averager;
-
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class WeatherService {
 
@@ -41,9 +38,12 @@ public class WeatherService {
         WeatherDto averageWeatherDto = getAverageWeatherDto(weather1, weather2);
         averageWeatherDto.setDate(LocalDate.now());
 
-        saveWeather(averageWeatherDto);
-
         return averageWeatherDto;
+    }
+
+    public void saveLocation(WeatherDto weatherDto){
+        Location location = locationMapper.toEntity(weatherDto);
+        locationDao.save(location);
     }
 
     public void saveWeather(WeatherDto weatherDto) {
@@ -72,19 +72,35 @@ public class WeatherService {
 
 
 
-    public void displayAllLocations() {
-        List<WeatherDto> locations = getAllLocations().stream()
+    public List<Location> getAllLocations() {
+        return locationDao.findAll();
+    }
+
+    public void displayLocations(List<Location> locations) {
+        List<WeatherDto> listToDisplay = locations.stream()
                 .map(locationMapper::toDto)
                 .toList();
 
-        for (WeatherDto location : locations) {
+        for (WeatherDto location : listToDisplay) {
             displayLocation(location);
         }
     }
 
-    public List<Location> getAllLocations() {
-        return locationDao.findAll();
+    public List<Weather> getAllWeathersByDate(LocalDate date){
+        return weatherDao.getWeatherByDate(date);
     }
+
+    public void displayWeathers(List<Weather> weathers) {
+        List<WeatherDto> listToDisplay = weathers.stream()
+                .map(weatherMapper::toDto)
+                .toList();
+
+        for (WeatherDto weather : listToDisplay) {
+            displayLocation(weather);
+        }
+    }
+
+
 
     public void displayWeather(WeatherDto weatherDto) {
         System.out.println("City: " + weatherDto.getCityName() +
@@ -104,8 +120,5 @@ public class WeatherService {
                 "Region: " + weatherDto.getRegion() + " | " +
                 "Coordinates: " + weatherDto.getLatitude() + ", " + weatherDto.getLongitude());
     }
-
-
-
 
 }
