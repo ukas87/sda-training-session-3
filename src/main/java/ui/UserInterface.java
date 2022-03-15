@@ -1,9 +1,9 @@
 package ui;
-
 import dao.LocationDao;
 import dao.WeatherDao;
+import lombok.extern.log4j.Log4j2;
 import model.Location;
-
+import model.WeatherDto;
 import service.LocationService;
 import service.OpenWeatherMapClient;
 import service.WeatherService;
@@ -18,9 +18,8 @@ public class UserInterface {
 
 
     final InputHandler inputHandler = new InputHandler(new Scanner(System.in));
-
     LocationService locationService = new LocationService(new LocationDao(), new LocationMapper());
-    WeatherService weatherService = new WeatherService(new WeatherStackClient(), new OpenWeatherMapClient(), new WeatherDtoAverager(), new WeatherMapper(), new LocationMapper(), new LocationDao(), new WeatherDao());
+    WeatherService weatherService = new WeatherService(new OpenWeatherMapClient(), new WeatherStackClient(), new WeatherDtoAverager(), new WeatherMapper(), new LocationMapper(), new LocationDao(), new WeatherDao());
     boolean isRunning = true;
     final String initMenu = "==== Weather Application ===\n[1] Adding a location\n[2] Display currently added locations\n[3] Downloading weather values\n[0] Exit";
 
@@ -45,9 +44,11 @@ public class UserInterface {
                     System.out.println("You chose to display Available Locations: ");
                     locationService.displayLocations(locationService.getAllLocations());
                 }
-                //locationService.displayAllLocations();
-                case "3" -> System.out.println("You chose to Download Weather Values: ");
 
+                case "3" -> {
+                    System.out.println("You chose to Download Weather Values: ");
+                    weatherDownloadMenu();
+                }
                 //showWeather
                 case "0" -> {
                     System.out.println("Bye, thanks");
@@ -56,6 +57,16 @@ public class UserInterface {
                 default -> System.out.println("(default)Wrong data! Try again\n");
             }
         } while (isRunning);
+    }
+
+    public void weatherDownloadMenu() {
+        try {
+            WeatherDto weatherDto = weatherService.getWeatherDtoFromOpenWeatherMap(inputHandler.takeLocationCityName());
+            weatherService.saveWeather(weatherDto);
+            weatherService.displayWeather(weatherDto);
+        } catch (Exception e) {
+            System.out.println("Unable to get data for your city");
+        }
     }
 }
 

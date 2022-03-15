@@ -21,7 +21,7 @@ public class WeatherService {
     final WeatherDao weatherDao;
 
 
-    public WeatherService(WeatherClient openWeatherMapClient, WeatherClient weatherStackClient, Averager<WeatherDto> weatherAverager, WeatherMapper weatherMapper, LocationMapper locationMapper, LocationDao locationDao, WeatherDao weatherDao) {
+    public WeatherService(OpenWeatherMapClient openWeatherMapClient, WeatherStackClient weatherStackClient, Averager<WeatherDto> weatherAverager, WeatherMapper weatherMapper, LocationMapper locationMapper, LocationDao locationDao, WeatherDao weatherDao) {
         this.openWeatherMapClient = openWeatherMapClient;
         this.weatherStackClient = weatherStackClient;
         this.weatherAverager = weatherAverager;
@@ -60,7 +60,6 @@ public class WeatherService {
     public WeatherDto getWeatherDtoFromOpenWeatherMap(String city) {
         return openWeatherMapClient.getWeatherByCity(city);
     }
-
 
     public WeatherDto getWeatherDtoFromWeatherStack(String city) {
         return weatherStackClient.getWeatherByCity(city);

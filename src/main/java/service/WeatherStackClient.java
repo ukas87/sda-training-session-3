@@ -13,22 +13,19 @@ public class WeatherStackClient implements WeatherClient {
     @Override
     public WeatherDto getWeatherByCity(String city) {
         ObjectNode node = getObjectNodeByCity(city);
-        WeatherDto result = null;
-        if(node != null){
-            result = WeatherDto.Builder()
-                    .withTemperature(node.get("current").get("temperature").asDouble())
-                    .withPressure(node.get("current").get("pressure").asInt())
-                    .withHumidity(node.get("current").get("humidity").asInt())
-                    .withWindSpeed(FormatConverter.getInstance().fromKilometersHourToMeterSeconds(node.get("current").get("wind_speed").asInt()))
-                    .withWindDegrees(node.get("current").get("wind_degree").asInt())
-                    .withLatitude(node.get("location").get("lat").asDouble())
-                    .withLongitude(node.get("location").get("lon").asDouble())
-                    .withCityName(node.get("location").get("name").asText())
-                    .withCountryName(node.get("location").get("country").asText())
-                    .withRegion(node.get("location").get("region").asText())
-                    .build();
-        }
-        return result;
+
+        return WeatherDto.Builder()
+                .withTemperature(node.get("current").get("temperature").asDouble())
+                .withPressure(node.get("current").get("pressure").asInt())
+                .withHumidity(node.get("current").get("humidity").asInt())
+                .withWindSpeed(FormatConverter.getInstance().fromKilometersHourToMeterSeconds(node.get("current").get("wind_speed").asInt()))
+                .withWindDegrees(node.get("current").get("wind_degree").asInt())
+                .withLatitude(node.get("location").get("lat").asDouble())
+                .withLongitude(node.get("location").get("lon").asDouble())
+                .withCityName(node.get("location").get("name").asText())
+                .withCountryName(node.get("location").get("country").asText())
+                .withRegion(node.get("location").get("region").asText())
+                .build();
     }
 
     private ObjectNode getObjectNodeByCity(String city) {
