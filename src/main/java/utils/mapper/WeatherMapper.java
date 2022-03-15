@@ -7,18 +7,18 @@ import model.WeatherDto;
 public class WeatherMapper implements Mapper<Weather, WeatherDto> {
 
     @Override
-    public WeatherDto toDto(Weather weather) {
+    public WeatherDto toDto(Weather entity) {
         return WeatherDto.Builder()
-                .withTemperature(weather.getTemperature())
-                .withPressure(weather.getPressure())
-                .withHumidity(weather.getHumidity())
-                .withWindSpeed(weather.getWindSpeed())
-                .withWindDegrees(weather.getWindDegrees())
-                .withLatitude(weather.getLocation().getLatitude())
-                .withLongitude(weather.getLocation().getLongitude())
-                .withCityName(weather.getLocation().getCityName())
-                .withCountryName(weather.getLocation().getCountryName())
-                .withRegion(weather.getLocation().getRegion())
+                .withTemperature(entity.getTemperature())
+                .withPressure(entity.getPressure())
+                .withHumidity(entity.getHumidity())
+                .withWindSpeed(entity.getWindSpeed())
+                .withWindDegrees(entity.getWindDegrees())
+                .withLatitude(entity.getLocation().getLatitude())
+                .withLongitude(entity.getLocation().getLongitude())
+                .withCityName(entity.getLocation().getCityName())
+                .withCountryName(entity.getLocation().getCountryName())
+                .withRegion(entity.getLocation().getRegion())
                 .build();
     }
 

@@ -1,12 +1,10 @@
 package dao;
-
 import model.Location;
 import model.Weather;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import utils.connection.HibernateUtil;
-
 import java.util.ArrayList;
 import java.util.List;
 

@@ -28,7 +28,6 @@ public class OpenWeatherMapClient implements WeatherClient {
                     .withCountryName(node.get("sys").get("country").asText())
                     .build();
         }
-
         return result;
     }
 
