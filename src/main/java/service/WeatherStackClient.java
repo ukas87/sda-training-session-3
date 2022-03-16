@@ -10,11 +10,9 @@ import java.net.URL;
 public class WeatherStackClient implements WeatherClient {
     private static final String appId = "1dcafe969dd27e1888fc943455c556ed";
 
-
     @Override
     public WeatherDto getWeatherByCity(String city) {
         ObjectNode node = getObjectNodeByCity(city);
-
 
         return WeatherDto.Builder()
                 .withTemperature(node.get("current").get("temperature").asDouble())
@@ -48,7 +46,6 @@ public class WeatherStackClient implements WeatherClient {
         } catch (MalformedURLException e) {
             System.err.println("Unable to create request");
         }
-        System.out.println(url);
         return url;
     }
 

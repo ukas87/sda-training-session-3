@@ -1,6 +1,8 @@
 package utils.averager;
+
 import model.WeatherDto;
 import utils.FormatConverter;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Arrays;
@@ -39,28 +41,31 @@ public class WeatherDtoAverager implements Averager<WeatherDto> {
                 .build();
     }
 
-    public Double getAverageLatitude(WeatherDto[] dtos){
+    public Double round(Double toRound, int scale) {
+        BigDecimal bd = new BigDecimal(Double.toString(toRound));
+        bd = bd.setScale(scale, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
+
+    public Double getAverageLatitude(WeatherDto[] dtos) {
         double result = Arrays.stream(dtos)
                 .filter(weather -> weather.getLatitude() != null)
                 .mapToDouble(WeatherDto::getLatitude)
                 .average()
                 .orElse(0);
 
-        BigDecimal bd = new BigDecimal(Double.toString(result));
-        bd = bd.setScale(4, RoundingMode.HALF_UP);
-        return bd.doubleValue();
+
+        return round(result, 4);
     }
 
-    public Double getAverageLongitude(WeatherDto[] dtos){
+    public Double getAverageLongitude(WeatherDto[] dtos) {
         double result = Arrays.stream(dtos)
                 .filter(weather -> weather.getLongitude() != null)
                 .mapToDouble(WeatherDto::getLongitude)
                 .average()
                 .orElse(0);
 
-        BigDecimal bd = new BigDecimal(Double.toString(result));
-        bd = bd.setScale(4, RoundingMode.HALF_UP);
-        return bd.doubleValue();
+        return round(result, 4);
     }
 
     public Double getAverageTemperature(WeatherDto[] dtos) {
@@ -70,9 +75,7 @@ public class WeatherDtoAverager implements Averager<WeatherDto> {
                 .average()
                 .orElse(0);
 
-        BigDecimal bd = new BigDecimal(Double.toString(result));
-        bd = bd.setScale(1, RoundingMode.HALF_UP);
-        return bd.doubleValue();
+        return round(result, 1);
     }
 
     public Integer getAverageHumidity(WeatherDto[] dtos) {
@@ -124,8 +127,8 @@ public class WeatherDtoAverager implements Averager<WeatherDto> {
                 .orElse(null);
     }
 
-    public String getRegionName(WeatherDto[] dtos){
-        return  Arrays.stream(dtos)
+    public String getRegionName(WeatherDto[] dtos) {
+        return Arrays.stream(dtos)
                 .map(WeatherDto::getRegion)
                 .filter(Objects::nonNull)
                 .findFirst()

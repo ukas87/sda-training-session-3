@@ -1,10 +1,11 @@
 package model;
+
 import lombok.*;
 import org.hibernate.Hibernate;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
-
 
 @Entity
 @Getter
@@ -38,7 +39,6 @@ public class Location {
 
     @OneToMany(mappedBy = "location", fetch = FetchType.EAGER)
     private List<Weather> weathers;
-
 
     @Override
     public boolean equals(Object o) {

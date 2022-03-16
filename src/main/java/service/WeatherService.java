@@ -1,14 +1,14 @@
 package service;
-
 import dao.LocationDao;
 import dao.WeatherDao;
 import model.Location;
+import utils.mapper.LocationMapper;
 import utils.mapper.WeatherMapper;
 import model.WeatherDto;
 import model.Weather;
 import utils.averager.Averager;
-
 import java.time.LocalDate;
+import java.util.List;
 
 public class WeatherService {
 
@@ -16,15 +16,17 @@ public class WeatherService {
     final WeatherClient weatherStackClient;
     final Averager<WeatherDto> weatherAverager;
     final WeatherMapper weatherMapper;
+    final LocationMapper locationMapper;
     final LocationDao locationDao;
     final WeatherDao weatherDao;
 
 
-    public WeatherService(WeatherClient openWeatherMapClient, WeatherClient weatherStackClient, Averager<WeatherDto> weatherAverager, WeatherMapper weatherMapper, LocationDao locationDao, WeatherDao weatherDao) {
+    public WeatherService(OpenWeatherMapClient openWeatherMapClient, WeatherStackClient weatherStackClient, Averager<WeatherDto> weatherAverager, WeatherMapper weatherMapper, LocationMapper locationMapper, LocationDao locationDao, WeatherDao weatherDao) {
         this.openWeatherMapClient = openWeatherMapClient;
         this.weatherStackClient = weatherStackClient;
         this.weatherAverager = weatherAverager;
         this.weatherMapper = weatherMapper;
+        this.locationMapper = locationMapper;
         this.locationDao = locationDao;
         this.weatherDao = weatherDao;
     }
@@ -36,37 +38,70 @@ public class WeatherService {
         WeatherDto averageWeatherDto = getAverageWeatherDto(weather1, weather2);
         averageWeatherDto.setDate(LocalDate.now());
 
-        Weather weatherToSave = weatherMapper.toEntity(averageWeatherDto);
-
-
         return averageWeatherDto;
     }
 
-    public void saveWeather(Weather weather){
+    public void saveLocation(WeatherDto weatherDto){
+        Location location = locationMapper.toEntity(weatherDto);
+        locationDao.save(location);
+    }
+
+    public void saveWeather(WeatherDto weatherDto) {
+        Weather weather = weatherMapper.toEntity(weatherDto);
         Location location = locationDao.findByCityAndCountry(weather.getLocation().getCityName(), weather.getLocation().getCountryName());
-        if(location != null){
+        if (location != null) {
             weather.setLocation(location);
             weatherDao.save(weather);
-        }else{
+        } else {
             weatherDao.save(weather);
         }
-
     }
 
-    private WeatherDto getWeatherDtoFromOpenWeatherMap(String city) {
-
+    public WeatherDto getWeatherDtoFromOpenWeatherMap(String city) {
         return openWeatherMapClient.getWeatherByCity(city);
     }
 
-
-    private WeatherDto getWeatherDtoFromWeatherStack(String city) {
-
-        return openWeatherMapClient.getWeatherByCity(city);
+    public WeatherDto getWeatherDtoFromWeatherStack(String city) {
+        return weatherStackClient.getWeatherByCity(city);
     }
 
-    private WeatherDto getAverageWeatherDto(WeatherDto... weathers) {
+    public WeatherDto getAverageWeatherDto(WeatherDto... weathers) {
         return weatherAverager.getAverage(weathers);
     }
+
+
+
+
+
+    public List<Weather> getAllWeathersByDate(LocalDate date, String cityName){
+        return weatherDao.getWeatherByDateAndCity(date, cityName);
+    }
+
+    public void displayWeathers(List<Weather> weathers) {
+        List<WeatherDto> listToDisplay = weathers.stream()
+                .map(weatherMapper::toDto)
+                .toList();
+
+        for (WeatherDto weather : listToDisplay) {
+            displayWeather(weather);
+            System.out.println();
+        }
+    }
+
+
+
+    public void displayWeather(WeatherDto weatherDto) {
+        System.out.println("City: " + weatherDto.getCityName() +
+                "\nCountry: " + weatherDto.getCountryName() +
+                "\nRegion: " + weatherDto.getRegion() +
+                "\nDate: " + weatherDto.getDate() +
+                "\nTemperature: " + weatherDto.getTemperature() + " C" +
+                "\nPressure: " + weatherDto.getPressure() + " Pa" +
+                "\nHumidity: " + weatherDto.getHumidity() + " %" +
+                "\nWind direction: " + weatherDto.getWindDirection() +
+                "\nWind speed: " + weatherDto.getWindSpeed() + " km/hour");
+    }
+
 
 
 }

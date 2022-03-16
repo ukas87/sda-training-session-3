@@ -6,6 +6,10 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import utils.connection.HibernateUtil;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 public class WeatherDao {
 
     public void save(Weather weather) {
@@ -23,7 +27,7 @@ public class WeatherDao {
         }
     }
 
-    public void delete(Weather weather){
+    public void delete(Weather weather) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
@@ -71,7 +75,7 @@ public class WeatherDao {
 
     }
 
-    public void deleteAllWeathers(){
+    public void deleteAllWeathers() {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
@@ -87,5 +91,31 @@ public class WeatherDao {
             if (transaction != null)
                 transaction.rollback();
         }
+    }
+
+    public List<Weather> getWeatherByDateAndCity(LocalDate date, String city) {
+        Transaction transaction = null;
+        List<Weather> weathers = new ArrayList<>();
+
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+
+            weathers = session.createNativeQuery("""
+                            SELECT *
+                            FROM weathers
+                            JOIN locations using(location_id)
+                            WHERE date = :date AND city_name = :city
+                            """, Weather.class)
+                    .setParameter("date", date)
+                    .setParameter("city", city)
+                    .getResultList();
+
+            transaction.commit();
+            return weathers;
+        } catch (HibernateException e) {
+            if (transaction != null)
+                transaction.rollback();
+        }
+        return weathers;
     }
 }
