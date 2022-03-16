@@ -34,14 +34,13 @@ public class WeatherService {
     }
 
 
-    public WeatherDto getAverageWeatherDtoFromBaseByCityName(String city) {
+    public WeatherDto getAverageWeatherDtoByCityNameFromBase(String city) {
         Double lat = null;
         Double lon = null;
         try {
             Location location = locationDao.findByCity(city);
             lat = location.getLatitude();
             lon = location.getLongitude();
-            System.out.println(location);
         } catch (Exception e) {
             System.out.println("no such location in base");
         }
@@ -60,7 +59,7 @@ public class WeatherService {
 
     public void saveWeather(WeatherDto weatherDto) {
         Weather weather = weatherMapper.toEntity(weatherDto);
-        Location location = locationDao.findByCityAndCountry(weather.getLocation().getCityName(), weather.getLocation().getCountryName());
+        Location location = locationDao.findByCity(weather.getLocation().getCityName());
         if (location != null) {
             weather.setLocation(location);
             weatherDao.save(weather);
@@ -70,7 +69,11 @@ public class WeatherService {
     }
 
     public WeatherDto getAverageWeatherDto(WeatherDto... weathers) {
-        return weatherAverager.getAverage(weathers);
+        WeatherDto weatherDto = weatherAverager.getAverage(weathers);
+        Location location = locationDao.findByCity(weatherDto.getCityName());
+        weatherDto.setCountryName(location.getCountryName());
+        weatherDto.setRegion(location.getRegion());
+        return weatherDto;
     }
 
     public List<Weather> getAllWeathersByDate(LocalDate date, String cityName) {
@@ -87,7 +90,6 @@ public class WeatherService {
             System.out.println();
         }
     }
-
     public void displayWeather(WeatherDto weatherDto) {
         System.out.println("City: " + weatherDto.getCityName() +
                 "\nCountry: " + weatherDto.getCountryName() +
@@ -99,6 +101,5 @@ public class WeatherService {
                 "\nWind direction: " + weatherDto.getWindDirection() +
                 "\nWind speed: " + weatherDto.getWindSpeed() + " km/hour");
     }
-
 
 }

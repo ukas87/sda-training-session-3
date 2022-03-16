@@ -59,7 +59,7 @@ public class UserInterface {
 
     public void weatherDownloadMenu() {
         try {
-            WeatherDto weatherDto = weatherService.getWeatherDtoFromOpenWeatherMap(inputHandler.takeLocationCityName());
+            WeatherDto weatherDto = weatherService.getAverageWeatherDtoByCityNameFromBase(inputHandler.takeLocationCityName());
             weatherService.saveWeather(weatherDto);
             weatherService.displayWeather(weatherDto);
         } catch (Exception e) {
