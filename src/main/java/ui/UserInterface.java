@@ -10,7 +10,6 @@ import service.WeatherStackClient;
 import utils.averager.WeatherDtoAverager;
 import utils.mapper.LocationMapper;
 import utils.mapper.WeatherMapper;
-
 import java.util.Scanner;
 
 public class UserInterface {

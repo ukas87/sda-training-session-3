@@ -53,10 +53,7 @@ public class WeatherService {
         WeatherDto weather1 = openWeatherMapClient.getWeatherByCoordinates(lat, lon);
         WeatherDto weather2 = weatherStackClient.getWeatherByCoordinates(lat, lon);
 
-        WeatherDto averageWeatherDto = getAverageWeatherDto(weather1, weather2);
-        averageWeatherDto.setDate(LocalDate.now());
-
-        return averageWeatherDto;
+        return getAverageWeatherDto(weather1, weather2);
     }
 
     public void saveWeather(WeatherDto weatherDto) {

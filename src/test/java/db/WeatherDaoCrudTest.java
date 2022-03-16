@@ -4,9 +4,7 @@ import dao.WeatherDao;
 import model.Location;
 import model.Weather;
 import org.junit.jupiter.api.*;
-
 import java.time.LocalDate;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -37,7 +35,6 @@ class WeatherDaoCrudTest {
                 .withLocation(Location.Builder()
                         .build())
                 .build();
-
         weatherDao.save(weather);
 
         Weather expected = weatherDao.findById(1);
