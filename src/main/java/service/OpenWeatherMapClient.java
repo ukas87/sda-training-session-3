@@ -60,7 +60,7 @@ public class OpenWeatherMapClient implements WeatherClient {
     private URL buildUrl(Double lat, Double lon){
         URL url = null;
         try {
-            url = new URL("https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=" + appId);
+            url = new URL("https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&units=metric&appid=" + appId);
         } catch (MalformedURLException e) {
             log.error(e);
         }

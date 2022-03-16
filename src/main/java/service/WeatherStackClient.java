@@ -10,7 +10,7 @@ import java.net.URL;
 
 @Log4j2
 public class WeatherStackClient implements WeatherClient {
-    private static final String appId = "1dcafe969dd27e1888fc943455c556ed";
+    private static final String appId = "bc4478a9522077df76caca4a9e8e1c9a";
 
     @Override
     public WeatherDto getWeatherByCity(String city) {
@@ -32,7 +32,7 @@ public class WeatherStackClient implements WeatherClient {
     private URL buildUrl(String city) {
         URL url = null;
         try {
-            url = new URL("https://api.weatherstack.com/current?access_key=" + appId + "&query=" + city + "&units=m");
+            url = new URL("http://api.weatherstack.com/current?access_key=" + appId + "&query=" + city + "&units=m");
         } catch (MalformedURLException e) {
             log.error(e);
         }
@@ -60,7 +60,7 @@ public class WeatherStackClient implements WeatherClient {
     private URL buildUrl(Double lat, Double lon) {
         URL url = null;
         try {
-            url = new URL("https://api.weatherstack.com/current?access_key=" + appId + "&query=" + lat + "," + lon + "&units=m");
+            url = new URL("http://api.weatherstack.com/current?access_key=" + appId + "&query=" + lat + "," + lon + "&units=m");
         } catch (MalformedURLException e) {
             log.error(e);
         }
