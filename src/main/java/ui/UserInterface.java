@@ -63,7 +63,7 @@ public class UserInterface {
             weatherService.saveWeather(weatherDto);
             weatherService.displayWeather(weatherDto);
         } catch (Exception e) {
-            System.out.println("Unable to get data for your city");
+            System.err.println("Unable to get data for your city");
         }
     }
 }

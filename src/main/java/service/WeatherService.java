@@ -2,6 +2,7 @@ package service;
 
 import dao.LocationDao;
 import dao.WeatherDao;
+import lombok.extern.log4j.Log4j2;
 import model.Location;
 import utils.mapper.LocationMapper;
 import utils.mapper.WeatherMapper;
@@ -12,6 +13,7 @@ import utils.averager.Averager;
 import java.time.LocalDate;
 import java.util.List;
 
+@Log4j2
 public class WeatherService {
 
     final WeatherClient openWeatherMapClient;
@@ -42,7 +44,7 @@ public class WeatherService {
             lat = location.getLatitude();
             lon = location.getLongitude();
         } catch (Exception e) {
-            System.out.println("no such location in base");
+            log.error(e);
         }
         return getAverageWeatherDtoByCoordinates(lat, lon);
     }

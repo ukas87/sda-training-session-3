@@ -59,7 +59,6 @@ public class LocationDao {
         return null;
     }
 
-
     public Location findByCityAndCountry(String city, String country) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {

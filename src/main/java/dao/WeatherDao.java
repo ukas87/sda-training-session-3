@@ -55,7 +55,6 @@ public class WeatherDao {
         return null;
     }
 
-
     public void update(Weather weather) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -85,7 +84,6 @@ public class WeatherDao {
                 transaction.rollback();
         }
     }
-
 
     public List<Weather> getAllWeathers() {
         Transaction transaction = null;

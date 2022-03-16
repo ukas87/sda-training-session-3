@@ -32,13 +32,13 @@
             To bardzo ważna opcja. Należy pamiętać żeby weryfikować czy zapytanie, które jest generowane
             odpowiada naszym potrzebom.
         -->
-        <property name="show_sql">true</property>
+<!--        <property name="show_sql">true</property>-->
 
-        <property name="format_sql">true</property>
+<!--        <property name="format_sql">true</property>-->
 
-        <property name="connection.pool_size">1</property>
+<!--        <property name="connection.pool_size">1</property>-->
 
-        <property name="current_session_context_class">thread</property>
+<!--        <property name="current_session_context_class">thread</property>-->
 
         <!--
             Właściwości związane z connection pool, więcej na ten temat:
