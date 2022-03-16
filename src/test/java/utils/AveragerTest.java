@@ -59,11 +59,8 @@ public class AveragerTest {
                 .withWindSpeed(4)
                 .withWindDegrees(168)
                 .withWindDirection("SSE")
-                .withLatitude(-13.6615)
-                .withLongitude(38.4937)
                 .withCityName("Chicago")
-                .withCountryName("USA")
-                .withRegion("Region1").build();
+                .build();
 
         WeatherDto actual = averager.getAverage(dtos);
 

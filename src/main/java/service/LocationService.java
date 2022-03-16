@@ -33,8 +33,8 @@ public class LocationService {
         locationDao.update(location);
     }
 
-    public Location findByCityAndCountry(String city, String country){
-        return locationDao.findByCityAndCountry(city,country);
+    public Location findByCityAndCountry(String city, String country) {
+        return locationDao.findByCityAndCountry(city, country);
     }
 
     public List<Location> getAllLocations() {
@@ -49,6 +49,11 @@ public class LocationService {
         for (WeatherDto location : listToDisplay) {
             displayLocation(location);
         }
+    }
+
+    public void saveLocation(WeatherDto weatherDto) {
+        Location location = locationMapper.toEntity(weatherDto);
+        locationDao.save(location);
     }
 
     public void displayLocation(WeatherDto weatherDto) {

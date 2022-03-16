@@ -1,4 +1,5 @@
 package service;
+
 import dao.LocationDao;
 import dao.WeatherDao;
 import model.Location;
@@ -7,6 +8,7 @@ import utils.mapper.WeatherMapper;
 import model.WeatherDto;
 import model.Weather;
 import utils.averager.Averager;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -31,9 +33,23 @@ public class WeatherService {
         this.weatherDao = weatherDao;
     }
 
-    public WeatherDto getAverageWeatherDtoByCity(String city) {
-        WeatherDto weather1 = getWeatherDtoFromOpenWeatherMap(city);
-        WeatherDto weather2 = getWeatherDtoFromWeatherStack(city);
+
+    public WeatherDto getAverageWeatherDtoByCityNameFromBase(String city) {
+        Double lat = null;
+        Double lon = null;
+        try {
+            Location location = locationDao.findByCity(city);
+            lat = location.getLatitude();
+            lon = location.getLongitude();
+        } catch (Exception e) {
+            System.out.println("no such location in base");
+        }
+        return getAverageWeatherDtoByCoordinates(lat, lon);
+    }
+
+    public WeatherDto getAverageWeatherDtoByCoordinates(Double lat, Double lon) {
+        WeatherDto weather1 = openWeatherMapClient.getWeatherByCoordinates(lat, lon);
+        WeatherDto weather2 = weatherStackClient.getWeatherByCoordinates(lat, lon);
 
         WeatherDto averageWeatherDto = getAverageWeatherDto(weather1, weather2);
         averageWeatherDto.setDate(LocalDate.now());
@@ -41,14 +57,9 @@ public class WeatherService {
         return averageWeatherDto;
     }
 
-    public void saveLocation(WeatherDto weatherDto){
-        Location location = locationMapper.toEntity(weatherDto);
-        locationDao.save(location);
-    }
-
     public void saveWeather(WeatherDto weatherDto) {
         Weather weather = weatherMapper.toEntity(weatherDto);
-        Location location = locationDao.findByCityAndCountry(weather.getLocation().getCityName(), weather.getLocation().getCountryName());
+        Location location = locationDao.findByCity(weather.getLocation().getCityName());
         if (location != null) {
             weather.setLocation(location);
             weatherDao.save(weather);
@@ -57,23 +68,15 @@ public class WeatherService {
         }
     }
 
-    public WeatherDto getWeatherDtoFromOpenWeatherMap(String city) {
-        return openWeatherMapClient.getWeatherByCity(city);
-    }
-
-    public WeatherDto getWeatherDtoFromWeatherStack(String city) {
-        return weatherStackClient.getWeatherByCity(city);
-    }
-
     public WeatherDto getAverageWeatherDto(WeatherDto... weathers) {
-        return weatherAverager.getAverage(weathers);
+        WeatherDto weatherDto = weatherAverager.getAverage(weathers);
+        Location location = locationDao.findByCity(weatherDto.getCityName());
+        weatherDto.setCountryName(location.getCountryName());
+        weatherDto.setRegion(location.getRegion());
+        return weatherDto;
     }
 
-
-
-
-
-    public List<Weather> getAllWeathersByDate(LocalDate date, String cityName){
+    public List<Weather> getAllWeathersByDate(LocalDate date, String cityName) {
         return weatherDao.getWeatherByDateAndCity(date, cityName);
     }
 
@@ -87,9 +90,6 @@ public class WeatherService {
             System.out.println();
         }
     }
-
-
-
     public void displayWeather(WeatherDto weatherDto) {
         System.out.println("City: " + weatherDto.getCityName() +
                 "\nCountry: " + weatherDto.getCountryName() +
@@ -101,7 +101,5 @@ public class WeatherService {
                 "\nWind direction: " + weatherDto.getWindDirection() +
                 "\nWind speed: " + weatherDto.getWindSpeed() + " km/hour");
     }
-
-
 
 }

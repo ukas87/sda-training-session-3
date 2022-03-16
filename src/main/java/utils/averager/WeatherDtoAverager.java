@@ -1,8 +1,6 @@
 package utils.averager;
-
 import model.WeatherDto;
 import utils.FormatConverter;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Arrays;
@@ -19,12 +17,7 @@ public class WeatherDtoAverager implements Averager<WeatherDto> {
         Integer avgWindSpeed = getAverageWindSpeed(dtos);
         Integer avgWindDegrees = getAverageWindDegrees(dtos);
         String windDirection = FormatConverter.getInstance().DegreesToCardinalDetailed(avgWindDegrees);
-        Double latitude = getAverageLatitude(dtos);
-        Double longitude = getAverageLongitude(dtos);
         String cityName = getCityName(dtos);
-        String countryName = getCountryName(dtos);
-        String region = getRegionName(dtos);
-
 
         return WeatherDto.Builder()
                 .withTemperature(avgTemperature)
@@ -33,11 +26,7 @@ public class WeatherDtoAverager implements Averager<WeatherDto> {
                 .withWindSpeed(avgWindSpeed)
                 .withWindDegrees(avgWindDegrees)
                 .withWindDirection(windDirection)
-                .withLatitude(latitude)
-                .withLongitude(longitude)
                 .withCityName(cityName)
-                .withCountryName(countryName)
-                .withRegion(region)
                 .build();
     }
 
