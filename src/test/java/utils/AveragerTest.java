@@ -67,23 +67,6 @@ public class AveragerTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    @Test
-    void shouldReturnFirstRegionName(){
-        WeatherDto[] dtos = new WeatherDto[]{weatherDto1, weatherDto2, weatherDto3};
-
-        String actual = averager.getRegionName(dtos);
-
-        assertThat(actual).isEqualTo("Region1");
-    }
-
-    @Test
-    void shouldReturnNullIfAllRegionsAreNull(){
-        WeatherDto[] dtos = new WeatherDto[]{weatherDto4};
-
-        String actual = averager.getRegionName(dtos);
-
-        assertThat(actual).isNull();
-    }
 
     @Test
     void shouldReturnFirstCityName(){
@@ -102,25 +85,6 @@ public class AveragerTest {
 
         assertThat(actual).isNull();
     }
-
-    @Test
-    void shouldReturnCountryNameInProperFormat(){
-        WeatherDto[] dtos = new WeatherDto[]{weatherDto1, weatherDto2, weatherDto3};
-
-        String actual = averager.getCountryName(dtos);
-
-        assertThat(actual).isEqualTo("USA");
-    }
-
-    @Test
-    void shouldReturnNullIfAllCountriesAreNull(){
-        WeatherDto[] dtos = new WeatherDto[]{weatherDto4};
-
-        String actual = averager.getCountryName(dtos);
-
-        assertThat(actual).isNull();
-    }
-
 
     @Test
     void shouldCountAverageTemperature(){

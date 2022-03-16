@@ -2,7 +2,6 @@ package db;
 import dao.LocationDao;
 import dao.WeatherDao;
 import model.Location;
-import model.Weather;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -100,17 +99,4 @@ public class LocationDaoTest {
         assertThat(locationToUpdate).isEqualTo(actual);
     }
 
-    @Test
-    void shouldAddWeatherWithExistingLocation() {
-        Weather toSave = Weather.Builder()
-                .withLocation(location2)
-                .withTemperature(42.00)
-                .build();
-        int locations = locationDao.findAll().size();
-        System.out.println(locations);
-
-        locationDao.saveWeather(toSave);
-
-        assertThat(locations).isEqualTo(3);
-    }
 }

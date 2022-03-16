@@ -5,7 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import utils.connection.HibernateUtil;
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -16,6 +16,7 @@ public class WeatherDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
 
+            weather.setDate(LocalDate.now());
             session.saveOrUpdate(weather);
 
             transaction.commit();
@@ -87,11 +88,11 @@ public class WeatherDao {
 
     public List<Weather> getAllWeathers() {
         Transaction transaction = null;
-        List<Weather> weather = new ArrayList<>();
+        List<Weather> weather = Collections.emptyList();
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
 
-            weather = session.createQuery("FROM Weather", Weather.class).getResultList();
+            weather = session.createQuery("FROM Weather ", Weather.class).getResultList();
 
             transaction.commit();
         } catch (HibernateException e) {
@@ -101,33 +102,33 @@ public class WeatherDao {
         return weather;
     }
 
-    public Weather findByCity(String city) {
+    public List<Weather> findByCity(String city) {
         Transaction transaction = null;
-        Weather weather = null;
+        List<Weather> weathers = Collections.emptyList();
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
 
-            weather = session.createNativeQuery("""
+            weathers = session.createNativeQuery("""
                             SELECT *
                             FROM weathers w
                             JOIN locations l
                             USING (location_id)
                             WHERE city_name = :cityName""", Weather.class)
                     .setParameter("cityName", city)
-                    .uniqueResult();
+                    .getResultList();
 
             transaction.commit();
-            return weather;
+            return weathers;
         } catch (HibernateException e) {
             if (transaction != null)
                 transaction.rollback();
         }
-        return weather;
+        return weathers;
     }
 
     public List<Weather> getWeatherByDateAndCity(LocalDate date, String city) {
         Transaction transaction = null;
-        List<Weather> weathers = new ArrayList<>();
+        List<Weather> weathers = Collections.emptyList();
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
@@ -151,27 +152,27 @@ public class WeatherDao {
         return weathers;
     }
 
-    public Weather findWeatherByCountry(String country) {
+    public List<Weather> findWeatherByCountry(String country) {
         Transaction transaction = null;
-        Weather weather = null;
+        List<Weather> weathers = Collections.emptyList();
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
 
-            weather = session.createNativeQuery("""
+            weathers = session.createNativeQuery("""
                             SELECT *
                             FROM weathers w
                             JOIN locations l
                             USING (location_id)
                             WHERE country_name = :countryName""", Weather.class)
                     .setParameter("countryName", country)
-                    .uniqueResult();
+                    .getResultList();
 
             transaction.commit();
-            return weather;
+            return weathers;
         } catch (HibernateException e) {
             if (transaction != null)
                 transaction.rollback();
         }
-        return weather;
+        return weathers;
     }
 }
