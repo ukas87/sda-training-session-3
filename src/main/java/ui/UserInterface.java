@@ -1,7 +1,6 @@
 package ui;
 import dao.LocationDao;
 import dao.WeatherDao;
-import lombok.extern.log4j.Log4j2;
 import model.Location;
 import model.WeatherDto;
 import service.LocationService;
@@ -15,7 +14,6 @@ import utils.mapper.WeatherMapper;
 import java.util.Scanner;
 
 public class UserInterface {
-
 
     final InputHandler inputHandler = new InputHandler(new Scanner(System.in));
     LocationService locationService = new LocationService(new LocationDao(), new LocationMapper());
