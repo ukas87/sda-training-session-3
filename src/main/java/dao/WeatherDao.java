@@ -8,7 +8,6 @@ import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 
-
 public class WeatherDao {
 
     public void save(Weather weather) {

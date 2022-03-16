@@ -3,7 +3,6 @@ package model;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.Cascade;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
