@@ -3,7 +3,6 @@ package model;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.Objects;
 
 @EqualsAndHashCode
 @Getter
@@ -25,23 +24,5 @@ public class WeatherDto {
     private String cityName;
     private String countryName;
     private String region;
-
-    @Override
-    public String toString() {
-        return "WeatherDto{" +
-                "temperature=" + temperature +
-                ", pressure=" + pressure +
-                ", humidity=" + humidity +
-                ", windSpeed=" + windSpeed +
-                ", date=" + date +
-                ", windDegrees=" + windDegrees +
-                ", windDirection='" + windDirection + '\'' +
-                ", latitude=" + latitude +
-                ", longitude=" + longitude +
-                ", cityName='" + cityName + '\'' +
-                ", countryName='" + countryName + '\'' +
-                ", region='" + region + '\'' +
-                '}';
-    }
 
 }

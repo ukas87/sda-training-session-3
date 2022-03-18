@@ -1,6 +1,5 @@
 package dao;
 import model.Location;
-import model.Weather;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -59,7 +58,6 @@ public class LocationDao {
         return null;
     }
 
-
     public Location findByCityAndCountry(String city, String country) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -107,20 +105,6 @@ public class LocationDao {
 
             transaction.commit();
         } catch (HibernateException hibernateException) {
-            if (transaction != null)
-                transaction.rollback();
-        }
-    }
-
-    public void saveWeather(Weather weather) {
-        Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-
-            session.saveOrUpdate(weather);
-
-            transaction.commit();
-        } catch (HibernateException e) {
             if (transaction != null)
                 transaction.rollback();
         }
