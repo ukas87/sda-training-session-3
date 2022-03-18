@@ -23,6 +23,20 @@ public class InputHandler {
         return checking;
     }
 
+    public String takeLocationChoice() {
+        System.out.println("Chose an action 0-2");
+        String checking;
+        checking = input.nextLine();
+        return checking;
+    }
+
+    public String takeWeatherChoice() {
+        System.out.println("Chose an action 0-3");
+        String checking;
+        checking = input.nextLine();
+        return checking;
+    }
+
 
     public String takeLocationCityName() {
         System.out.println("What's name of the City?");
