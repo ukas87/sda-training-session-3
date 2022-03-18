@@ -12,7 +12,6 @@ import utils.averager.WeatherDtoAverager;
 import utils.mapper.LocationMapper;
 import utils.mapper.WeatherMapper;
 
-
 import java.util.List;
 import java.util.Scanner;
 
@@ -23,15 +22,10 @@ public class UserInterface {
     WeatherService weatherService = new WeatherService(new OpenWeatherMapClient(), new WeatherStackClient(), new WeatherDtoAverager(), new WeatherMapper(), new LocationMapper(), new LocationDao(), new WeatherDao());
     boolean isRunning = true;
 
-    final String initMenu = "==== Weather Application ===\n[1] Location Menu\n[2] Weather Menu\n[0] Exit";
-    final String locationMenu = "==== Location Menu ===\n[1] Adding a location to DB\n[2] Display all locations in DB\n[0] Back to Init Menu";
-    final String weatherMenu = "==== Weather Menu ===\n[1] Display average weather by city name\n[2] Display historic average weather by city" +
-            "\n[3]Display all weather for all locations\n[0] Back to Init Menu";
-
 
     public void startMenu() {
         do {
-            System.out.println(initMenu);
+            menuInterface();
             String choice = inputHandler.takeMenuChoice();
             switch (choice) {
                 case "1" -> {
@@ -51,7 +45,7 @@ public class UserInterface {
 
 
     public void locationMenu() {
-        System.out.println(locationMenu);
+        locationInterface();
         String choice = inputHandler.takeLocationChoice();
         switch (choice) {
             case "1" -> {
@@ -67,14 +61,14 @@ public class UserInterface {
                 // locationService.delete((Location) locationService.getAllLocations());
             }
             case "0" -> {
-                System.out.println(initMenu);
+                menuInterface();
                 System.out.println();
             }
         }
     }
 
     public void weatherMenu() {
-        System.out.println(weatherMenu);
+        weatherInterface();
         String choice = inputHandler.takeWeatherChoice();
         switch (choice) {
             case "1" -> {
@@ -84,54 +78,16 @@ public class UserInterface {
             }
             case "2" -> {
                 System.out.println("You chose to display historic average weather by city and date");
-                displayHistoricAverageWeatherByCyAndDate();
+               // displayHistoricAverageWeatherByCyAndDate();
             }
             case "3" -> {
                 System.out.println("You chose to display all weather for all locations");
                 displayAllWeatherForAllLocations();
             }
             case "0" -> {
-                System.out.println(initMenu);
+                menuInterface();
                 System.out.println();
             }
-        }
-    }
-
-    public void weatherDownloadMenu() {
-        try {
-            WeatherDto weatherDto = weatherService.getAverageWeatherDtoByCityNameFromBase(inputHandler.takeLocationCityName());
-            weatherService.saveWeather(weatherDto);
-            weatherService.displayWeather(weatherDto);
-        } catch (Exception e) {
-            System.err.println("Unable to get data for your city");
-        }
-    }
-
-    public void displayAverageWeather() {
-        try {
-            WeatherDto weatherDto = weatherService.getWeatherDtoFromOpenWeatherMap(inputHandler.takeLocationCityName());
-            weatherService.getAverageWeatherDto(weatherDto);
-            weatherService.saveWeather(weatherDto);
-            weatherService.displayWeather(weatherDto);
-        } catch (Exception e) {
-            System.err.println("Unable to get data for your city");
-        }
-    }
-
-    public void displayAllWeatherForAllLocations() {
-        try {
-            WeatherDto weatherDto = weatherService.getWeatherDtoFromOpenWeatherMap(inputHandler.takeLocationCountryName());
-            weatherService.displayWeathers((List<Weather>) weatherDto);
-        } catch (Exception e) {
-            System.err.println("Unable to get data");
-        }
-    }
-
-    public void displayAvailableLocations() {
-        try {
-            locationService.displayLocations(locationService.getAllLocations());
-        } catch (Exception e) {
-            System.err.println("Unable to get data");
         }
     }
 
@@ -150,13 +106,67 @@ public class UserInterface {
         }
     }
 
-    public void displayHistoricAverageWeatherByCyAndDate() {
+    public void displayAvailableLocations() {
         try {
-            WeatherDto weatherDto = weatherService.getWeatherDtoFromOpenWeatherMap(inputHandler.takeLocationCountryName());
-       //     weatherService.getAllWeathersByDate();
-        //    weatherService.displayWeathers();
+            locationService.displayLocations(locationService.getAllLocations());
         } catch (Exception e) {
-            System.err.println("Wrong data");
+            System.err.println("Unable to get data");
         }
     }
+
+    public void weatherDownloadMenu() {
+        try {
+            WeatherDto weatherDto = weatherService.getAverageWeatherDtoByCityNameFromBase(inputHandler.takeLocationCityName());
+            weatherService.saveWeather(weatherDto);
+            weatherService.displayWeather(weatherDto);
+        } catch (Exception e) {
+            System.err.println("Unable to get data for your city");
+        }
+    }
+
+    public void displayAverageWeather() {
+        try {
+            WeatherDto weatherDto = weatherService.getAverageWeatherDtoByCityNameFromBase(inputHandler.takeLocationCityName());
+            weatherService.saveWeather(weatherDto);
+            weatherService.displayWeather(weatherDto);
+        } catch (Exception e) {
+            System.err.println("Unable to get data for your city");
+        }
+    }
+
+
+//    public void displayHistoricAverageWeatherByCyAndDate() {
+//        try {
+//           WeatherDto weatherDto = weatherService.getAllWeathersByDate(null,inputHandler.takeLocationCityName());
+//           weatherService.getAverageWeatherDto();
+//           weatherService.displayWeathers(weatherDto);
+//        } catch (Exception e) {
+//            System.err.println("Wrong data");
+//        }
+//    }
+
+    public void displayAllWeatherForAllLocations() {
+        try {
+            WeatherDto weatherDto = weatherService.getAverageWeatherDto();
+            //weatherService.displayWeather(weatherDto);
+            weatherService.displayWeathers((List<Weather>) weatherDto);
+        } catch (Exception e) {
+            System.err.println("Unable to get data");
+        }
+    }
+
+    public void menuInterface(){
+        System.out.println("==== Weather Application ===\n[1] Location Menu\n[2] Weather Menu\n[0] Exit");
+    }
+
+    public void locationInterface(){
+        System.out.println("==== Location Menu ===\n[1] Adding a location to DB\n[2] Display all locations in DB\n" +
+                "[0] Back to Init Menu");
+    }
+
+    public void weatherInterface(){
+        System.out.println("==== Weather Menu ===\n[1] Display average weather by city name\n[2] Display historic" +
+                " average weather by city\n[3]Display all weather for all locations\n[0] Back to Init Menu");
+    }
+
 }
