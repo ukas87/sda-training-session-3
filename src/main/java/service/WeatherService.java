@@ -85,14 +85,10 @@ public class WeatherService {
     }
 
     public void displayWeathers(List<Weather> weathers) {
-        List<WeatherDto> listToDisplay = weathers.stream()
+        weathers.stream()
                 .map(weatherMapper::toDto)
-                .toList();
+                .forEach(this::displayWeather);
 
-        for (WeatherDto weather : listToDisplay) {
-            displayWeather(weather);
-            System.out.println();
-        }
     }
 
     public void displayWeather(WeatherDto weatherDto) {

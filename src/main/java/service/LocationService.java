@@ -36,13 +36,11 @@ public class LocationService {
     }
 
     public void displayAllLocations() {
-        List<WeatherDto> listToDisplay = getAllLocations().stream()
+        getAllLocations().stream()
                 .map(locationMapper::toDto)
-                .toList();
+                .forEach(this::displayLocation);
 
-        for (WeatherDto location : listToDisplay) {
-            displayLocation(location);
-        }
+
     }
 
     public void deleteLocationWithWeatherRelatedByCityName(String cityName){
