@@ -77,8 +77,6 @@ public class OpenWeatherMapClient implements WeatherClient {
                 .withWindDegrees(node.get("wind").get("deg").asInt())
                 .withLatitude(node.get("coord").get("lat").asDouble())
                 .withLongitude(node.get("coord").get("lon").asDouble())
-                .withCityName(node.get("name").asText())
-                .withCountryName(node.get("sys").get("country").asText())
                 .build();
     }
 }

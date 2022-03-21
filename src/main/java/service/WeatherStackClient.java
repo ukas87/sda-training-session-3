@@ -77,9 +77,6 @@ public class WeatherStackClient implements WeatherClient {
                 .withWindDegrees(node.get("current").get("wind_degree").asInt())
                 .withLatitude(node.get("location").get("lat").asDouble())
                 .withLongitude(node.get("location").get("lon").asDouble())
-                .withCityName(node.get("location").get("name").asText())
-                .withCountryName(node.get("location").get("country").asText())
-                .withRegion(node.get("location").get("region").asText())
                 .build();
     }
 

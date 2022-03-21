@@ -2,6 +2,7 @@ package model;
 
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.List;
@@ -38,6 +39,7 @@ public class Location {
     private String region;
 
     @OneToMany(mappedBy = "location", fetch = FetchType.EAGER)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<Weather> weathers;
 
     @Override

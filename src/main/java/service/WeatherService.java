@@ -53,6 +53,7 @@ public class WeatherService {
 
     public WeatherDto getAverageWeatherDtoByCoordinates(Double lat, Double lon) {
         WeatherDto weather1 = openWeatherMapClient.getWeatherByCoordinates(lat, lon);
+
         WeatherDto weather2 = weatherStackClient.getWeatherByCoordinates(lat, lon);
         List<WeatherDto> toAverage = List.of(weather1, weather2);
 
@@ -73,7 +74,6 @@ public class WeatherService {
                 .map(weatherMapper::toDto)
                 .toList();
         displayWeather(weatherAverager.getAverage(dtos));
-
     }
 
     public WeatherDto getAverageWeatherDto(List<WeatherDto> weathers) {
@@ -96,9 +96,7 @@ public class WeatherService {
     }
 
     public void displayWeather(WeatherDto weatherDto) {
-        System.out.println("City: " + weatherDto.getCityName() +
-                "\nCountry: " + weatherDto.getCountryName() +
-                "\nRegion: " + weatherDto.getRegion() +
+        System.out.println("Location: " + weatherDto.getCityName() +
                 "\nDate: " + weatherDto.getDate() +
                 "\nTemperature: " + weatherDto.getTemperature() + " C" +
                 "\nPressure: " + weatherDto.getPressure() + " Pa" +
