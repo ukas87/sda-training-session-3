@@ -1,10 +1,11 @@
 package utils.averager;
 
-import model.WeatherDto;
+
+import java.util.List;
 
 public interface Averager<T> {
 
-    T getAverage(WeatherDto[] objects);
+    T getAverage(List<T> objects);
 
 
 }

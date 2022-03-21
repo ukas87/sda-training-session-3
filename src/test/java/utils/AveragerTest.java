@@ -2,6 +2,9 @@ package utils;
 import model.WeatherDto;
 import org.junit.jupiter.api.Test;
 import utils.averager.WeatherDtoAverager;
+
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class AveragerTest {
@@ -51,7 +54,7 @@ public class AveragerTest {
 
     @Test
     void shouldReturnAverageWeatherDto(){
-        WeatherDto[] dtos = new WeatherDto[]{weatherDto1, weatherDto2, weatherDto3, weatherDto4};
+        List<WeatherDto> dtos = List.of(weatherDto1, weatherDto2, weatherDto3, weatherDto4);
         WeatherDto expected = WeatherDto.Builder()
                 .withTemperature(19.1)
                 .withPressure(13)
@@ -69,7 +72,7 @@ public class AveragerTest {
 
     @Test
     void shouldCountAverageTemperature(){
-        WeatherDto[] dtos = new WeatherDto[]{weatherDto1, weatherDto2, weatherDto3};
+        List<WeatherDto> dtos = List.of(weatherDto1, weatherDto2, weatherDto3);
 
         Double actual = averager.getAverageTemperature(dtos);
 
@@ -78,7 +81,7 @@ public class AveragerTest {
 
     @Test
     void shouldCountAverageTemperatureWithOneEmptyField(){
-        WeatherDto[] dtos = new WeatherDto[]{weatherDto1, weatherDto2, weatherDto3, weatherDto4};
+        List<WeatherDto> dtos = List.of(weatherDto1, weatherDto2, weatherDto3, weatherDto4);
 
         Double actual = averager.getAverageTemperature(dtos);
 
@@ -87,7 +90,7 @@ public class AveragerTest {
 
     @Test
     void shouldReturnZeroAverageTemperatureIfAllFieldsEmpty(){
-        WeatherDto[] dtos = new WeatherDto[]{weatherDto4};
+        List<WeatherDto> dtos = List.of(weatherDto4);
 
         Double actual = averager.getAverageTemperature(dtos);
 
@@ -97,7 +100,7 @@ public class AveragerTest {
 
     @Test
     void shouldCountAverageLatitude(){
-        WeatherDto[] dtos = new WeatherDto[]{weatherDto1, weatherDto2, weatherDto3};
+        List<WeatherDto> dtos = List.of(weatherDto1, weatherDto2, weatherDto3);
 
         Double actual = averager.getAverageLatitude(dtos);
 
@@ -106,7 +109,7 @@ public class AveragerTest {
 
     @Test
     void shouldCountAverageLatitudeWithOneEmptyField(){
-        WeatherDto[] dtos = new WeatherDto[]{weatherDto1, weatherDto2, weatherDto3, weatherDto4};
+        List<WeatherDto> dtos = List.of(weatherDto1, weatherDto2, weatherDto3, weatherDto4);
 
         Double actual = averager.getAverageLatitude(dtos);
 
@@ -115,7 +118,7 @@ public class AveragerTest {
 
     @Test
     void shouldReturnZeroAverageLatitudeIfAllFieldsEmpty(){
-        WeatherDto[] dtos = new WeatherDto[]{weatherDto4};
+        List<WeatherDto> dtos = List.of(weatherDto4);
 
         Double actual = averager.getAverageLatitude(dtos);
 
@@ -125,7 +128,7 @@ public class AveragerTest {
 
     @Test
     void shouldCountAverageLongitude(){
-        WeatherDto[] dtos = new WeatherDto[]{weatherDto1, weatherDto2, weatherDto3};
+        List<WeatherDto> dtos = List.of(weatherDto1, weatherDto2, weatherDto3);
 
         Double actual = averager.getAverageLongitude(dtos);
 
@@ -134,7 +137,7 @@ public class AveragerTest {
 
     @Test
     void shouldCountAverageLongitudeWithOneEmptyField(){
-        WeatherDto[] dtos = new WeatherDto[]{weatherDto1, weatherDto2, weatherDto3, weatherDto4};
+        List<WeatherDto> dtos = List.of(weatherDto1, weatherDto2, weatherDto3, weatherDto4);
 
         Double actual = averager.getAverageLongitude(dtos);
 
@@ -143,7 +146,7 @@ public class AveragerTest {
 
     @Test
     void shouldReturnZeroAverageLongitudeIfAllFieldsEmpty(){
-        WeatherDto[] dtos = new WeatherDto[]{weatherDto4};
+        List<WeatherDto> dtos = List.of(weatherDto4);
 
         Double actual = averager.getAverageLongitude(dtos);
 
@@ -153,7 +156,7 @@ public class AveragerTest {
 
     @Test
     void shouldCountAveragePressureWithOneEmptyField(){
-        WeatherDto[] dtos = new WeatherDto[]{weatherDto1, weatherDto2, weatherDto3, weatherDto4};
+        List<WeatherDto> dtos = List.of(weatherDto1, weatherDto2, weatherDto3, weatherDto4);
 
         Integer actual = averager.getAveragePressure(dtos);
 
@@ -162,7 +165,7 @@ public class AveragerTest {
 
     @Test
     void shouldReturnZeroAveragePressureIfAllFieldsEmpty(){
-        WeatherDto[] dtos = new WeatherDto[]{weatherDto4};
+        List<WeatherDto> dtos = List.of(weatherDto4);
 
         Integer actual = averager.getAveragePressure(dtos);
 
@@ -171,7 +174,7 @@ public class AveragerTest {
 
     @Test
     void shouldCountAveragePressure(){
-        WeatherDto[] dtos = new WeatherDto[]{weatherDto1, weatherDto2, weatherDto3};
+        List<WeatherDto> dtos = List.of(weatherDto1, weatherDto2, weatherDto3);
 
         Integer actual = averager.getAveragePressure(dtos);
 
@@ -181,7 +184,7 @@ public class AveragerTest {
 
     @Test
     void shouldCountAverageHumidity(){
-        WeatherDto[] dtos = new WeatherDto[]{weatherDto1, weatherDto2, weatherDto3};
+        List<WeatherDto> dtos = List.of(weatherDto1, weatherDto2, weatherDto3);
 
         Integer actual = averager.getAverageHumidity(dtos);
 
@@ -190,7 +193,7 @@ public class AveragerTest {
 
     @Test
     void shouldCountAverageHumidityWithOneEmptyField(){
-        WeatherDto[] dtos = new WeatherDto[]{weatherDto1, weatherDto2, weatherDto3, weatherDto4};
+        List<WeatherDto> dtos = List.of(weatherDto1, weatherDto2, weatherDto3, weatherDto4);
 
         Integer actual = averager.getAverageHumidity(dtos);
 
@@ -199,7 +202,7 @@ public class AveragerTest {
 
     @Test
     void shouldReturnZeroAverageHumidityIfAllFieldsEmpty(){
-        WeatherDto[] dtos = new WeatherDto[]{weatherDto4};
+        List<WeatherDto> dtos = List.of(weatherDto4);
 
         Integer actual = averager.getAverageHumidity(dtos);
 
@@ -209,7 +212,7 @@ public class AveragerTest {
 
     @Test
     void shouldCountAverageWindSpeed(){
-        WeatherDto[] dtos = new WeatherDto[]{weatherDto1, weatherDto2, weatherDto3};
+        List<WeatherDto> dtos = List.of(weatherDto1, weatherDto2, weatherDto3);
 
         Integer actual = averager.getAverageWindSpeed(dtos);
 
@@ -218,7 +221,7 @@ public class AveragerTest {
 
     @Test
     void shouldCountAverageWindSpeedWithOneEmptyField(){
-        WeatherDto[] dtos = new WeatherDto[]{weatherDto1, weatherDto2, weatherDto3, weatherDto4};
+        List<WeatherDto> dtos = List.of(weatherDto1, weatherDto2, weatherDto3, weatherDto4);
 
         Integer actual = averager.getAverageWindSpeed(dtos);
 
@@ -227,7 +230,7 @@ public class AveragerTest {
 
     @Test
     void shouldReturnZeroAverageWindSpeedIfAllFieldsEmpty(){
-        WeatherDto[] dtos = new WeatherDto[]{weatherDto4};
+        List<WeatherDto> dtos = List.of(weatherDto4);
 
         Integer actual = averager.getAverageWindSpeed(dtos);
 
@@ -237,7 +240,7 @@ public class AveragerTest {
 
     @Test
     void shouldCountAverageWindDegrees(){
-        WeatherDto[] dtos = new WeatherDto[]{weatherDto1, weatherDto2, weatherDto3};
+        List<WeatherDto> dtos = List.of(weatherDto1, weatherDto2, weatherDto3);
 
         Integer actual = averager.getAverageWindDegrees(dtos);
 
@@ -246,7 +249,7 @@ public class AveragerTest {
 
     @Test
     void shouldCountAverageWindDegreesWithOneEmptyField(){
-        WeatherDto[] dtos = new WeatherDto[]{weatherDto1, weatherDto2, weatherDto3, weatherDto4};
+        List<WeatherDto> dtos = List.of(weatherDto1, weatherDto2, weatherDto3, weatherDto4);
 
         Integer actual = averager.getAverageWindDegrees(dtos);
 
@@ -255,7 +258,7 @@ public class AveragerTest {
 
     @Test
     void shouldReturnZeroAverageWindDegreesIfAllFieldsEmpty(){
-        WeatherDto[] dtos = new WeatherDto[]{weatherDto4};
+        List<WeatherDto> dtos = List.of(weatherDto4);
 
         Integer actual = averager.getAverageWindDegrees(dtos);
 

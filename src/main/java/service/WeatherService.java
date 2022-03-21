@@ -54,8 +54,9 @@ public class WeatherService {
     public WeatherDto getAverageWeatherDtoByCoordinates(Double lat, Double lon) {
         WeatherDto weather1 = openWeatherMapClient.getWeatherByCoordinates(lat, lon);
         WeatherDto weather2 = weatherStackClient.getWeatherByCoordinates(lat, lon);
+        List<WeatherDto> toAverage = List.of(weather1, weather2);
 
-        WeatherDto weatherDto = getAverageWeatherDto(weather1, weather2);
+        WeatherDto weatherDto = getAverageWeatherDto(toAverage);
         weatherDto.setDate(LocalDate.now());
         return weatherDto;
     }
@@ -67,7 +68,15 @@ public class WeatherService {
 
     }
 
-    public WeatherDto getAverageWeatherDto(WeatherDto... weathers) {
+    public void displayHistoricalAverageByDateAndCity(LocalDate date, String city){
+        List<WeatherDto> dtos = getAllWeathersByDate(date, city).stream()
+                .map(weatherMapper::toDto)
+                .toList();
+        displayWeather(weatherAverager.getAverage(dtos));
+
+    }
+
+    public WeatherDto getAverageWeatherDto(List<WeatherDto> weathers) {
         return weatherAverager.getAverage(weathers);
     }
 

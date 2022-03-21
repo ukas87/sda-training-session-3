@@ -11,7 +11,6 @@ import service.WeatherStackClient;
 import utils.averager.WeatherDtoAverager;
 import utils.mapper.LocationMapper;
 import utils.mapper.WeatherMapper;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
@@ -162,8 +161,6 @@ public class UserInterface {
             System.err.println("Wrong historic data");
         }
     }
-
-
 
     public void menuInterface(){
         System.out.println("""
