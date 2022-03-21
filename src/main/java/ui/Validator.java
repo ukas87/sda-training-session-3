@@ -29,12 +29,12 @@ public class Validator {
     }
 
     public boolean countryNameValidation(String checking) {
-        String pattern = "^[a-zA-Z]";
+        String pattern = "^[A-Z][a-z]+(?: [A-Z]\\.[A-Z]\\.?|(?: [A-Z][a-z]+)*)";
         return validate(pattern, checking);
     }
 
     public boolean cityNameValidation(String checking) {
-        String pattern = "(^[a-zA-Z])";
+        String pattern = "^[A-Z][a-z]+(?: [A-Z]\\.[A-Z]\\.?|(?: [A-Z][a-z]+)*)";
         return validate(pattern, checking);
     }
 

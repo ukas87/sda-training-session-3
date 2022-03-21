@@ -21,6 +21,9 @@ public class UserInterface {
     LocationService locationService = new LocationService(new LocationDao(), new LocationMapper());
     WeatherService weatherService = new WeatherService(new OpenWeatherMapClient(), new WeatherStackClient(), new WeatherDtoAverager(), new WeatherMapper(), new LocationMapper(), new LocationDao(), new WeatherDao());
     boolean isRunning = true;
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_RESET= "\033[0m";
+
 
 
     public void startMenu() {
@@ -38,7 +41,7 @@ public class UserInterface {
                     System.out.println("Bye, thanks");
                     isRunning = false;
                 }
-//                default -> System.out.println("(default)Wrong data! Try again\n");
+          // default -> System.out.println("(default)Wrong data! Try again\n");
             }
         } while (isRunning);
     }
@@ -65,7 +68,7 @@ public class UserInterface {
                 updateLocation();
             }
             case "0" -> {
-                menuInterface();
+                startMenu();
                 System.out.println();
             }
         }
@@ -81,11 +84,11 @@ public class UserInterface {
                 System.out.println();
             }
             case "2" -> {
-                System.out.println("You chose to display historic average weather by city and date");
+                System.out.println("You chose to display historic average weather by date and city");
                 displayHistoricAverageWeatherByCyAndDate();
             }
             case "0" -> {
-                menuInterface();
+                startMenu();
                 System.out.println();
             }
         }
@@ -102,18 +105,19 @@ public class UserInterface {
                     .build();
 
             locationService.add(locationToAdd);
+            System.out.println(ANSI_GREEN + "New location successful added" + ANSI_RESET);
         } catch (Exception e) {
-            System.err.println("Wrong data");
+            System.err.println("Location was not added");
         }
     }
 
     public void deleteLocation(){
         try{
             locationService.deleteLocationWithWeatherRelatedByCityName(inputHandler.takeLocationCityName());
-            System.out.println("Location successfully deleted");
+            System.out.println(ANSI_GREEN +"Location successfully deleted" + ANSI_RESET);
             System.out.println();
         } catch (Exception e){
-            System.err.println("Unable to delete location");
+            System.err.println("Unable to delete location, int was not found in DB");
         }
     }
 
@@ -127,9 +131,9 @@ public class UserInterface {
                     locationToUpdate.setLatitude(inputHandler.takeLocationLatitude());
 
             locationService.update(locationToUpdate);
-            System.out.println("You updated locations parameters");
+            System.out.println(ANSI_GREEN + "You updated locations parameters in DB" + ANSI_RESET);
         } catch (Exception e){
-            System.err.println("Unable to update location");
+            System.err.println("Unable to update location, it is not in DB");
         }
     }
 
@@ -137,8 +141,9 @@ public class UserInterface {
     public void displayAvailableLocations() {
         try {
             locationService.displayAllLocations();
+            System.out.println(ANSI_GREEN + "Available locations successful displayed" + ANSI_RESET);
         } catch (Exception e) {
-            System.err.println("Unable to get data");
+            System.err.println("Unable to get Location data, it is not in DB");
         }
     }
 
@@ -147,8 +152,9 @@ public class UserInterface {
             WeatherDto weatherDto = weatherService.getAverageWeatherDtoByCityNameFromBase(inputHandler.takeLocationCityName());
             weatherService.saveWeather(weatherDto);
             weatherService.displayWeather(weatherDto);
+            System.out.println(ANSI_GREEN + "Average weather for " + inputHandler.takeLocationCityName() + " was successful displayed" + ANSI_RESET);
         } catch (Exception e) {
-            System.err.println("Unable to get data for your city");
+            System.err.println("Unable to get data for your city. The city name is not in DB");
         }
     }
 
@@ -157,8 +163,9 @@ public class UserInterface {
         try {
             List<Weather> weather =  weatherService.getAllWeathersByDate(LocalDate.parse(inputHandler.takeLocalDate()), inputHandler.takeLocationCityName2());
             weatherService.displayWeathers(weather);
+            System.out.println(ANSI_GREEN + "Historic data by city name was displayed successful" + ANSI_RESET);
         } catch (Exception e) {
-            System.err.println("Wrong historic data");
+            System.err.println("Unable to display historic data by city name, are you sure city name is in DB?");
         }
     }
 

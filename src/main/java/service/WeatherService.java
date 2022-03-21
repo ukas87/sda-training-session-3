@@ -93,12 +93,12 @@ public class WeatherService {
 
     public void displayWeather(WeatherDto weatherDto) {
         System.out.println("Location: " + weatherDto.getCityName() +
-                "\nDate: " + weatherDto.getDate() +
+                " | Date: " + weatherDto.getDate() +
                 "\nTemperature: " + weatherDto.getTemperature() + " C" +
                 "\nPressure: " + weatherDto.getPressure() + " Pa" +
                 "\nHumidity: " + weatherDto.getHumidity() + " %" +
                 "\nWind direction: " + weatherDto.getWindDirection() +
-                "\nWind speed: " + weatherDto.getWindSpeed() + " km/hour");
+                "\nWind speed: " + weatherDto.getWindSpeed() + " km/hour" + "\n");
     }
 
 }
