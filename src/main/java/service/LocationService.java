@@ -41,14 +41,18 @@ public class LocationService {
         return locationDao.findAll();
     }
 
-    public void displayLocations(List<Location> locations) {
-        List<WeatherDto> listToDisplay = locations.stream()
+    public void displayAllLocations() {
+        List<WeatherDto> listToDisplay = getAllLocations().stream()
                 .map(locationMapper::toDto)
                 .toList();
 
         for (WeatherDto location : listToDisplay) {
             displayLocation(location);
         }
+    }
+
+    public void deleteLocationWithWeatherRelatedByCityName(String cityName){
+        locationDao.deleteLocationWithRelatedWeatherByCityName(cityName);
     }
 
     public void saveLocation(WeatherDto weatherDto) {
