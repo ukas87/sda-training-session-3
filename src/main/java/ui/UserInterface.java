@@ -101,6 +101,7 @@ public class UserInterface {
                     .withLatitude(inputHandler.takeLocationLatitude())
                     .withLongitude(inputHandler.takeLocationLongitude())
                     .build();
+
             locationService.add(locationToAdd);
         } catch (Exception e) {
             System.err.println("Wrong data");
@@ -125,6 +126,7 @@ public class UserInterface {
                     locationToUpdate.setRegion(inputHandler.takeLocationRegionName());
                     locationToUpdate.setLongitude(inputHandler.takeLocationLongitude());
                     locationToUpdate.setLatitude(inputHandler.takeLocationLatitude());
+
             locationService.update(locationToUpdate);
             System.out.println("You updated locations parameters");
         } catch (Exception e){

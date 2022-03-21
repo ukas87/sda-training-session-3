@@ -1,10 +1,8 @@
 package service;
-
 import dao.LocationDao;
 import model.Location;
 import model.WeatherDto;
 import utils.mapper.Mapper;
-
 import java.util.List;
 
 public class LocationService {
@@ -33,10 +31,6 @@ public class LocationService {
         locationDao.update(location);
     }
 
-    public Location findByCityAndCountry(String city, String country) {
-        return locationDao.findByCityAndCountry(city, country);
-    }
-
     public List<Location> getAllLocations() {
         return locationDao.findAll();
     }
@@ -53,11 +47,6 @@ public class LocationService {
 
     public void deleteLocationWithWeatherRelatedByCityName(String cityName){
         locationDao.deleteLocationWithRelatedWeatherByCityName(cityName);
-    }
-
-    public void saveLocation(WeatherDto weatherDto) {
-        Location location = locationMapper.toEntity(weatherDto);
-        locationDao.save(location);
     }
 
     public void displayLocation(WeatherDto weatherDto) {

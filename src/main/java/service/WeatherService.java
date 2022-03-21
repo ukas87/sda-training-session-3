@@ -1,5 +1,4 @@
 package service;
-
 import dao.LocationDao;
 import dao.WeatherDao;
 import lombok.extern.log4j.Log4j2;
@@ -9,7 +8,6 @@ import utils.mapper.WeatherMapper;
 import model.WeatherDto;
 import model.Weather;
 import utils.averager.Averager;
-
 import java.time.LocalDate;
 import java.util.List;
 
@@ -53,7 +51,9 @@ public class WeatherService {
         WeatherDto weather1 = openWeatherMapClient.getWeatherByCoordinates(lat, lon);
         WeatherDto weather2 = weatherStackClient.getWeatherByCoordinates(lat, lon);
 
-        return getAverageWeatherDto(weather1, weather2);
+        WeatherDto weatherDto = getAverageWeatherDto(weather1, weather2);
+        weatherDto.setDate(LocalDate.now());
+        return weatherDto;
     }
 
     public void saveWeather(WeatherDto weatherDto) {
@@ -89,6 +89,7 @@ public class WeatherService {
             System.out.println();
         }
     }
+
     public void displayWeather(WeatherDto weatherDto) {
         System.out.println("City: " + weatherDto.getCityName() +
                 "\nCountry: " + weatherDto.getCountryName() +
