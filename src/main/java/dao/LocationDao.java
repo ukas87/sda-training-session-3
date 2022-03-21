@@ -1,9 +1,11 @@
 package dao;
+
 import model.Location;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import utils.connection.HibernateUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +31,22 @@ public class LocationDao {
             transaction = session.beginTransaction();
 
             session.delete(location);
+
+            transaction.commit();
+        } catch (HibernateException e) {
+            if (transaction != null)
+                transaction.rollback();
+        }
+    }
+
+    public void deleteByCityName(String cityName) {
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+
+            session.createNativeQuery("DELETE * FROM locations WHERE city_name = :cityName", Location.class)
+                    .setParameter("cityName", cityName)
+                    .executeUpdate();
 
             transaction.commit();
         } catch (HibernateException e) {
@@ -90,6 +108,35 @@ public class LocationDao {
 
             transaction.commit();
 
+        } catch (HibernateException e) {
+            if (transaction != null)
+                transaction.rollback();
+        }
+    }
+
+    public void deleteLocationWithRelatedWeatherByCityName(String city) {
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+
+            session.createNativeQuery("""
+                            DELETE
+                            FROM weathers 
+                            USING locations
+                            WHERE city_name = :cityName
+                            """)
+                    .setParameter("cityName", city)
+                    .executeUpdate();
+
+            session.createNativeQuery("""
+                            DELETE 
+                            FROM locations
+                            WHERE city_name =:cityName
+                            """)
+                    .setParameter("cityName", city)
+                    .executeUpdate();
+
+            transaction.commit();
         } catch (HibernateException e) {
             if (transaction != null)
                 transaction.rollback();
