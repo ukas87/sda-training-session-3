@@ -18,7 +18,7 @@ import java.util.Scanner;
 
 public class UserInterface {
 
-    final InputHandler inputHandler = new InputHandler(new Scanner(System.in));
+    final InputHandler inputHandler = new InputHandler(new Scanner(System.in), new Validator());
     LocationService locationService = new LocationService(new LocationDao(), new LocationMapper());
     WeatherService weatherService = new WeatherService(new OpenWeatherMapClient(), new WeatherStackClient(), new WeatherDtoAverager(), new WeatherMapper(), new LocationMapper(), new LocationDao(), new WeatherDao());
     boolean isRunning = true;
@@ -29,17 +29,17 @@ public class UserInterface {
             menuInterface();
             String choice = inputHandler.takeMenuChoice();
             switch (choice) {
-                case "1" -> {
+                case "1" ->
                     locationMenu();
-                }
-                case "2" -> {
+
+                case "2" ->
                     weatherMenu();
-                }
+
                 case "0" -> {
                     System.out.println("Bye, thanks");
                     isRunning = false;
                 }
-                default -> System.out.println("(default)Wrong data! Try again\n");
+//                default -> System.out.println("(default)Wrong data! Try again\n");
             }
         } while (isRunning);
     }
@@ -101,6 +101,7 @@ public class UserInterface {
                     .withLatitude(inputHandler.takeLocationLatitude())
                     .withLongitude(inputHandler.takeLocationLongitude())
                     .build();
+
             locationService.add(locationToAdd);
         } catch (Exception e) {
             System.err.println("Wrong data");
@@ -109,7 +110,7 @@ public class UserInterface {
 
     public void deleteLocation(){
         try{
-            locationService.delete(locationService.findByCity(inputHandler.takeLocationCityName()));
+            locationService.deleteLocationWithWeatherRelatedByCityName(inputHandler.takeLocationCityName());
             System.out.println("Location successfully deleted");
             System.out.println();
         } catch (Exception e){
@@ -125,6 +126,7 @@ public class UserInterface {
                     locationToUpdate.setRegion(inputHandler.takeLocationRegionName());
                     locationToUpdate.setLongitude(inputHandler.takeLocationLongitude());
                     locationToUpdate.setLatitude(inputHandler.takeLocationLatitude());
+
             locationService.update(locationToUpdate);
             System.out.println("You updated locations parameters");
         } catch (Exception e){
@@ -135,19 +137,9 @@ public class UserInterface {
 
     public void displayAvailableLocations() {
         try {
-            locationService.displayLocations(locationService.getAllLocations());
+            locationService.displayAllLocations();
         } catch (Exception e) {
             System.err.println("Unable to get data");
-        }
-    }
-
-    public void weatherDownloadMenu() {
-        try {
-            WeatherDto weatherDto = weatherService.getAverageWeatherDtoByCityNameFromBase(inputHandler.takeLocationCityName());
-            weatherService.saveWeather(weatherDto);
-            weatherService.displayWeather(weatherDto);
-        } catch (Exception e) {
-            System.err.println("Unable to get data for your city");
         }
     }
 
@@ -164,10 +156,8 @@ public class UserInterface {
 
     public void displayHistoricAverageWeatherByCyAndDate() {
         try {
-            WeatherDto weatherDto = (WeatherDto) weatherService.getAllWeathersByDate(LocalDate.parse(inputHandler.takeLocalDate()), inputHandler.takeLocationCityName2());
-            weatherService.displayWeathers((List<Weather>) weatherDto);
-            //WeatherDto weathersDto = (WeatherDto) weatherService.getAllWeathersByDate(inputHandler.takeLocalDate(), inputHandler.takeLocationCityName());
-            //weatherService.displayWeathers((List<Weather>) weathersDto);
+            List<Weather> weather =  weatherService.getAllWeathersByDate(LocalDate.parse(inputHandler.takeLocalDate()), inputHandler.takeLocationCityName2());
+            weatherService.displayWeathers(weather);
         } catch (Exception e) {
             System.err.println("Wrong historic data");
         }
@@ -176,17 +166,35 @@ public class UserInterface {
 
 
     public void menuInterface(){
-        System.out.println("==== Weather Application ===\n[1] Location Menu\n[2] Weather Menu\n[0] Exit");
+        System.out.println("""
+                
+                ==== Weather Application ===
+                [1] Location Menu
+                [2] Weather Menu
+                [0] Exit
+                """);
     }
 
     public void locationInterface(){
-        System.out.println("==== Location Menu ===\n[1] Adding a location to DB\n[2] Display all locations in DB\n" +
-                "[3] Delete location from DB\n[4] Update location parameters in DB\n[0] Back to Init Menu");
+        System.out.println("""
+                
+                =========== Location Menu ==========
+                [1] Adding a location to DB
+                [2] Display all locations in DB
+                [3] Delete location from DB
+                [4] Update location parameters in DB
+                [0] Back to Init Menu
+                """);
     }
 
     public void weatherInterface(){
-        System.out.println("==== Weather Menu ===\n[1] Display average weather by city name\n[2] Display historic" +
-                " average weather by city\n[0] Back to Init Menu");
+        System.out.println("""
+                
+                ============== Weather Menu ================
+                [1] Display average weather by city name
+                [2] Display historic average weather by city
+                [0] Back to Init Menu
+                """);
     }
 
 }

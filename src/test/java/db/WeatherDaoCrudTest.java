@@ -42,22 +42,8 @@ class WeatherDaoCrudTest {
         assertThat(expected).isEqualTo(weather);
     }
 
-
     @Test
     @Order(2)
-    void shouldUpdateWeather() {
-        Weather weatherToUpdate = weatherDao.findById(1);
-        Double newTemp = -66.6;
-
-        weatherToUpdate.setTemperature(newTemp);
-        weatherDao.update(weatherToUpdate);
-        Weather actualWeather = weatherDao.findById(1);
-
-        assertThat(weatherToUpdate).isEqualTo(actualWeather);
-    }
-
-    @Test
-    @Order(3)
     void shouldDeleteWeather() {
         weather2 = Weather.Builder()
                 .withDate(LocalDate.now())

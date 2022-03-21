@@ -28,10 +28,6 @@ public class Validator {
         return validate(pattern, checking);
     }
 
-    public void informationMessage(){
-        System.out.println("No parameter added");
-    }
-
     public boolean countryNameValidation(String checking) {
         String pattern = "^[a-zA-Z]";
         return validate(pattern, checking);

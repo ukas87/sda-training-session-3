@@ -46,33 +46,29 @@ public class WeatherService {
         } catch (Exception e) {
             log.error(e);
         }
-        return getAverageWeatherDtoByCoordinates(lat, lon);
+        WeatherDto average = getAverageWeatherDtoByCoordinates(lat, lon);
+        average.setCityName(city);
+        return average;
     }
 
     public WeatherDto getAverageWeatherDtoByCoordinates(Double lat, Double lon) {
         WeatherDto weather1 = openWeatherMapClient.getWeatherByCoordinates(lat, lon);
         WeatherDto weather2 = weatherStackClient.getWeatherByCoordinates(lat, lon);
 
-        return getAverageWeatherDto(weather1, weather2);
+        WeatherDto weatherDto = getAverageWeatherDto(weather1, weather2);
+        weatherDto.setDate(LocalDate.now());
+        return weatherDto;
     }
 
     public void saveWeather(WeatherDto weatherDto) {
         Weather weather = weatherMapper.toEntity(weatherDto);
-        Location location = locationDao.findByCity(weather.getLocation().getCityName());
-        if (location != null) {
-            weather.setLocation(location);
-            weatherDao.save(weather);
-        } else {
-            weatherDao.save(weather);
-        }
+        weather.setLocation(locationDao.findByCity(weatherDto.getCityName()));
+        weatherDao.save(weather);
+
     }
 
     public WeatherDto getAverageWeatherDto(WeatherDto... weathers) {
-        WeatherDto weatherDto = weatherAverager.getAverage(weathers);
-        Location location = locationDao.findByCity(weatherDto.getCityName());
-        weatherDto.setCountryName(location.getCountryName());
-        weatherDto.setRegion(location.getRegion());
-        return weatherDto;
+        return weatherAverager.getAverage(weathers);
     }
 
     public List<Weather> getAllWeathersByDate(LocalDate date, String cityName) {
@@ -89,6 +85,7 @@ public class WeatherService {
             System.out.println();
         }
     }
+
     public void displayWeather(WeatherDto weatherDto) {
         System.out.println("City: " + weatherDto.getCityName() +
                 "\nCountry: " + weatherDto.getCountryName() +

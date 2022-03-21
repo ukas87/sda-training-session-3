@@ -95,20 +95,4 @@ public class WeatherDaoTest {
         assertThat(weathers.size()).isEqualTo(0);
     }
 
-    @Test
-    void shouldReturn2WeathersWhenFindByCityAndDate(){
-
-        List<Weather> weathers = weatherDao.getWeatherByDateAndCity(LocalDate.now(), "New York");
-
-        assertThat(weathers.size()).isEqualTo(2);
-    }
-
-    @Test
-    void shouldReturnEmptyListWhenFindByCityAndNotExistingDate(){
-
-        List<Weather> weathers = weatherDao.getWeatherByDateAndCity(LocalDate.parse("2022-03-15"), "New York");
-
-        assertThat(weathers.size()).isEqualTo(0);
-    }
-
 }

@@ -15,7 +15,6 @@ public class WeatherDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
 
-            weather.setDate(LocalDate.now());
             session.saveOrUpdate(weather);
 
             transaction.commit();
@@ -53,20 +52,6 @@ public class WeatherDao {
                 transaction.rollback();
         }
         return null;
-    }
-
-    public void update(Weather weather) {
-        Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-
-            session.update(weather);
-
-            transaction.commit();
-        } catch (HibernateException hibernateException) {
-            if (transaction != null)
-                transaction.rollback();
-        }
     }
 
     public void deleteAllWeathers() {
@@ -150,28 +135,5 @@ public class WeatherDao {
         }
         return weathers;
     }
-
-    public List<Weather> findWeatherByCountry(String country) {
-        Transaction transaction = null;
-        List<Weather> weathers = Collections.emptyList();
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-
-            weathers = session.createNativeQuery("""
-                            SELECT *
-                            FROM weathers w
-                            JOIN locations l
-                            USING (location_id)
-                            WHERE country_name = :countryName""", Weather.class)
-                    .setParameter("countryName", country)
-                    .getResultList();
-
-            transaction.commit();
-            return weathers;
-        } catch (HibernateException e) {
-            if (transaction != null)
-                transaction.rollback();
-        }
-        return weathers;
-    }
 }
+

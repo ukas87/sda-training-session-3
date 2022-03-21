@@ -1,11 +1,9 @@
 package dao;
-
 import model.Location;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import utils.connection.HibernateUtil;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -121,9 +119,9 @@ public class LocationDao {
 
             session.createNativeQuery("""
                             DELETE
-                            FROM weathers 
-                            USING locations
-                            WHERE city_name = :cityName
+                            FROM weathers w 
+                            USING locations l
+                            WHERE l.city_name = :cityName
                             """)
                     .setParameter("cityName", city)
                     .executeUpdate();

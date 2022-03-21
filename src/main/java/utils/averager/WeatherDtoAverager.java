@@ -4,7 +4,6 @@ import utils.FormatConverter;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Arrays;
-import java.util.Objects;
 
 
 public class WeatherDtoAverager implements Averager<WeatherDto> {
@@ -17,7 +16,6 @@ public class WeatherDtoAverager implements Averager<WeatherDto> {
         Integer avgWindSpeed = getAverageWindSpeed(dtos);
         Integer avgWindDegrees = getAverageWindDegrees(dtos);
         String windDirection = FormatConverter.getInstance().DegreesToCardinalDetailed(avgWindDegrees);
-        String cityName = getCityName(dtos);
 
         return WeatherDto.Builder()
                 .withTemperature(avgTemperature)
@@ -26,7 +24,6 @@ public class WeatherDtoAverager implements Averager<WeatherDto> {
                 .withWindSpeed(avgWindSpeed)
                 .withWindDegrees(avgWindDegrees)
                 .withWindDirection(windDirection)
-                .withCityName(cityName)
                 .build();
     }
 
@@ -98,15 +95,5 @@ public class WeatherDtoAverager implements Averager<WeatherDto> {
                 .average()
                 .orElse(0);
     }
-
-
-    public String getCityName(WeatherDto[] dtos) {
-        return Arrays.stream(dtos)
-                .map(WeatherDto::getCityName)
-                .filter(Objects::nonNull)
-                .findFirst()
-                .orElse(null);
-    }
-
 
 }

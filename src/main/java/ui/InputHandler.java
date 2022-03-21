@@ -1,16 +1,10 @@
 package ui;
-
-import java.time.LocalDate;
 import java.util.Scanner;
 
 public class InputHandler {
-    final Scanner input;
 
-    Validator validator = new Validator();
-
-    public InputHandler(Scanner input) {
-        this.input = input;
-    }
+    private final Scanner input;
+    private final Validator validator;
 
     public InputHandler(Scanner input, Validator validator) {
         this.input = input;
@@ -37,7 +31,6 @@ public class InputHandler {
         checking = input.nextLine();
         return checking;
     }
-
 
     public String takeLocationCityName() {
         System.out.println("What's name of the City?");
