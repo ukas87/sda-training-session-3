@@ -1,6 +1,4 @@
 package utils;
-
-
 public class FormatConverter {
 
     private static FormatConverter INSTANCE;
@@ -19,8 +17,7 @@ public class FormatConverter {
         return (int) (toConvert/3.6);
     }
 
-    public String DegreesToCardinalDetailed(Integer degrees)
-    {
+    public String DegreesToCardinalDetailed(Integer degrees){
         degrees *= 10;
 
         String[] cardinals = { "N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW", "N" };

@@ -107,6 +107,4 @@ public class WeatherDtoAverager implements Averager<WeatherDto> {
                 .findFirst()
                 .orElse(null);
     }
-
-
 }
