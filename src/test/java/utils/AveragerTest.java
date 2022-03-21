@@ -59,7 +59,6 @@ public class AveragerTest {
                 .withWindSpeed(4)
                 .withWindDegrees(168)
                 .withWindDirection("SSE")
-                .withCityName("Chicago")
                 .build();
 
         WeatherDto actual = averager.getAverage(dtos);
@@ -67,24 +66,6 @@ public class AveragerTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-
-    @Test
-    void shouldReturnFirstCityName(){
-        WeatherDto[] dtos = new WeatherDto[]{weatherDto1, weatherDto2, weatherDto3};
-
-        String actual = averager.getCityName(dtos);
-
-        assertThat(actual).isEqualTo("Chicago");
-    }
-
-    @Test
-    void shouldReturnNullIfAllCitiesAreNull(){
-        WeatherDto[] dtos = new WeatherDto[]{weatherDto4};
-
-        String actual = averager.getCityName(dtos);
-
-        assertThat(actual).isNull();
-    }
 
     @Test
     void shouldCountAverageTemperature(){

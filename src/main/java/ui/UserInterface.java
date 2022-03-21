@@ -18,7 +18,7 @@ import java.util.Scanner;
 
 public class UserInterface {
 
-    final InputHandler inputHandler = new InputHandler(new Scanner(System.in));
+    final InputHandler inputHandler = new InputHandler(new Scanner(System.in), new Validator());
     LocationService locationService = new LocationService(new LocationDao(), new LocationMapper());
     WeatherService weatherService = new WeatherService(new OpenWeatherMapClient(), new WeatherStackClient(), new WeatherDtoAverager(), new WeatherMapper(), new LocationMapper(), new LocationDao(), new WeatherDao());
     boolean isRunning = true;
@@ -39,7 +39,7 @@ public class UserInterface {
                     System.out.println("Bye, thanks");
                     isRunning = false;
                 }
-                default -> System.out.println("(default)Wrong data! Try again\n");
+//                default -> System.out.println("(default)Wrong data! Try again\n");
             }
         } while (isRunning);
     }
@@ -167,6 +167,7 @@ public class UserInterface {
 
     public void menuInterface(){
         System.out.println("""
+                
                 ==== Weather Application ===
                 [1] Location Menu
                 [2] Weather Menu
@@ -176,6 +177,7 @@ public class UserInterface {
 
     public void locationInterface(){
         System.out.println("""
+                
                 =========== Location Menu ==========
                 [1] Adding a location to DB
                 [2] Display all locations in DB
@@ -187,6 +189,7 @@ public class UserInterface {
 
     public void weatherInterface(){
         System.out.println("""
+                
                 ============== Weather Menu ================
                 [1] Display average weather by city name
                 [2] Display historic average weather by city

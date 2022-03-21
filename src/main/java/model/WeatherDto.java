@@ -25,4 +25,21 @@ public class WeatherDto {
     private String countryName;
     private String region;
 
+    @Override
+    public String toString() {
+        return "WeatherDto{" +
+                "temperature=" + temperature +
+                ", pressure=" + pressure +
+                ", humidity=" + humidity +
+                ", windSpeed=" + windSpeed +
+                ", date=" + date +
+                ", windDegrees=" + windDegrees +
+                ", windDirection='" + windDirection + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", cityName='" + cityName + '\'' +
+                ", countryName='" + countryName + '\'' +
+                ", region='" + region + '\'' +
+                '}';
+    }
 }

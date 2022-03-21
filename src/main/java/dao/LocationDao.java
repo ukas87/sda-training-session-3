@@ -119,9 +119,9 @@ public class LocationDao {
 
             session.createNativeQuery("""
                             DELETE
-                            FROM weathers 
-                            USING locations
-                            WHERE city_name = :cityName
+                            FROM weathers w 
+                            USING locations l
+                            WHERE l.city_name = :cityName
                             """)
                     .setParameter("cityName", city)
                     .executeUpdate();
