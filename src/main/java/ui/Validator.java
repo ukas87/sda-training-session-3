@@ -29,7 +29,7 @@ public class Validator {
     }
 
     public void informationMessage(){
-        System.out.println("NO parameter added");
+        System.out.println("No parameter added");
     }
 
     public boolean countryNameValidation(String checking) {
@@ -44,6 +44,11 @@ public class Validator {
 
     public boolean regionNameValidation(String checking) {
         String pattern = "(^[a-zA-Z])";
+        return validate(pattern, checking);
+    }
+
+    public boolean dateValidation(String checking) {
+        String pattern = "^\\d{4}-\\d{2}-\\d{2}$";
         return validate(pattern, checking);
     }
 

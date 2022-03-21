@@ -1,5 +1,6 @@
 package ui;
 
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class InputHandler {
@@ -24,14 +25,14 @@ public class InputHandler {
     }
 
     public String takeLocationChoice() {
-        System.out.println("Chose an action 0-2");
+        System.out.println("Chose an action 0-3");
         String checking;
         checking = input.nextLine();
         return checking;
     }
 
     public String takeWeatherChoice() {
-        System.out.println("Chose an action 0-3");
+        System.out.println("Chose an action 0-2");
         String checking;
         checking = input.nextLine();
         return checking;
@@ -44,7 +45,19 @@ public class InputHandler {
         do {
             checking = input.nextLine();
             if (!validator.cityNameValidation(checking)) {
-                System.out.println("Wrong Data try again[a-zA-Z]");
+               System.out.println("Wrong Data try again[a-zA-Z]");
+            }
+        } while (!validator.cityNameValidation(checking));
+        return checking;
+    }
+
+    public String takeLocationCityName2() {
+        System.out.println("What's name of the City?");
+        String checking;
+        do {
+            checking = input.nextLine();
+            if (!validator.cityNameValidation(checking)) {
+              //  System.out.println("Wrong Data try again[a-zA-Z]");
             }
         } while (!validator.cityNameValidation(checking));
         return checking;
@@ -100,5 +113,15 @@ public class InputHandler {
         return checking;
     }
 
-
+    public CharSequence takeLocalDate() {
+        System.out.println("What date you are interested in?");
+        CharSequence checking;
+        do {
+            checking = input.next();
+            if (!validator.dateValidation(String.valueOf(checking))) {
+                System.out.println("Wrong data try smth like yyyy-mm-dd");
+            }
+        } while (!validator.dateValidation(String.valueOf(checking)));
+        return checking;
+    }
 }
