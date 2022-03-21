@@ -4,12 +4,13 @@ import utils.FormatConverter;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Arrays;
+import java.util.List;
 
 
 public class WeatherDtoAverager implements Averager<WeatherDto> {
 
     @Override
-    public WeatherDto getAverage(WeatherDto[] dtos) {
+    public WeatherDto getAverage(List<WeatherDto> dtos) {
         Double avgTemperature = getAverageTemperature(dtos);
         Integer avgHumidity = getAverageHumidity(dtos);
         Integer avgPressure = getAveragePressure(dtos);
@@ -33,8 +34,8 @@ public class WeatherDtoAverager implements Averager<WeatherDto> {
         return bd.doubleValue();
     }
 
-    public Double getAverageLatitude(WeatherDto[] dtos) {
-        double result = Arrays.stream(dtos)
+    public Double getAverageLatitude(List<WeatherDto> dtos) {
+        double result = dtos.stream()
                 .filter(weather -> weather.getLatitude() != null)
                 .mapToDouble(WeatherDto::getLatitude)
                 .average()
@@ -44,8 +45,8 @@ public class WeatherDtoAverager implements Averager<WeatherDto> {
         return round(result, 4);
     }
 
-    public Double getAverageLongitude(WeatherDto[] dtos) {
-        double result = Arrays.stream(dtos)
+    public Double getAverageLongitude(List<WeatherDto> dtos) {
+        double result = dtos.stream()
                 .filter(weather -> weather.getLongitude() != null)
                 .mapToDouble(WeatherDto::getLongitude)
                 .average()
@@ -54,8 +55,8 @@ public class WeatherDtoAverager implements Averager<WeatherDto> {
         return round(result, 4);
     }
 
-    public Double getAverageTemperature(WeatherDto[] dtos) {
-        double result = Arrays.stream(dtos)
+    public Double getAverageTemperature(List<WeatherDto> dtos) {
+        double result = dtos.stream()
                 .filter(weather -> weather.getTemperature() != null)
                 .mapToDouble(WeatherDto::getTemperature)
                 .average()
@@ -64,32 +65,32 @@ public class WeatherDtoAverager implements Averager<WeatherDto> {
         return round(result, 1);
     }
 
-    public Integer getAverageHumidity(WeatherDto[] dtos) {
-        return (int) Arrays.stream(dtos)
+    public Integer getAverageHumidity(List<WeatherDto> dtos) {
+        return (int) dtos.stream()
                 .filter(weather -> weather.getHumidity() != null)
                 .mapToInt(WeatherDto::getHumidity)
                 .average()
                 .orElse(0);
     }
 
-    public Integer getAveragePressure(WeatherDto[] dtos) {
-        return (int) Arrays.stream(dtos)
+    public Integer getAveragePressure(List<WeatherDto> dtos) {
+        return (int) dtos.stream()
                 .filter(weather -> weather.getPressure() != null)
                 .mapToInt(WeatherDto::getPressure)
                 .average()
                 .orElse(0);
     }
 
-    public Integer getAverageWindSpeed(WeatherDto[] dtos) {
-        return (int) Arrays.stream(dtos)
+    public Integer getAverageWindSpeed(List<WeatherDto> dtos) {
+        return (int) dtos.stream()
                 .filter(weather -> weather.getWindSpeed() != null)
                 .mapToInt(WeatherDto::getWindSpeed)
                 .average()
                 .orElse(0);
     }
 
-    public Integer getAverageWindDegrees(WeatherDto[] dtos) {
-        return (int) Arrays.stream(dtos)
+    public Integer getAverageWindDegrees(List<WeatherDto> dtos) {
+        return (int) dtos.stream()
                 .filter(weather -> weather.getWindDegrees() != null)
                 .mapToInt(WeatherDto::getWindDegrees)
                 .average()
