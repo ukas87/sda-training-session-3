@@ -12,14 +12,14 @@ public class InputHandler {
     }
 
     public String takeMenuChoice() {
-        System.out.println("Chose an action 0-3");
+        System.out.println("Chose an action 0-2");
         String checking;
         checking = input.nextLine();
         return checking;
     }
 
     public String takeLocationChoice() {
-        System.out.println("Chose an action 0-3");
+        System.out.println("Chose an action 0-4");
         String checking;
         checking = input.nextLine();
         return checking;
